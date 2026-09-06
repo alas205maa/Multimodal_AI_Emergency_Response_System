@@ -146,9 +146,9 @@ def extract_entities(text: str) -> list:
     text_value = str(text).strip()
 
     number_matches = re.findall(
-        r'\b\d+\s*(?:people|persons|casualties|injured|dead|families|cars|vehicles|floors?|houses?)?\b',
+        r'\b\d+\s*(?:people|persons|casualties|injured|dead|families|cars|vehicles|floors?|houses?|مصاب|قتيل|أسرة|شخص|أشخاص|طوابق?)?\b',
         text_value,
-        re.IGNORECASE,
+        re.IGNORECASE | re.UNICODE,
     )
 
     for match in number_matches:
@@ -157,7 +157,7 @@ def extract_entities(text: str) -> list:
             entities.append(value)
 
     location_matches = re.findall(
-        r'\b(?:sector|street|highway|block|district|city|hospital|bridge|area|road)\s*[\w\d-]+\b',
+        r'\b(?:sector|street|highway|block|district|city|hospital|bridge|area|road|avenue|lane|station|park|market|mall|square)\s*[A-Za-z0-9\-]+\b',
         text_value,
         re.IGNORECASE,
     )
@@ -167,9 +167,8 @@ def extract_entities(text: str) -> list:
         if value and value not in entities:
             entities.append(value)
 
-    # Arabic place keywords (simple heuristic)
     arabic_location_matches = re.findall(
-        r'((?:حي|شارع|طريق|منطقة|مدينة|مستشفى|جسر|ميدان|ساحة|بلدة)\s*[\u0600-\u06FF\w\-]+)',
+        r'((?:حي|شارع|طريق|منطقة|مدينة|مستشفى|جسر|ميدان|ساحة|بلدة|محطة|حديقة|سوق|مركز|مبنى)\s*[\u0600-\u06FF\w\-]+)',
         text_value,
         re.IGNORECASE | re.UNICODE,
     )
@@ -179,6 +178,31 @@ def extract_entities(text: str) -> list:
         if value and value not in entities:
             entities.append(value)
 
+    mixed_location_matches = re.findall(
+        r'\b(?:حي|شارع|طريق|street|road|avenue|district|area|city|hospital|station)\s+[A-Za-z\u0600-\u06FF\-\s]+',
+        text_value,
+        re.IGNORECASE | re.UNICODE,
+    )
+
+    for location in mixed_location_matches:
+        value = location.strip()
+        if value and value not in entities:
+            entities.append(value)
+
+    location_names = re.findall(
+        r'\b(?:[A-Z][a-z]+|[\u0600-\u06FF]+)(?:\s+(?:[A-Z][a-z]+|[\u0600-\u06FF]+)){0,2}\b',
+        text_value,
+        re.UNICODE,
+    )
+    for item in location_names:
+        lowered = item.strip()
+        if any(k in lowered.lower() for k in [
+            'street', 'road', 'hospital', 'city', 'district', 'area', 'bridge',
+            'حي', 'شارع', 'مستشفى', 'مدينة', 'منطقة', 'جسر', 'ميدان', 'ساحة'
+        ]):
+            if lowered and lowered not in entities:
+                entities.append(lowered)
+
     return entities
 
 
@@ -186,20 +210,57 @@ def is_arabic(text: str) -> bool:
     return bool(re.search(r'[\u0600-\u06FF]', str(text)))
 
 
+def detect_language(text: str) -> str:
+    text_value = str(text)
+    has_ar = is_arabic(text_value)
+    has_en = bool(re.search(r'[A-Za-z]', text_value))
+    if has_ar and has_en:
+        return "mixed"
+    if has_ar:
+        return "arabic"
+    if has_en:
+        return "english"
+    return "other"
+
+
+def normalize_text_for_model(text: str) -> str:
+    text_value = str(text).strip()
+    if not text_value:
+        return text_value
+
+    if detect_language(text_value) == "arabic":
+        if Translator is not None:
+            try:
+                translator = Translator()
+                result = translator.translate(text_value, src='ar', dest='en')
+                english_text = result.text
+                if english_text and not is_arabic(english_text):
+                    return english_text
+            except Exception:
+                pass
+        return text_value
+
+    if detect_language(text_value) == "mixed":
+        if Translator is not None:
+            try:
+                translator = Translator()
+                result = translator.translate(text_value, src='auto', dest='en')
+                english_text = result.text
+                if english_text and not is_arabic(english_text):
+                    return english_text
+            except Exception:
+                pass
+        return text_value
+
+    return text_value
+
+
 def translate_to_english(text: str) -> str:
     """Translate Arabic text to English using googletrans if available.
 
     Falls back to returning original text when translator isn't installed.
     """
-    if Translator is None:
-        return text
-
-    try:
-        translator = Translator()
-        res = translator.translate(text, src='ar', dest='en')
-        return res.text
-    except Exception:
-        return text
+    return normalize_text_for_model(text)
 
 
 # ============================================================
@@ -232,16 +293,12 @@ def analyze_emergency(request_json: dict) -> dict:
     if text is None or not str(text).strip():
         raise ValueError("text is required")
 
-    # If the input is Arabic, try to translate to English for the English-trained model
+    # Accept Arabic, English, and mixed-language text.
     original_text = text
-    if is_arabic(text):
-        translated = translate_to_english(text)
-        # prefer translated text for model input if translation produced ASCII letters
-        if translated and not is_arabic(translated):
-            text_for_model = translated
-        else:
-            text_for_model = text
-    else:
+    language = detect_language(text)
+    text_for_model = normalize_text_for_model(text)
+
+    if language == "other":
         text_for_model = text
 
     sequence = text_to_sequence(text_for_model, max_len=MAX_LEN)
@@ -282,12 +339,12 @@ def analyze_emergency(request_json: dict) -> dict:
 
     return {
         "emergency_id": emergency_id,
+        "language": detect_language(original_text),
         "text_urgency": compute_text_urgency_score(priority_probabilities),
         "emergency_type": detected_type,
         "priority": top_priority,
         "priority_probabilities": priority_probabilities,
         "text_embedding": embedding,
-        # entities from original text (keeps Arabic place names)
         "entities": extract_entities(original_text),
     }
 

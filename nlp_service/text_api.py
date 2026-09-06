@@ -1,5 +1,16 @@
-from flask import Flask, request, jsonify
-from predict import analyze_emergency
+import sys
+from pathlib import Path
+
+from flask import Flask, jsonify, request
+
+BASE_DIR = Path(__file__).resolve().parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+try:
+    from predict import analyze_emergency
+except ModuleNotFoundError:  # pragma: no cover
+    from nlp_service.predict import analyze_emergency
 
 app = Flask(__name__)
 
