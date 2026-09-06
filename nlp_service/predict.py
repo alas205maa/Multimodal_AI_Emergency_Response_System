@@ -7,6 +7,12 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+# Optional translator: install with `pip install googletrans==4.0.0-rc1`
+try:
+    from googletrans import Translator
+except Exception:
+    Translator = None
+
 
 # ============================================================
 # Configuration
@@ -14,6 +20,7 @@ import torch.nn.functional as F
 BASE_DIR = Path(__file__).resolve().parent
 
 MODEL_CANDIDATES = [
+    BASE_DIR / "s1_emergency_bilstm_model0.2.with_places.pt",
     BASE_DIR / "s1_emergency_bilstm_model0.2.pt",
 ]
 
@@ -160,7 +167,39 @@ def extract_entities(text: str) -> list:
         if value and value not in entities:
             entities.append(value)
 
+    # Arabic place keywords (simple heuristic)
+    arabic_location_matches = re.findall(
+        r'((?:حي|شارع|طريق|منطقة|مدينة|مستشفى|جسر|ميدان|ساحة|بلدة)\s*[\u0600-\u06FF\w\-]+)',
+        text_value,
+        re.IGNORECASE | re.UNICODE,
+    )
+
+    for location in arabic_location_matches:
+        value = location.strip()
+        if value and value not in entities:
+            entities.append(value)
+
     return entities
+
+
+def is_arabic(text: str) -> bool:
+    return bool(re.search(r'[\u0600-\u06FF]', str(text)))
+
+
+def translate_to_english(text: str) -> str:
+    """Translate Arabic text to English using googletrans if available.
+
+    Falls back to returning original text when translator isn't installed.
+    """
+    if Translator is None:
+        return text
+
+    try:
+        translator = Translator()
+        res = translator.translate(text, src='ar', dest='en')
+        return res.text
+    except Exception:
+        return text
 
 
 # ============================================================
@@ -193,7 +232,19 @@ def analyze_emergency(request_json: dict) -> dict:
     if text is None or not str(text).strip():
         raise ValueError("text is required")
 
-    sequence = text_to_sequence(text, max_len=MAX_LEN)
+    # If the input is Arabic, try to translate to English for the English-trained model
+    original_text = text
+    if is_arabic(text):
+        translated = translate_to_english(text)
+        # prefer translated text for model input if translation produced ASCII letters
+        if translated and not is_arabic(translated):
+            text_for_model = translated
+        else:
+            text_for_model = text
+    else:
+        text_for_model = text
+
+    sequence = text_to_sequence(text_for_model, max_len=MAX_LEN)
     sequence_tensor = torch.tensor(
         [sequence],
         dtype=torch.long,
@@ -236,7 +287,8 @@ def analyze_emergency(request_json: dict) -> dict:
         "priority": top_priority,
         "priority_probabilities": priority_probabilities,
         "text_embedding": embedding,
-        "entities": extract_entities(text),
+        # entities from original text (keeps Arabic place names)
+        "entities": extract_entities(original_text),
     }
 
 
