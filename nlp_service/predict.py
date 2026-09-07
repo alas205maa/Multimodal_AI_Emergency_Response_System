@@ -15,7 +15,6 @@ BASE_DIR = Path(__file__).resolve().parent
 
 MODEL_CANDIDATES = [
     BASE_DIR / "s1_emergency_bilstm_model0.2.pt",
-    BASE_DIR / "s1_emergency_bilstm_model.pt",
 ]
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
