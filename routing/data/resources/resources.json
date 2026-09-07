@@ -1,0 +1,1171 @@
+[
+  {
+    "resource_id": 1,
+    "resource_name": "Fire_Rescue 1",
+    "resource_type": "Fire_Rescue",
+    "latitude": 15.3180519,
+    "longitude": 44.2350112
+  },
+  {
+    "resource_id": 2,
+    "resource_name": "مستشفى أنا وطفلي التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.341499,
+    "longitude": 44.1798029
+  },
+  {
+    "resource_id": 3,
+    "resource_name": "nan",
+    "resource_type": "Ambulance",
+    "latitude": 15.3548484,
+    "longitude": 44.2138873
+  },
+  {
+    "resource_id": 4,
+    "resource_name": "المستشفى اليمني الألماني",
+    "resource_type": "Ambulance",
+    "latitude": 15.3187656,
+    "longitude": 44.1992662
+  },
+  {
+    "resource_id": 5,
+    "resource_name": "مستشفى الصفاء العام",
+    "resource_type": "Ambulance",
+    "latitude": 15.3101959,
+    "longitude": 44.2340095
+  },
+  {
+    "resource_id": 6,
+    "resource_name": "مستوصف الرأفة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3822584,
+    "longitude": 44.2307923
+  },
+  {
+    "resource_id": 7,
+    "resource_name": "مركز جدر الصحي",
+    "resource_type": "Ambulance",
+    "latitude": 15.426595,
+    "longitude": 44.211561
+  },
+  {
+    "resource_id": 8,
+    "resource_name": "وحدة الحجر الصحي",
+    "resource_type": "Ambulance",
+    "latitude": 15.438358,
+    "longitude": 44.209494
+  },
+  {
+    "resource_id": 9,
+    "resource_name": "nan",
+    "resource_type": "Ambulance",
+    "latitude": 15.3577148,
+    "longitude": 44.1736318
+  },
+  {
+    "resource_id": 10,
+    "resource_name": "مستشفى الكمالي التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3589073,
+    "longitude": 44.1731176
+  },
+  {
+    "resource_id": 11,
+    "resource_name": "مستشفى لبنان",
+    "resource_type": "Ambulance",
+    "latitude": 15.2968689,
+    "longitude": 44.2007493
+  },
+  {
+    "resource_id": 12,
+    "resource_name": "مستشفى 17 يوليو",
+    "resource_type": "Ambulance",
+    "latitude": 15.2720821,
+    "longitude": 44.2539919
+  },
+  {
+    "resource_id": 13,
+    "resource_name": "مستشفى الاوروبي اليمني",
+    "resource_type": "Ambulance",
+    "latitude": 15.2713802,
+    "longitude": 44.2482859
+  },
+  {
+    "resource_id": 14,
+    "resource_name": "مستشفى الأمل التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3812775,
+    "longitude": 44.2032724
+  },
+  {
+    "resource_id": 15,
+    "resource_name": "جمعية الهلال الأحمر اليمنية",
+    "resource_type": "Ambulance",
+    "latitude": 15.3561303,
+    "longitude": 44.1970162
+  },
+  {
+    "resource_id": 16,
+    "resource_name": "مركز الزراعة الصحي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3545134,
+    "longitude": 44.1915305
+  },
+  {
+    "resource_id": 17,
+    "resource_name": "مستشفى إسراء التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3024027,
+    "longitude": 44.1951486
+  },
+  {
+    "resource_id": 18,
+    "resource_name": "مركز الامومة و الطفولة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3510005,
+    "longitude": 44.1969631
+  },
+  {
+    "resource_id": 19,
+    "resource_name": "مستشفى الامل لاورام السرطان",
+    "resource_type": "Ambulance",
+    "latitude": 15.3461824,
+    "longitude": 44.1664339
+  },
+  {
+    "resource_id": 20,
+    "resource_name": "مستشفى العاقل",
+    "resource_type": "Ambulance",
+    "latitude": 15.3415656,
+    "longitude": 44.1680549
+  },
+  {
+    "resource_id": 21,
+    "resource_name": "مجمع الثورة الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3796023,
+    "longitude": 44.202604
+  },
+  {
+    "resource_id": 22,
+    "resource_name": "مستشفى الاشول التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.326838,
+    "longitude": 44.2263394
+  },
+  {
+    "resource_id": 23,
+    "resource_name": "مستشفى العواضي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3012552,
+    "longitude": 44.2362427
+  },
+  {
+    "resource_id": 24,
+    "resource_name": "مستشفى المدينة التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3426617,
+    "longitude": 44.1804556
+  },
+  {
+    "resource_id": 25,
+    "resource_name": "مستشفى الأم",
+    "resource_type": "Ambulance",
+    "latitude": 15.339489,
+    "longitude": 44.2056979
+  },
+  {
+    "resource_id": 26,
+    "resource_name": "مستشفى ابن سينا التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3411448,
+    "longitude": 44.1687539
+  },
+  {
+    "resource_id": 27,
+    "resource_name": "مستشفى المؤيد",
+    "resource_type": "Ambulance",
+    "latitude": 15.4038493,
+    "longitude": 44.2167618
+  },
+  {
+    "resource_id": 28,
+    "resource_name": "مستشفى سيبلاس",
+    "resource_type": "Ambulance",
+    "latitude": 15.3402192,
+    "longitude": 44.1732279
+  },
+  {
+    "resource_id": 29,
+    "resource_name": "مستشفى القدس العسكري",
+    "resource_type": "Ambulance",
+    "latitude": 15.29544,
+    "longitude": 44.2033769
+  },
+  {
+    "resource_id": 30,
+    "resource_name": "مستشفى القاهرة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3692015,
+    "longitude": 44.1922329
+  },
+  {
+    "resource_id": 31,
+    "resource_name": "مستشفى الخمسين",
+    "resource_type": "Ambulance",
+    "latitude": 15.279635,
+    "longitude": 44.2171074
+  },
+  {
+    "resource_id": 32,
+    "resource_name": "مستشفى الدرن",
+    "resource_type": "Ambulance",
+    "latitude": 15.2969199,
+    "longitude": 44.2440654
+  },
+  {
+    "resource_id": 33,
+    "resource_name": "مستشفى د.عبدالقادر المتوكل",
+    "resource_type": "Ambulance",
+    "latitude": 15.3362323,
+    "longitude": 44.1840525
+  },
+  {
+    "resource_id": 34,
+    "resource_name": "مستشفى الملك التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.4025652,
+    "longitude": 44.2132779
+  },
+  {
+    "resource_id": 35,
+    "resource_name": "مركز الزهراوي الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3322692,
+    "longitude": 44.2217797
+  },
+  {
+    "resource_id": 36,
+    "resource_name": "مستشفى الهلال الابيض",
+    "resource_type": "Ambulance",
+    "latitude": 15.3327159,
+    "longitude": 44.2231957
+  },
+  {
+    "resource_id": 37,
+    "resource_name": "المستشفى الأهلي الحديث",
+    "resource_type": "Ambulance",
+    "latitude": 15.3351583,
+    "longitude": 44.1745632
+  },
+  {
+    "resource_id": 38,
+    "resource_name": "مستشفى الامانة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3765167,
+    "longitude": 44.1735515
+  },
+  {
+    "resource_id": 39,
+    "resource_name": "مستشفى دار الرحمة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3761783,
+    "longitude": 44.1740926
+  },
+  {
+    "resource_id": 40,
+    "resource_name": "مستشفى المدينة النموذجي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3427854,
+    "longitude": 44.1886328
+  },
+  {
+    "resource_id": 41,
+    "resource_name": "مركز الجراف الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.4068363,
+    "longitude": 44.2068561
+  },
+  {
+    "resource_id": 42,
+    "resource_name": "مستشفى التوفيق الاستشاري",
+    "resource_type": "Ambulance",
+    "latitude": 15.2790425,
+    "longitude": 44.2207408
+  },
+  {
+    "resource_id": 43,
+    "resource_name": "مستشفى الموشكي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3050943,
+    "longitude": 44.1987953
+  },
+  {
+    "resource_id": 44,
+    "resource_name": "مركز التعاون الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3968876,
+    "longitude": 44.212993
+  },
+  {
+    "resource_id": 45,
+    "resource_name": "مستشفى نبض الحياة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3050093,
+    "longitude": 44.2353538
+  },
+  {
+    "resource_id": 46,
+    "resource_name": "خالد الهزار التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.2865407,
+    "longitude": 44.2420413
+  },
+  {
+    "resource_id": 47,
+    "resource_name": "مستشفى النخبة",
+    "resource_type": "Ambulance",
+    "latitude": 15.2995733,
+    "longitude": 44.2373396
+  },
+  {
+    "resource_id": 48,
+    "resource_name": "مستشفى النخبة",
+    "resource_type": "Ambulance",
+    "latitude": 15.2990347,
+    "longitude": 44.2375501
+  },
+  {
+    "resource_id": 49,
+    "resource_name": "مستشفى الأمومة والطفولة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3376848,
+    "longitude": 44.2258257
+  },
+  {
+    "resource_id": 50,
+    "resource_name": "مختبرات الذبحاني",
+    "resource_type": "Ambulance",
+    "latitude": 15.335536,
+    "longitude": 44.2222771
+  },
+  {
+    "resource_id": 51,
+    "resource_name": "مستشفى العلياء الدولي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3435396,
+    "longitude": 44.1874968
+  },
+  {
+    "resource_id": 52,
+    "resource_name": "مستشفى ناصر التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3228982,
+    "longitude": 44.2277266
+  },
+  {
+    "resource_id": 53,
+    "resource_name": "مستشفى المودة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3390826,
+    "longitude": 44.1776279
+  },
+  {
+    "resource_id": 54,
+    "resource_name": "المستشفى الألماني الحديث",
+    "resource_type": "Ambulance",
+    "latitude": 15.3215464,
+    "longitude": 44.2283438
+  },
+  {
+    "resource_id": 55,
+    "resource_name": "مستشفى ابن الهيثم للبصريات والسمعيات",
+    "resource_type": "Ambulance",
+    "latitude": 15.3470433,
+    "longitude": 44.2035293
+  },
+  {
+    "resource_id": 56,
+    "resource_name": "مستشفى الحرمين",
+    "resource_type": "Ambulance",
+    "latitude": 15.3806002,
+    "longitude": 44.2310952
+  },
+  {
+    "resource_id": 57,
+    "resource_name": "مستشفى العظام التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3067913,
+    "longitude": 44.2342625
+  },
+  {
+    "resource_id": 58,
+    "resource_name": "مركز الوليد الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3935177,
+    "longitude": 44.1723294
+  },
+  {
+    "resource_id": 59,
+    "resource_name": "مركز سبأ الصحي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3703683,
+    "longitude": 44.2053427
+  },
+  {
+    "resource_id": 60,
+    "resource_name": "الاستشاريون لطب العيون",
+    "resource_type": "Ambulance",
+    "latitude": 15.3444846,
+    "longitude": 44.1925219
+  },
+  {
+    "resource_id": 61,
+    "resource_name": "المستشفى الأوروبي الحديث",
+    "resource_type": "Ambulance",
+    "latitude": 15.3567294,
+    "longitude": 44.1747658
+  },
+  {
+    "resource_id": 62,
+    "resource_name": "المستشفى الاستشاري",
+    "resource_type": "Ambulance",
+    "latitude": 15.3574593,
+    "longitude": 44.174795
+  },
+  {
+    "resource_id": 63,
+    "resource_name": "المستشفى الملكي",
+    "resource_type": "Ambulance",
+    "latitude": 15.2758836,
+    "longitude": 44.2227468
+  },
+  {
+    "resource_id": 64,
+    "resource_name": "مستشفى الرأفة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3799612,
+    "longitude": 44.2312247
+  },
+  {
+    "resource_id": 65,
+    "resource_name": "مركز علاو الإنجابي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3824335,
+    "longitude": 44.2264243
+  },
+  {
+    "resource_id": 66,
+    "resource_name": "مستشفى الخزان التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3075229,
+    "longitude": 44.2339733
+  },
+  {
+    "resource_id": 67,
+    "resource_name": "مستشفى شملان التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.4015479,
+    "longitude": 44.1531574
+  },
+  {
+    "resource_id": 68,
+    "resource_name": "مستشفى عين الحياة التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.2803707,
+    "longitude": 44.2620363
+  },
+  {
+    "resource_id": 69,
+    "resource_name": "مستشفى ابن حيان التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3603061,
+    "longitude": 44.1636338
+  },
+  {
+    "resource_id": 70,
+    "resource_name": "مستشفى الرباط الحديث",
+    "resource_type": "Ambulance",
+    "latitude": 15.3539262,
+    "longitude": 44.1872101
+  },
+  {
+    "resource_id": 71,
+    "resource_name": "مركز الاعناب الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.4116059,
+    "longitude": 44.1774973
+  },
+  {
+    "resource_id": 72,
+    "resource_name": "مستشفى سبأ",
+    "resource_type": "Ambulance",
+    "latitude": 15.3886542,
+    "longitude": 44.2061147
+  },
+  {
+    "resource_id": 73,
+    "resource_name": "مستشفى السبعين",
+    "resource_type": "Ambulance",
+    "latitude": 15.3309681,
+    "longitude": 44.2070408
+  },
+  {
+    "resource_id": 74,
+    "resource_name": "مستشفى الثورة",
+    "resource_type": "Ambulance",
+    "latitude": 15.35078,
+    "longitude": 44.22106
+  },
+  {
+    "resource_id": 75,
+    "resource_name": "المستشفى الجمهوري",
+    "resource_type": "Ambulance",
+    "latitude": 15.345399,
+    "longitude": 44.195002
+  },
+  {
+    "resource_id": 76,
+    "resource_name": "المستشفى العسكري",
+    "resource_type": "Ambulance",
+    "latitude": 15.362836,
+    "longitude": 44.21259
+  },
+  {
+    "resource_id": 77,
+    "resource_name": "مستشفى الكويت",
+    "resource_type": "Ambulance",
+    "latitude": 15.361486,
+    "longitude": 44.193406
+  },
+  {
+    "resource_id": 78,
+    "resource_name": "مركز العشب الأخضر للتداوي بالأعشاب الطبية - طبيب الأعشاب / محمد عبدالسلام الظمين",
+    "resource_type": "Ambulance",
+    "latitude": 15.2683684,
+    "longitude": 44.2433447
+  },
+  {
+    "resource_id": 79,
+    "resource_name": "مستشفى الرباط الحديث",
+    "resource_type": "Ambulance",
+    "latitude": 15.3588526,
+    "longitude": 44.182358
+  },
+  {
+    "resource_id": 80,
+    "resource_name": "مستشفى د.عبدالوهاب عجلان التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3968058,
+    "longitude": 44.2055435
+  },
+  {
+    "resource_id": 81,
+    "resource_name": "مركز الزهراء الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.27955,
+    "longitude": 44.2425212
+  },
+  {
+    "resource_id": 82,
+    "resource_name": "عيادة الدكتور محمد سالم نعمان/جهاز الهضمي وكبد",
+    "resource_type": "Ambulance",
+    "latitude": 15.3411329,
+    "longitude": 44.2028922
+  },
+  {
+    "resource_id": 83,
+    "resource_name": "مركز الاصبحي الجراحي",
+    "resource_type": "Ambulance",
+    "latitude": 15.2872407,
+    "longitude": 44.2408051
+  },
+  {
+    "resource_id": 84,
+    "resource_name": "مستشفى المجد التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.4343382,
+    "longitude": 44.2153225
+  },
+  {
+    "resource_id": 85,
+    "resource_name": "المركز الوطني لعلاج الاورام",
+    "resource_type": "Ambulance",
+    "latitude": 15.3460542,
+    "longitude": 44.194939
+  },
+  {
+    "resource_id": 86,
+    "resource_name": "د / عيسى الجبري",
+    "resource_type": "Ambulance",
+    "latitude": 15.2865724,
+    "longitude": 44.2101112
+  },
+  {
+    "resource_id": 87,
+    "resource_name": "عيادة نساء وولادة",
+    "resource_type": "Ambulance",
+    "latitude": 15.401949,
+    "longitude": 44.1671912
+  },
+  {
+    "resource_id": 88,
+    "resource_name": "مستشفى الدكتور علي الخزان",
+    "resource_type": "Ambulance",
+    "latitude": 15.423664,
+    "longitude": 44.198579
+  },
+  {
+    "resource_id": 89,
+    "resource_name": "مستشفى الأمل التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3394061,
+    "longitude": 44.2144757
+  },
+  {
+    "resource_id": 90,
+    "resource_name": "مستشفى الشرطة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3710668,
+    "longitude": 44.2092863
+  },
+  {
+    "resource_id": 91,
+    "resource_name": "مستشفى يشفين",
+    "resource_type": "Ambulance",
+    "latitude": 15.2713666,
+    "longitude": 44.2482804
+  },
+  {
+    "resource_id": 92,
+    "resource_name": "مستشفى اليمن السعيد",
+    "resource_type": "Ambulance",
+    "latitude": 15.2867747,
+    "longitude": 44.2401771
+  },
+  {
+    "resource_id": 93,
+    "resource_name": "عيادة الدكتورة إيناس العريقي أخصائية نساءوولادةوعقم",
+    "resource_type": "Ambulance",
+    "latitude": 15.4476063,
+    "longitude": 44.2283922
+  },
+  {
+    "resource_id": 94,
+    "resource_name": "مستشفى النبلاء الحديث",
+    "resource_type": "Ambulance",
+    "latitude": 15.3841344,
+    "longitude": 44.2442501
+  },
+  {
+    "resource_id": 95,
+    "resource_name": "مستشفى الرسالة للطب النفسي وعلاج الإدمان",
+    "resource_type": "Ambulance",
+    "latitude": 15.3363551,
+    "longitude": 44.1765598
+  },
+  {
+    "resource_id": 96,
+    "resource_name": "مسشفى مغربي للعيون",
+    "resource_type": "Ambulance",
+    "latitude": 15.3435705,
+    "longitude": 44.1881451
+  },
+  {
+    "resource_id": 97,
+    "resource_name": "مركز القلب الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3278806,
+    "longitude": 44.1883704
+  },
+  {
+    "resource_id": 98,
+    "resource_name": "مركز الدكتور سليم خيلة التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3696068,
+    "longitude": 44.197731
+  },
+  {
+    "resource_id": 99,
+    "resource_name": "مركز طب العائلة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3113365,
+    "longitude": 44.1990742
+  },
+  {
+    "resource_id": 100,
+    "resource_name": "مستشفى الوسام الدولي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3432094,
+    "longitude": 44.1980138
+  },
+  {
+    "resource_id": 101,
+    "resource_name": "المستشفى اليمني الفرنسي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3362641,
+    "longitude": 44.1984568
+  },
+  {
+    "resource_id": 102,
+    "resource_name": "مستشفى البروفيسور فاكر القباطي التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.2713987,
+    "longitude": 44.2092016
+  },
+  {
+    "resource_id": 103,
+    "resource_name": "مستشفى بروج صنعاء الدولي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3077239,
+    "longitude": 44.1897415
+  },
+  {
+    "resource_id": 104,
+    "resource_name": "المستشفى الروماني الحديث",
+    "resource_type": "Ambulance",
+    "latitude": 15.301418,
+    "longitude": 44.236176
+  },
+  {
+    "resource_id": 105,
+    "resource_name": "مجمع آزال الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3593235,
+    "longitude": 44.2281104
+  },
+  {
+    "resource_id": 106,
+    "resource_name": "مستشفى الدكتورة مها البيضاني التخصصي للأمومة والطفولة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3828332,
+    "longitude": 44.229356
+  },
+  {
+    "resource_id": 107,
+    "resource_name": "مستشفى نشوان",
+    "resource_type": "Ambulance",
+    "latitude": 15.3206206,
+    "longitude": 44.2287643
+  },
+  {
+    "resource_id": 108,
+    "resource_name": "مستشفى المتحدون",
+    "resource_type": "Ambulance",
+    "latitude": 15.3860536,
+    "longitude": 44.2308334
+  },
+  {
+    "resource_id": 109,
+    "resource_name": "مستشفى الصحاب التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3767952,
+    "longitude": 44.2057255
+  },
+  {
+    "resource_id": 110,
+    "resource_name": "المستشفى التخصصي للأمومة الآمنة",
+    "resource_type": "Ambulance",
+    "latitude": 15.3773506,
+    "longitude": 44.2341183
+  },
+  {
+    "resource_id": 111,
+    "resource_name": "مستشفى الجزائر التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.335681,
+    "longitude": 44.1848259
+  },
+  {
+    "resource_id": 112,
+    "resource_name": "المركز الاستشاري المجري السلوفاكي",
+    "resource_type": "Ambulance",
+    "latitude": 15.335754,
+    "longitude": 44.1895345
+  },
+  {
+    "resource_id": 113,
+    "resource_name": "مركز الثريا الطبي الحديث",
+    "resource_type": "Ambulance",
+    "latitude": 15.2854865,
+    "longitude": 44.2500114
+  },
+  {
+    "resource_id": 114,
+    "resource_name": "مركز الجعدي للأمومة والطفولة",
+    "resource_type": "Ambulance",
+    "latitude": 15.2825008,
+    "longitude": 44.2403474
+  },
+  {
+    "resource_id": 115,
+    "resource_name": "مستشفى العين والأنف التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.2880337,
+    "longitude": 44.2418723
+  },
+  {
+    "resource_id": 116,
+    "resource_name": "برج حدة الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.2971434,
+    "longitude": 44.1891333
+  },
+  {
+    "resource_id": 117,
+    "resource_name": "مجمع التحدي لذوي الإعاقة",
+    "resource_type": "Ambulance",
+    "latitude": 15.308365,
+    "longitude": 44.1844019
+  },
+  {
+    "resource_id": 118,
+    "resource_name": "مستشفى البنون الدولي للخصوبة والعقم",
+    "resource_type": "Ambulance",
+    "latitude": 15.2736583,
+    "longitude": 44.2209403
+  },
+  {
+    "resource_id": 119,
+    "resource_name": "مركز الخمسين الطبي التعاوني",
+    "resource_type": "Ambulance",
+    "latitude": 15.2934773,
+    "longitude": 44.1906595
+  },
+  {
+    "resource_id": 120,
+    "resource_name": "مستشفى الحكماء التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.3800681,
+    "longitude": 44.2147357
+  },
+  {
+    "resource_id": 121,
+    "resource_name": "مركز النور الطبي الجراحي",
+    "resource_type": "Ambulance",
+    "latitude": 15.44976,
+    "longitude": 44.170623
+  },
+  {
+    "resource_id": 122,
+    "resource_name": "جامعة العلوم والتكنولوجيا",
+    "resource_type": "Ambulance",
+    "latitude": 15.370612468577386,
+    "longitude": 44.175499573507146
+  },
+  {
+    "resource_id": 123,
+    "resource_name": "المستشفى الجمهوري",
+    "resource_type": "Ambulance",
+    "latitude": 15.345528772303476,
+    "longitude": 44.19503544458362
+  },
+  {
+    "resource_id": 124,
+    "resource_name": "مستشفى السبعين للنساء والولادة",
+    "resource_type": "Ambulance",
+    "latitude": 15.329716982676874,
+    "longitude": 44.206984603628186
+  },
+  {
+    "resource_id": 125,
+    "resource_name": "المستشفى السعودي الألماني",
+    "resource_type": "Ambulance",
+    "latitude": 15.421183373043734,
+    "longitude": 44.20759691422295
+  },
+  {
+    "resource_id": 126,
+    "resource_name": "مستشفى الثورة",
+    "resource_type": "Ambulance",
+    "latitude": 15.35095890230212,
+    "longitude": 44.22092114684093
+  },
+  {
+    "resource_id": 127,
+    "resource_name": "مستشفى ابن سينا",
+    "resource_type": "Ambulance",
+    "latitude": 15.340995895331181,
+    "longitude": 44.168675329121506
+  },
+  {
+    "resource_id": 128,
+    "resource_name": "مستشفى الكويت",
+    "resource_type": "Ambulance",
+    "latitude": 15.361502358093645,
+    "longitude": 44.19327922799104
+  },
+  {
+    "resource_id": 129,
+    "resource_name": "مستشفى فلسطين للأمومة والطفولة",
+    "resource_type": "Ambulance",
+    "latitude": 15.445943592432348,
+    "longitude": 44.244250933390944
+  },
+  {
+    "resource_id": 130,
+    "resource_name": "مستشفى الأم",
+    "resource_type": "Ambulance",
+    "latitude": 15.340166936690638,
+    "longitude": 44.21511924030802
+  },
+  {
+    "resource_id": 131,
+    "resource_name": "مستشفى مغربي للعيون",
+    "resource_type": "Ambulance",
+    "latitude": 15.343431284496498,
+    "longitude": 44.18821147131696
+  },
+  {
+    "resource_id": 132,
+    "resource_name": "مستشفى آزال",
+    "resource_type": "Ambulance",
+    "latitude": 15.375943000000003,
+    "longitude": 44.17737485
+  },
+  {
+    "resource_id": 133,
+    "resource_name": "برج اليمن الطبي",
+    "resource_type": "Ambulance",
+    "latitude": 15.379783562627942,
+    "longitude": 44.17639577801546
+  },
+  {
+    "resource_id": 134,
+    "resource_name": "مستشفى المتحدون التخصصي",
+    "resource_type": "Ambulance",
+    "latitude": 15.386000569363832,
+    "longitude": 44.230839998555815
+  },
+  {
+    "resource_id": 135,
+    "resource_name": "شرطة صنعاء السياحية",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3774815,
+    "longitude": 44.2103236
+  },
+  {
+    "resource_id": 136,
+    "resource_name": "قسم شرطة علايه شميله",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3064198,
+    "longitude": 44.2355007
+  },
+  {
+    "resource_id": 137,
+    "resource_name": "قسم الحصبة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3743084,
+    "longitude": 44.2033853
+  },
+  {
+    "resource_id": 138,
+    "resource_name": "قسم شرطة العلفي",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3466177,
+    "longitude": 44.1974915
+  },
+  {
+    "resource_id": 139,
+    "resource_name": "الامن القومي صنعاء",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.355909,
+    "longitude": 44.2190721
+  },
+  {
+    "resource_id": 140,
+    "resource_name": "الامن القومي - صرف",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.4138839,
+    "longitude": 44.2395479
+  },
+  {
+    "resource_id": 141,
+    "resource_name": "مركز شرطة الشهيد الجوفي",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3004027,
+    "longitude": 44.1993968
+  },
+  {
+    "resource_id": 142,
+    "resource_name": "قسم النصر",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3417516,
+    "longitude": 44.200846
+  },
+  {
+    "resource_id": 143,
+    "resource_name": "مكتب شرطه",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3977137,
+    "longitude": 44.2280425
+  },
+  {
+    "resource_id": 144,
+    "resource_name": "مركز شرطة الوحدة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3788495,
+    "longitude": 44.2347269
+  },
+  {
+    "resource_id": 145,
+    "resource_name": "وادي احمد",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.4495578,
+    "longitude": 44.2010276
+  },
+  {
+    "resource_id": 146,
+    "resource_name": "مركز شرطة حدة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.2959163,
+    "longitude": 44.1838762
+  },
+  {
+    "resource_id": 147,
+    "resource_name": "قسم ذي يزن",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3286161,
+    "longitude": 44.2159474
+  },
+  {
+    "resource_id": 148,
+    "resource_name": "قسم شرطة الثورة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3507323,
+    "longitude": 44.224162
+  },
+  {
+    "resource_id": 149,
+    "resource_name": "قسم شرطة آزال",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3466683,
+    "longitude": 44.2266023
+  },
+  {
+    "resource_id": 150,
+    "resource_name": "قسم شرطة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.4035633,
+    "longitude": 44.2182777
+  },
+  {
+    "resource_id": 151,
+    "resource_name": "قسم المعلمي",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.346056,
+    "longitude": 44.1816865
+  },
+  {
+    "resource_id": 152,
+    "resource_name": "قسم شرطه",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.2693005,
+    "longitude": 44.2165186
+  },
+  {
+    "resource_id": 153,
+    "resource_name": "nan",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.29641,
+    "longitude": 44.2115745
+  },
+  {
+    "resource_id": 154,
+    "resource_name": "مديرية أمن السبعين",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3128835,
+    "longitude": 44.2243321
+  },
+  {
+    "resource_id": 155,
+    "resource_name": "قسم شرطة آزال",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.361626,
+    "longitude": 44.2281959
+  },
+  {
+    "resource_id": 156,
+    "resource_name": "قسم شرطة هبرة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3848422,
+    "longitude": 44.2235494
+  },
+  {
+    "resource_id": 157,
+    "resource_name": "مرور منطقة الصافية",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3320729,
+    "longitude": 44.2224493
+  },
+  {
+    "resource_id": 158,
+    "resource_name": "قسم الجديري",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3536968,
+    "longitude": 44.190478
+  },
+  {
+    "resource_id": 159,
+    "resource_name": "قسم شرطة جمال جميل",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.354799,
+    "longitude": 44.206864
+  },
+  {
+    "resource_id": 160,
+    "resource_name": "قسم شرطة مدينة الوحدة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.37893,
+    "longitude": 44.234848
+  },
+  {
+    "resource_id": 161,
+    "resource_name": "قسم شرطة العمري",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.338048,
+    "longitude": 44.225762
+  },
+  {
+    "resource_id": 162,
+    "resource_name": "قسم شرطة بيت بوس وأرتل",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.2709424,
+    "longitude": 44.2145995
+  },
+  {
+    "resource_id": 163,
+    "resource_name": "قسم شرطة السنينة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3540808,
+    "longitude": 44.1651188
+  },
+  {
+    "resource_id": 164,
+    "resource_name": "الانتربول",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3662244,
+    "longitude": 44.1954846
+  },
+  {
+    "resource_id": 165,
+    "resource_name": "قسم شرطة القلفان",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.302009,
+    "longitude": 44.2517827
+  },
+  {
+    "resource_id": 166,
+    "resource_name": "نقطة خشم البكرة",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.4422075,
+    "longitude": 44.2580829
+  },
+  {
+    "resource_id": 167,
+    "resource_name": "قسم شرطة 14 اكتوبر",
+    "resource_type": "Rescue_Team",
+    "latitude": 15.3663522,
+    "longitude": 44.1756396
+  }
+]
