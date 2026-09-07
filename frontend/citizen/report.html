@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>إرسال بلاغ | نظام الاستجابة للطوارئ</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+
+<body class="report-page">
+
+<header class="topbar">
+
+    <a href="../index.html" class="brand">
+        <div class="brand-mark">
+            <span>+</span>
+        </div>
+
+        <div class="brand-text">
+            <strong>استجابة</strong>
+            <span>نظام الاستجابة للطوارئ</span>
+        </div>
+    </a>
+
+    <a href="../index.html" class="back-home">
+        ← العودة للرئيسية
+    </a>
+
+</header>
+
+
+<main class="report-main">
+
+    <!-- =====================================================
+         PAGE HEADER
+    ====================================================== -->
+
+    <section class="report-header">
+
+        <div>
+
+            <div class="report-breadcrumb">
+                الرئيسية
+                <span>›</span>
+                إرسال بلاغ
+            </div>
+
+            <div class="status-pill">
+                <span class="status-dot"></span>
+                البلاغات متاحة الآن
+            </div>
+
+            <h1>
+                أرسل بلاغ
+                <span>طوارئ</span>
+            </h1>
+
+            <p>
+                أخبرنا بما حدث. يمكنك إضافة صورة وموقعك لمساعدة
+                النظام على تحليل الحالة وتحديد الاستجابة المناسبة.
+            </p>
+
+        </div>
+
+
+        <div class="report-security">
+
+            <div class="security-icon">
+                ✓
+            </div>
+
+            <div>
+                <strong>بلاغك مهم</strong>
+                <span>سيتم تحليل المعلومات وإرسالها إلى نظام الاستجابة.</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         PROGRESS
+    ====================================================== -->
+
+    <div class="report-progress">
+
+        <div class="progress-step active">
+            <span>1</span>
+            <strong>معلومات الحالة</strong>
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div class="progress-step">
+            <span>2</span>
+            <strong>الموقع</strong>
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div class="progress-step">
+            <span>3</span>
+            <strong>المراجعة</strong>
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         REPORT LAYOUT
+    ====================================================== -->
+
+    <section class="report-layout">
+
+
+        <!-- =================================================
+             MAIN FORM
+        ================================================== -->
+
+        <div class="report-form-card">
+
+            <!-- Emergency type -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">
+                        01
+                    </div>
+
+                    <div>
+                        <h2>ما الذي حدث؟</h2>
+                        <p>اختر نوع الحالة الأقرب لما يحدث.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="type-grid">
+
+                    <label class="type-option">
+                        <input
+                            type="radio"
+                            name="emergency_type"
+                            value="Fire"
+                        >
+
+                        <div class="type-option-content">
+
+                            <div class="type-icon fire">
+                                🔥
+                            </div>
+
+                            <div>
+                                <strong>حريق</strong>
+                                <span>منزل، مبنى أو مركبة</span>
+                            </div>
+
+                            <div class="radio-check">✓</div>
+
+                        </div>
+                    </label>
+
+
+                    <label class="type-option">
+                        <input
+                            type="radio"
+                            name="emergency_type"
+                            value="Traffic Accident"
+                        >
+
+                        <div class="type-option-content">
+
+                            <div class="type-icon accident">
+                                🚗
+                            </div>
+
+                            <div>
+                                <strong>حادث مروري</strong>
+                                <span>تصادم أو حادث طريق</span>
+                            </div>
+
+                            <div class="radio-check">✓</div>
+
+                        </div>
+                    </label>
+
+
+                    <label class="type-option">
+                        <input
+                            type="radio"
+                            name="emergency_type"
+                            value="Medical Emergency"
+                        >
+
+                        <div class="type-option-content">
+
+                            <div class="type-icon medical">
+                                ✚
+                            </div>
+
+                            <div>
+                                <strong>حالة طبية</strong>
+                                <span>إصابة أو حالة عاجلة</span>
+                            </div>
+
+                            <div class="radio-check">✓</div>
+
+                        </div>
+                    </label>
+
+
+                    <label class="type-option">
+                        <input
+                            type="radio"
+                            name="emergency_type"
+                            value="Flood"
+                        >
+
+                        <div class="type-option-content">
+
+                            <div class="type-icon flood">
+                                ≋
+                            </div>
+
+                            <div>
+                                <strong>فيضان</strong>
+                                <span>تجمع مياه أو فيضان</span>
+                            </div>
+
+                            <div class="radio-check">✓</div>
+
+                        </div>
+                    </label>
+
+
+                    <label class="type-option">
+                        <input
+                            type="radio"
+                            name="emergency_type"
+                            value="Earthquake"
+                        >
+
+                        <div class="type-option-content">
+
+                            <div class="type-icon earthquake">
+                                ◈
+                            </div>
+
+                            <div>
+                                <strong>زلزال</strong>
+                                <span>هزة أو أضرار أرضية</span>
+                            </div>
+
+                            <div class="radio-check">✓</div>
+
+                        </div>
+                    </label>
+
+
+                    <label class="type-option">
+                        <input
+                            type="radio"
+                            name="emergency_type"
+                            value="Other"
+                        >
+
+                        <div class="type-option-content">
+
+                            <div class="type-icon other">
+                                !
+                            </div>
+
+                            <div>
+                                <strong>حالة أخرى</strong>
+                                <span>نوع طارئ آخر</span>
+                            </div>
+
+                            <div class="radio-check">✓</div>
+
+                        </div>
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <!-- Description -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">
+                        02
+                    </div>
+
+                    <div>
+                        <h2>صف لنا ما حدث</h2>
+                        <p>
+                            اكتب أي معلومات يمكن أن تساعد في فهم الحالة.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="textarea-wrapper">
+
+                    <textarea
+                        id="description"
+                        maxlength="1000"
+                        placeholder="مثال: يوجد حادث بين سيارتين، وهناك شخص مصاب..."
+                    ></textarea>
+
+                    <div class="textarea-footer">
+                        <span>
+                            لا تقلق إذا لم تعرف كل التفاصيل.
+                        </span>
+
+                        <span id="charCount">
+                            0 / 1000
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Image -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">
+                        03
+                    </div>
+
+                    <div>
+                        <h2>أضف صورة</h2>
+                        <p>
+                            الصورة اختيارية، لكنها تساعد النظام في تحليل الحالة.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <label class="upload-area" id="uploadArea">
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        accept="image/*"
+                        hidden
+                    >
+
+                    <div class="upload-content">
+
+                        <div class="upload-icon">
+                            ↑
+                        </div>
+
+                        <strong>
+                            اضغط لرفع صورة
+                        </strong>
+
+                        <span>
+                            PNG, JPG أو JPEG — بحد أقصى 10MB
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+                <div
+                    class="image-preview"
+                    id="imagePreview"
+                    hidden
+                >
+                    <img id="previewImage" alt="معاينة الصورة">
+
+                    <button
+                        type="button"
+                        id="removeImage"
+                        class="remove-image"
+                    >
+                        ×
+                    </button>
+
+                    <div class="image-name" id="imageName"></div>
+                </div>
+
+            </div>
+
+
+            <!-- Location -->
+
+            <div class="form-section">
+
+                <div class="form-section-title">
+
+                    <div class="section-number">
+                        04
+                    </div>
+
+                    <div>
+                        <h2>أين حدثت الحالة؟</h2>
+                        <p>
+                            حدد موقع الحالة ليسهل على فريق الاستجابة الوصول إليها.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="currentLocationBtn"
+                    class="location-button"
+                >
+                    <span class="location-button-icon">
+                        ◎
+                    </span>
+
+                    استخدام موقعي الحالي
+
+                    <span class="location-arrow">
+                        ←
+                    </span>
+                </button>
+
+
+                <div class="map-wrapper">
+
+                    <div id="reportMap"></div>
+
+                    <div class="map-overlay">
+                        اسحب العلامة لتحديد الموقع بدقة
+                    </div>
+
+                </div>
+
+
+                <div class="coordinates">
+
+                    <div>
+                        <span>خط العرض</span>
+                        <strong id="latitudeText">15.3694</strong>
+                    </div>
+
+                    <div>
+                        <span>خط الطول</span>
+                        <strong id="longitudeText">44.1910</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Submit -->
+
+            <div class="submit-area">
+
+                <div class="submit-warning">
+
+                    <span>!</span>
+
+                    <p>
+                        في الحالات التي تهدد الحياة، حاول طلب المساعدة
+                        المحلية فورًا ولا تعتمد على النظام وحده.
+                    </p>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="submitReport"
+                    class="submit-report-btn"
+                >
+
+                    <span class="submit-icon">
+                        ↑
+                    </span>
+
+                    <span>
+                        إرسال البلاغ
+                    </span>
+
+                    <span class="submit-arrow">
+                        ←
+                    </span>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             LIVE SUMMARY
+        ================================================== -->
+
+        <aside class="report-sidebar">
+
+            <div class="summary-card">
+
+                <div class="summary-header">
+
+                    <div>
+                        <span>معاينة البلاغ</span>
+                        <strong>قبل الإرسال</strong>
+                    </div>
+
+                    <div class="summary-status">
+                        مسودة
+                    </div>
+
+                </div>
+
+
+                <div class="summary-emergency">
+
+                    <div
+                        class="summary-type-icon"
+                        id="summaryTypeIcon"
+                    >
+                        ?
+                    </div>
+
+                    <div>
+
+                        <span>نوع الحالة</span>
+
+                        <strong id="summaryType">
+                            لم يتم الاختيار
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-divider"></div>
+
+
+                <div class="summary-item">
+
+                    <span>الوصف</span>
+
+                    <strong id="summaryDescription">
+                        لم تتم إضافة وصف
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>الصورة</span>
+
+                    <strong id="summaryImage">
+                        لا توجد صورة
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>الموقع</span>
+
+                    <strong>
+                        <span id="summaryLocation">
+                            محدد
+                        </span>
+                    </strong>
+
+                </div>
+
+
+                <div class="ai-preview">
+
+                    <div class="ai-preview-top">
+
+                        <span class="ai-orb">
+                            AI
+                        </span>
+
+                        <div>
+                            <strong>تحليل ذكي</strong>
+                            <span>سيبدأ بعد إرسال البلاغ</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-lines">
+
+                        <div>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <div>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="help-card">
+
+                <div class="help-icon">
+                    ?
+                </div>
+
+                <div>
+                    <strong>ماذا سيحدث بعد الإرسال؟</strong>
+
+                    <p>
+                        سيقوم النظام بتحليل وصفك والصورة إن وجدت،
+                        ثم يقيّم مستوى الخطورة ويحدد نوع فريق الاستجابة المناسب.
+                    </p>
+                </div>
+
+            </div>
+
+        </aside>
+
+    </section>
+
+</main>
+
+
+<!-- Toast -->
+
+<div id="toast" class="toast"></div>
+
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="../js/app.js"></script>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =====================================================
+       ELEMENTS
+    ====================================================== */
+
+    const description =
+        document.getElementById("description");
+
+    const charCount =
+        document.getElementById("charCount");
+
+    const imageInput =
+        document.getElementById("imageInput");
+
+    const uploadArea =
+        document.getElementById("uploadArea");
+
+    const imagePreview =
+        document.getElementById("imagePreview");
+
+    const previewImage =
+        document.getElementById("previewImage");
+
+    const imageName =
+        document.getElementById("imageName");
+
+    const removeImage =
+        document.getElementById("removeImage");
+
+    const submitButton =
+        document.getElementById("submitReport");
+
+    const currentLocationBtn =
+        document.getElementById("currentLocationBtn");
+
+
+    /* =====================================================
+       TYPE MAPPING
+    ====================================================== */
+
+    const arabicTypes = {
+        "Fire": "حريق",
+        "Traffic Accident": "حادث مروري",
+        "Medical Emergency": "حالة طبية",
+        "Flood": "فيضان",
+        "Earthquake": "زلزال",
+        "Other": "حالة أخرى"
+    };
+
+    const typeIcons = {
+        "Fire": "🔥",
+        "Traffic Accident": "🚗",
+        "Medical Emergency": "✚",
+        "Flood": "≋",
+        "Earthquake": "◈",
+        "Other": "!"
+    };
+
+
+    /* =====================================================
+       URL TYPE
+    ====================================================== */
+
+    const urlParams =
+        new URLSearchParams(window.location.search);
+
+    const requestedType =
+        urlParams.get("type");
+
+
+    if (requestedType) {
+
+        const requestedRadio =
+            document.querySelector(
+                `input[name="emergency_type"][value="${requestedType}"]`
+            );
+
+        if (requestedRadio) {
+            requestedRadio.checked = true;
+            updateTypeSummary(requestedType);
+        }
+    }
+
+
+    /* =====================================================
+       TYPE CHANGE
+    ====================================================== */
+
+    document
+        .querySelectorAll('input[name="emergency_type"]')
+        .forEach(radio => {
+
+            radio.addEventListener("change", () => {
+
+                updateTypeSummary(radio.value);
+
+            });
+
+        });
+
+
+    function updateTypeSummary(type) {
+
+        const summaryType =
+            document.getElementById("summaryType");
+
+        const summaryIcon =
+            document.getElementById("summaryTypeIcon");
+
+        summaryType.textContent =
+            arabicTypes[type] || type;
+
+        summaryIcon.textContent =
+            typeIcons[type] || "?";
+    }
+
+
+    /* =====================================================
+       DESCRIPTION
+    ====================================================== */
+
+    description.addEventListener("input", () => {
+
+        charCount.textContent =
+            `${description.value.length} / 1000`;
+
+        const summary =
+            document.getElementById("summaryDescription");
+
+        if (description.value.trim()) {
+
+            const text =
+                description.value.trim();
+
+            summary.textContent =
+                text.length > 80
+                    ? text.substring(0, 80) + "..."
+                    : text;
+
+        } else {
+
+            summary.textContent =
+                "لم تتم إضافة وصف";
+        }
+
+    });
+
+
+    /* =====================================================
+       IMAGE UPLOAD
+    ====================================================== */
+
+    uploadArea.addEventListener("click", () => {
+        imageInput.click();
+    });
+
+
+    imageInput.addEventListener("change", () => {
+
+        const file =
+            imageInput.files[0];
+
+        if (!file) return;
+
+
+        if (!file.type.startsWith("image/")) {
+
+            showLocalToast("يرجى اختيار صورة فقط.");
+
+            imageInput.value = "";
+
+            return;
+        }
+
+
+        if (file.size > 10 * 1024 * 1024) {
+
+            showLocalToast("حجم الصورة يجب ألا يتجاوز 10MB.");
+
+            imageInput.value = "";
+
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload = event => {
+
+            previewImage.src =
+                event.target.result;
+
+            imageName.textContent =
+                file.name;
+
+            imagePreview.hidden = false;
+
+            uploadArea.style.display =
+                "none";
+
+
+            document.getElementById(
+                "summaryImage"
+            ).textContent = "تمت إضافة صورة";
+
+        };
+
+
+        reader.readAsDataURL(file);
+
+    });
+
+
+    removeImage.addEventListener("click", () => {
+
+        imageInput.value = "";
+
+        imagePreview.hidden = true;
+
+        uploadArea.style.display =
+            "flex";
+
+        document.getElementById(
+            "summaryImage"
+        ).textContent = "لا توجد صورة";
+
+    });
+
+
+    /* =====================================================
+       MAP
+    ====================================================== */
+
+    const defaultLat = 15.3694;
+    const defaultLng = 44.1910;
+
+
+    const map =
+        L.map("reportMap", {
+            zoomControl: false
+        }).setView(
+            [defaultLat, defaultLng],
+            14
+        );
+
+
+    L.control.zoom({
+        position: "bottomright"
+    }).addTo(map);
+
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution: "&copy; OpenStreetMap"
+        }
+    ).addTo(map);
+
+
+    const emergencyIcon =
+        L.divIcon({
+            className: "custom-map-marker",
+            html: `
+                <div class="map-marker-pulse"></div>
+                <div class="map-marker-dot"></div>
+            `,
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+        });
+
+
+    let marker =
+        L.marker(
+            [defaultLat, defaultLng],
+            {
+                draggable: true,
+                icon: emergencyIcon
+            }
+        ).addTo(map);
+
+
+    function updateCoordinates(lat, lng) {
+
+        document.getElementById(
+            "latitudeText"
+        ).textContent = lat.toFixed(6);
+
+        document.getElementById(
+            "longitudeText"
+        ).textContent = lng.toFixed(6);
+
+    }
+
+
+    marker.on("dragend", () => {
+
+        const position =
+            marker.getLatLng();
+
+        updateCoordinates(
+            position.lat,
+            position.lng
+        );
+
+    });
+
+
+    map.on("click", event => {
+
+        marker.setLatLng(event.latlng);
+
+        updateCoordinates(
+            event.latlng.lat,
+            event.latlng.lng
+        );
+
+    });
+
+
+    updateCoordinates(
+        defaultLat,
+        defaultLng
+    );
+
+
+    /* =====================================================
+       CURRENT LOCATION
+    ====================================================== */
+
+    currentLocationBtn.addEventListener("click", () => {
+
+        if (!navigator.geolocation) {
+
+            showLocalToast(
+                "المتصفح لا يدعم تحديد الموقع."
+            );
+
+            return;
+        }
+
+
+        currentLocationBtn.classList.add("loading");
+
+        currentLocationBtn.querySelector(
+            ".location-button-icon"
+        ).textContent = "…";
+
+
+        navigator.geolocation.getCurrentPosition(
+
+            position => {
+
+                const lat =
+                    position.coords.latitude;
+
+                const lng =
+                    position.coords.longitude;
+
+
+                map.setView(
+                    [lat, lng],
+                    16
+                );
+
+
+                marker.setLatLng(
+                    [lat, lng]
+                );
+
+
+                updateCoordinates(
+                    lat,
+                    lng
+                );
+
+
+                currentLocationBtn.classList.remove(
+                    "loading"
+                );
+
+                currentLocationBtn.querySelector(
+                    ".location-button-icon"
+                ).textContent = "✓";
+
+
+                document.getElementById(
+                    "summaryLocation"
+                ).textContent =
+                    "تم تحديد موقعي الحالي";
+
+
+                showLocalToast(
+                    "تم تحديد موقعك الحالي."
+                );
+
+            },
+
+            () => {
+
+                currentLocationBtn.classList.remove(
+                    "loading"
+                );
+
+                currentLocationBtn.querySelector(
+                    ".location-button-icon"
+                ).textContent = "◎";
+
+
+                showLocalToast(
+                    "تعذر الوصول إلى موقعك. يمكنك تحديده على الخريطة."
+                );
+
+            },
+
+            {
+                enableHighAccuracy: true,
+                timeout: 10000
+            }
+
+        );
+
+    });
+
+
+    /* =====================================================
+       SUBMIT
+    ====================================================== */
+
+    submitButton.addEventListener("click", () => {
+
+        const selectedType =
+            document.querySelector(
+                'input[name="emergency_type"]:checked'
+            );
+
+
+        if (!selectedType) {
+
+            showLocalToast(
+                "يرجى اختيار نوع الحالة أولاً."
+            );
+
+            document.querySelector(
+                ".type-grid"
+            ).scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            return;
+        }
+
+
+       const hasDescription =
+            description.value.trim().length > 0;
+
+        const hasImage =
+            imageInput.files.length > 0;
+
+        if (!hasDescription && !hasImage) {
+
+            showLocalToast(
+                "أدخل وصفًا للحالة أو أرفق صورة واحدة على الأقل."
+            );
+
+            description.focus();
+
+            return;
+        }
+
+        const position =
+            marker.getLatLng();
+
+
+        const emergencyData = {
+
+            emergency_id:
+                "EMG-" +
+                Date.now(),
+
+            emergency_type:
+                selectedType.value,
+
+            description:
+                description.value.trim(),
+
+            latitude:
+                Number(position.lat),
+
+            longitude:
+                Number(position.lng),
+
+            has_image:
+                imageInput.files.length > 0,
+
+            image_name:
+                imageInput.files.length > 0
+                    ? imageInput.files[0].name
+                    : null,
+
+            status:
+                "processing",
+
+            created_at:
+                new Date().toISOString()
+
+        };
+
+
+        sessionStorage.setItem(
+            "currentEmergency",
+            JSON.stringify(emergencyData)
+        );
+
+
+        submitButton.disabled = true;
+
+        submitButton.innerHTML = `
+            <span class="submit-spinner"></span>
+            <span>جاري إرسال البلاغ...</span>
+        `;
+
+
+        setTimeout(() => {
+
+            window.location.href =
+                "processing.html";
+
+        }, 800);
+
+    });
+
+
+    /* =====================================================
+       TOAST
+    ====================================================== */
+
+    function showLocalToast(message) {
+
+        const toast =
+            document.getElementById("toast");
+
+        toast.textContent =
+            message;
+
+        toast.classList.add("show");
+
+
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 3000);
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

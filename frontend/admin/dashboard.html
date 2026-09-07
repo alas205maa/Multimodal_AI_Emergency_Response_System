@@ -1,0 +1,2545 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>مركز عمليات الطوارئ</title>
+
+    <!-- Google Font -->
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Leaflet -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <!-- App CSS -->
+    <link
+        rel="stylesheet"
+        href="../css/app.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           ADMIN DASHBOARD
+        ===================================================== */
+
+        body {
+            background: #07111f;
+        }
+
+        .admin-layout {
+            min-height: 100vh;
+        }
+
+        .admin-main {
+            margin-right: 260px;
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+
+        .dashboard-content {
+            padding: 24px;
+            max-width: 1800px;
+            margin: auto;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .admin-header {
+            position: fixed;
+            top: 0;
+            right: 260px;
+            left: 0;
+            height: 72px;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+
+            background: rgba(7, 17, 31, .94);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .admin-page-title {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .admin-page-title strong {
+            font-size: 17px;
+        }
+
+        .admin-page-title span {
+            font-size: 11px;
+            color: #8492a6;
+        }
+
+        .admin-user-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            background: rgba(40, 200, 120, .08);
+            border: 1px solid rgba(40, 200, 120, .18);
+
+            color: #7de3ad;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #2bd47d;
+            box-shadow: 0 0 10px rgba(43,212,125,.8);
+        }
+
+        .operator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .operator-avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 12px;
+
+            display: grid;
+            place-items: center;
+
+            background: linear-gradient(
+                135deg,
+                #182b45,
+                #0f1c30
+            );
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            font-weight: 700;
+            color: #dfe8f3;
+        }
+
+        .operator-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .operator-info strong {
+            font-size: 12px;
+        }
+
+        .operator-info span {
+            font-size: 10px;
+            color: #74839a;
+        }
+
+
+        /* =====================================================
+           WELCOME / OPERATIONS BAR
+        ===================================================== */
+
+        .operations-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 22px 24px;
+            margin-bottom: 22px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    rgba(18,37,61,.98),
+                    rgba(10,25,43,.98)
+                );
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            box-shadow:
+                0 18px 50px rgba(0,0,0,.18);
+        }
+
+        .operations-banner h1 {
+            margin: 0 0 5px;
+            font-size: 22px;
+        }
+
+        .operations-banner p {
+            margin: 0;
+            color: #8d9bb0;
+            font-size: 12px;
+        }
+
+        .operations-clock {
+            text-align: left;
+            direction: ltr;
+        }
+
+        .operations-clock strong {
+            display: block;
+            font-size: 22px;
+            letter-spacing: 1px;
+        }
+
+        .operations-clock span {
+            font-size: 10px;
+            color: #77869a;
+        }
+
+
+        /* =====================================================
+           METRICS
+        ===================================================== */
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .metric-card {
+            position: relative;
+            overflow: hidden;
+
+            padding: 20px;
+
+            min-height: 120px;
+
+            border-radius: 16px;
+
+            background: #0d1b2d;
+
+            border: 1px solid rgba(255,255,255,.07);
+        }
+
+        .metric-card::after {
+            content: "";
+
+            position: absolute;
+
+            width: 90px;
+            height: 90px;
+
+            left: -25px;
+            bottom: -35px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,.025);
+        }
+
+        .metric-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .metric-label {
+            color: #8492a6;
+            font-size: 12px;
+        }
+
+        .metric-icon {
+            width: 38px;
+            height: 38px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.05);
+
+            font-size: 17px;
+        }
+
+        .metric-value {
+            margin-top: 14px;
+
+            font-size: 30px;
+            font-weight: 800;
+
+            line-height: 1;
+        }
+
+        .metric-footer {
+            margin-top: 8px;
+
+            font-size: 10px;
+            color: #738298;
+        }
+
+        .metric-danger .metric-value {
+            color: #ff5d67;
+        }
+
+        .metric-danger .metric-icon {
+            background: rgba(255,75,85,.10);
+        }
+
+        .metric-warning .metric-value {
+            color: #ffc857;
+        }
+
+        .metric-success .metric-value {
+            color: #52d997;
+        }
+
+        .metric-info .metric-value {
+            color: #67b8ff;
+        }
+
+
+        /* =====================================================
+           MAIN GRID
+        ===================================================== */
+
+        .main-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.7fr)
+                minmax(320px, .9fr);
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+        }
+
+
+        /* =====================================================
+           PANELS
+        ===================================================== */
+
+        .panel {
+            background: #0d1b2d;
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            border-radius: 17px;
+
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 17px 18px;
+
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .panel-title {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .panel-title strong {
+            font-size: 14px;
+        }
+
+        .panel-title span {
+            color: #738298;
+            font-size: 10px;
+        }
+
+        .panel-link {
+            color: #6bb7ff;
+            text-decoration: none;
+            font-size: 11px;
+        }
+
+        .panel-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           LIVE MAP
+        ===================================================== */
+
+        .map-wrapper {
+            position: relative;
+            height: 455px;
+        }
+
+        #operationsMap {
+            width: 100%;
+            height: 100%;
+        }
+
+        .map-overlay {
+            position: absolute;
+
+            top: 15px;
+            right: 15px;
+
+            z-index: 500;
+
+            padding: 12px 14px;
+
+            border-radius: 12px;
+
+            background: rgba(7,17,31,.90);
+
+            border: 1px solid rgba(255,255,255,.08);
+
+            backdrop-filter: blur(10px);
+        }
+
+        .map-overlay-title {
+            font-size: 11px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .map-legend {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #91a0b4;
+            font-size: 10px;
+        }
+
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+
+        .legend-emergency {
+            background: #ff4d5a;
+            box-shadow: 0 0 8px rgba(255,77,90,.7);
+        }
+
+        .legend-critical {
+            background: #ff8b4d;
+        }
+
+        .legend-resource {
+            background: #45d69b;
+        }
+
+
+        /* =====================================================
+           CRITICAL QUEUE
+        ===================================================== */
+
+        .queue {
+            max-height: 455px;
+            overflow-y: auto;
+        }
+
+        .queue::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .queue::-webkit-scrollbar-thumb {
+            background: #26374e;
+            border-radius: 10px;
+        }
+
+        .emergency-item {
+            display: flex;
+
+            gap: 12px;
+
+            padding: 15px 17px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.05);
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+        .emergency-item:hover {
+            background: rgba(255,255,255,.025);
+        }
+
+        .emergency-icon-box {
+            flex: 0 0 40px;
+
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: rgba(255,70,80,.09);
+
+            font-size: 17px;
+        }
+
+        .emergency-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .emergency-info-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .emergency-info strong {
+            font-size: 12px;
+        }
+
+        .emergency-id {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #65758c;
+            font-size: 9px;
+
+            direction: ltr;
+            text-align: right;
+        }
+
+        .emergency-description {
+            margin-top: 8px;
+
+            color: #8795a8;
+
+            font-size: 10px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .risk-score {
+            min-width: 42px;
+            text-align: center;
+        }
+
+        .risk-score strong {
+            display: block;
+            font-size: 16px;
+            color: #ff5b64;
+        }
+
+        .risk-score span {
+            color: #69798e;
+            font-size: 8px;
+        }
+
+
+        /* =====================================================
+           BOTTOM GRID
+        ===================================================== */
+
+        .bottom-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.2fr)
+                minmax(0, 1fr);
+
+            gap: 18px;
+        }
+
+
+        /* =====================================================
+           AI OVERVIEW
+        ===================================================== */
+
+        .ai-content {
+            padding: 18px;
+        }
+
+        .ai-summary {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+
+            margin-bottom: 20px;
+        }
+
+        .risk-circle {
+            width: 94px;
+            height: 94px;
+
+            border-radius: 50%;
+
+            display: grid;
+            place-items: center;
+
+            background:
+                conic-gradient(
+                    #ff535e 0 76%,
+                    #17283d 76% 100%
+                );
+
+            position: relative;
+        }
+
+        .risk-circle::before {
+            content: "";
+
+            position: absolute;
+
+            width: 72px;
+            height: 72px;
+
+            border-radius: 50%;
+
+            background: #0d1b2d;
+        }
+
+        .risk-circle-content {
+            position: relative;
+            text-align: center;
+        }
+
+        .risk-circle-content strong {
+            display: block;
+            font-size: 21px;
+        }
+
+        .risk-circle-content span {
+            font-size: 8px;
+            color: #7b899d;
+        }
+
+        .ai-summary-text strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+
+        .ai-summary-text span {
+            color: #7c8a9d;
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .ai-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 13px;
+        }
+
+        .ai-bar-row {
+            display: grid;
+
+            grid-template-columns:
+                110px
+                1fr
+                40px;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .ai-bar-label {
+            color: #8997aa;
+            font-size: 10px;
+        }
+
+        .ai-bar {
+            height: 7px;
+
+            border-radius: 20px;
+
+            background: #17283d;
+
+            overflow: hidden;
+        }
+
+        .ai-bar-fill {
+            height: 100%;
+
+            border-radius: inherit;
+
+            background: #ff5a64;
+        }
+
+        .ai-bar-value {
+            font-size: 10px;
+            text-align: left;
+            color: #d6deea;
+        }
+
+
+        /* =====================================================
+           RESOURCE STATUS
+        ===================================================== */
+
+        .resource-list {
+            padding: 5px 17px 12px;
+        }
+
+        .resource-row {
+            display: grid;
+
+            grid-template-columns:
+                38px
+                1fr
+                auto;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 13px 0;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.05);
+        }
+
+        .resource-row:last-child {
+            border-bottom: 0;
+        }
+
+        .resource-icon {
+            width: 36px;
+            height: 36px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 10px;
+
+            background: rgba(72,213,157,.08);
+
+            font-size: 15px;
+        }
+
+        .resource-name strong {
+            display: block;
+            font-size: 11px;
+        }
+
+        .resource-name span {
+            color: #6e7e93;
+            font-size: 9px;
+        }
+
+        .resource-status {
+            font-size: 9px;
+
+            padding: 5px 8px;
+
+            border-radius: 20px;
+        }
+
+        .resource-available {
+            color: #5cdda1;
+            background: rgba(49,207,135,.08);
+        }
+
+        .resource-busy {
+            color: #ffbd57;
+            background: rgba(255,189,87,.08);
+        }
+
+
+        /* =====================================================
+           LEAFLET DARK
+        ===================================================== */
+
+        .leaflet-container {
+            background: #091524;
+            font-family: Cairo, sans-serif;
+        }
+
+        .leaflet-control-zoom a {
+            background: #0d1b2d !important;
+            color: #dce5ef !important;
+            border-color: #24364d !important;
+        }
+
+        .leaflet-popup-content-wrapper,
+        .leaflet-popup-tip {
+            background: #0d1b2d;
+            color: #dce5ef;
+        }
+
+        .leaflet-popup-content {
+            font-family: Cairo, sans-serif;
+            font-size: 11px;
+        }
+
+        .map-marker {
+            width: 28px;
+            height: 28px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            border: 2px solid rgba(255,255,255,.8);
+
+            font-size: 13px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,.4);
+        }
+
+        .marker-emergency {
+            background: #ef4c58;
+        }
+
+        .marker-critical {
+            background: #ff8c4c;
+        }
+
+        .marker-resource {
+            background: #35c98f;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .metrics-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0,1fr));
+            }
+
+            .main-grid,
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .admin-main {
+                margin-right: 0;
+            }
+
+            .admin-header {
+                right: 0;
+            }
+
+            .dashboard-content {
+                padding: 16px;
+            }
+
+            .operations-banner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .operations-clock {
+                text-align: right;
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-user-area {
+                gap: 8px;
+            }
+
+            .system-status {
+                display: none;
+            }
+
+            .operator-info {
+                display: none;
+            }
+
+            .operations-banner h1 {
+                font-size: 18px;
+            }
+
+            .map-wrapper {
+                height: 390px;
+            }
+
+            .ai-bar-row {
+                grid-template-columns:
+                    90px
+                    1fr
+                    32px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- =====================================================
+         ADMIN AUTH GUARD
+    ===================================================== -->
+
+    <script>
+
+        if (
+            sessionStorage.getItem(
+                "adminAuthenticated"
+            ) !== "true"
+        ) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+    </script>
+
+
+    <!-- =====================================================
+         ADMIN NAVIGATION
+    ===================================================== -->
+
+    <div id="adminNav"></div>
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header class="admin-header">
+
+        <div class="admin-header-left">
+
+            <button
+                class="menu-toggle"
+                onclick="toggleSidebar()"
+                aria-label="فتح القائمة"
+            >
+                ☰
+            </button>
+
+            <div class="admin-page-title">
+
+                <strong>
+                    مركز العمليات
+                </strong>
+
+                <span>
+                    Emergency Operations Center
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-user-area">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                جميع الأنظمة تعمل
+
+            </div>
+
+
+            <div class="operator">
+
+                <div
+                    class="operator-avatar"
+                    id="operatorAvatar"
+                >
+                    A
+                </div>
+
+                <div class="operator-info">
+
+                    <strong id="operatorName">
+                        Admin User
+                    </strong>
+
+                    <span>
+                        مسؤول النظام
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="admin-main">
+
+        <div class="dashboard-content">
+
+
+            <!-- =================================================
+                 OPERATIONS BANNER
+            ================================================= -->
+
+            <section class="operations-banner">
+
+                <div>
+
+                    <h1>
+                        لوحة الاستجابة للطوارئ
+                    </h1>
+
+                    <p>
+                        مراقبة البلاغات وتحليل المخاطر وتوزيع فرق الاستجابة في الوقت الحقيقي.
+                    </p>
+
+                </div>
+
+
+                <div class="operations-clock">
+
+                    <strong id="liveClock">
+                        --:--:--
+                    </strong>
+
+                    <span>
+                        وقت النظام المحلي
+                    </span>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 METRICS
+            ================================================= -->
+
+            <section class="metrics-grid">
+
+
+                <div class="metric-card metric-danger">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            حالات حرجة
+                        </span>
+
+                        <div class="metric-icon">
+                            ⚠
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="metric-value"
+                        id="criticalCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="metric-footer">
+                        تتطلب استجابة فورية
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card metric-warning">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            الحالات النشطة
+                        </span>
+
+                        <div class="metric-icon">
+                            ◉
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="metric-value"
+                        id="activeCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="metric-footer">
+                        بلاغات قيد المتابعة
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card metric-info">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            فرق مستنفرة
+                        </span>
+
+                        <div class="metric-icon">
+                            🚑
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="metric-value"
+                        id="dispatchedCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="metric-footer">
+                        موارد في مهمة حالية
+                    </div>
+
+                </div>
+
+
+                <div class="metric-card metric-success">
+
+                    <div class="metric-top">
+
+                        <span class="metric-label">
+                            فرق متاحة
+                        </span>
+
+                        <div class="metric-icon">
+                            ✓
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="metric-value"
+                        id="availableCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="metric-footer">
+                        جاهزة للتوجيه
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 MAP + CRITICAL QUEUE
+            ================================================= -->
+
+            <section class="main-grid">
+
+
+                <!-- LIVE MAP -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+
+                            <strong>
+                                الخريطة التشغيلية المباشرة
+                            </strong>
+
+                            <span>
+                                مواقع البلاغات وفرق الاستجابة
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="map.html"
+                            class="panel-link"
+                        >
+                            فتح الخريطة الكاملة →
+                        </a>
+
+                    </div>
+
+
+                    <div class="map-wrapper">
+
+                        <div id="operationsMap"></div>
+
+
+                        <div class="map-overlay">
+
+                            <div class="map-overlay-title">
+                                حالة الخريطة
+                            </div>
+
+                            <div class="map-legend">
+
+                                <div class="legend-item">
+
+                                    <span class="legend-dot legend-emergency"></span>
+
+                                    حالة طوارئ
+
+                                </div>
+
+                                <div class="legend-item">
+
+                                    <span class="legend-dot legend-critical"></span>
+
+                                    حالة حرجة
+
+                                </div>
+
+                                <div class="legend-item">
+
+                                    <span class="legend-dot legend-resource"></span>
+
+                                    فريق استجابة
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CRITICAL QUEUE -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+
+                            <strong>
+                                طابور الحالات الحرجة
+                            </strong>
+
+                            <span>
+                                الأولوية حسب تقييم الذكاء الاصطناعي
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="emergencies.html"
+                            class="panel-link"
+                        >
+                            كل البلاغات
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        class="queue"
+                        id="criticalQueue"
+                    >
+
+                        <!-- JS -->
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 AI + RESOURCES
+            ================================================= -->
+
+            <section class="bottom-grid">
+
+
+                <!-- AI RISK -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+
+                            <strong>
+                                تحليل المخاطر بالذكاء الاصطناعي
+                            </strong>
+
+                            <span>
+                                Decision Fusion Overview
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="analytics.html"
+                            class="panel-link"
+                        >
+                            التحليلات
+                        </a>
+
+                    </div>
+
+
+                    <div class="ai-content">
+
+
+                        <div class="ai-summary">
+
+                            <div class="risk-circle">
+
+                                <div class="risk-circle-content">
+
+                                    <strong id="averageRisk">
+                                        0
+                                    </strong>
+
+                                    <span>
+                                        متوسط الخطر
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="ai-summary-text">
+
+                                <strong>
+                                    مستوى المخاطر الحالي
+                                </strong>
+
+                                <span>
+                                    يعتمد التقييم على دمج تحليل النص والصور
+                                    مع بيانات الموقع ونوع الحالة لتحديد مستوى
+                                    الاستجابة المناسب.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="ai-bars">
+
+                            <div class="ai-bar-row">
+
+                                <span class="ai-bar-label">
+                                    حرج
+                                </span>
+
+                                <div class="ai-bar">
+
+                                    <div
+                                        class="ai-bar-fill"
+                                        id="criticalBar"
+                                        style="width:0%"
+                                    ></div>
+
+                                </div>
+
+                                <span
+                                    class="ai-bar-value"
+                                    id="criticalPercent"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div class="ai-bar-row">
+
+                                <span class="ai-bar-label">
+                                    مرتفع
+                                </span>
+
+                                <div class="ai-bar">
+
+                                    <div
+                                        class="ai-bar-fill"
+                                        id="highBar"
+                                        style="width:0%"
+                                    ></div>
+
+                                </div>
+
+                                <span
+                                    class="ai-bar-value"
+                                    id="highPercent"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+
+                            <div class="ai-bar-row">
+
+                                <span class="ai-bar-label">
+                                    متوسط / منخفض
+                                </span>
+
+                                <div class="ai-bar">
+
+                                    <div
+                                        class="ai-bar-fill"
+                                        id="mediumBar"
+                                        style="width:0%"
+                                    ></div>
+
+                                </div>
+
+                                <span
+                                    class="ai-bar-value"
+                                    id="mediumPercent"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RESOURCES -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+
+                            <strong>
+                                جاهزية فرق الاستجابة
+                            </strong>
+
+                            <span>
+                                Resource Availability
+                            </span>
+
+                        </div>
+
+                        <a
+                            href="resources.html"
+                            class="panel-link"
+                        >
+                            إدارة الموارد
+                        </a>
+
+                    </div>
+
+
+                    <div
+                        class="resource-list"
+                        id="resourceList"
+                    >
+
+                        <!-- JS -->
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         LEAFLET
+    ===================================================== -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!-- =====================================================
+         APP JS
+    ===================================================== -->
+
+    <script src="../js/app.js"></script>
+
+
+    <script>
+
+        /* =====================================================
+           ADMIN NAV
+        ===================================================== */
+
+        document.getElementById("adminNav").innerHTML =
+            adminNav("dashboard");
+
+
+        /* =====================================================
+           DATA
+        ===================================================== */
+
+        let dashboardData = null;
+
+
+        async function loadDashboardData() {
+
+            try {
+
+                const response =
+                    await fetch(
+                        "../mock-data/data.json"
+                    );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Unable to load data"
+                    );
+                }
+
+                dashboardData =
+                    await response.json();
+
+                initializeDashboard();
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           INITIALIZE
+        ===================================================== */
+
+        function initializeDashboard() {
+
+            const emergencies =
+                dashboardData.emergencies || [];
+
+            const resources =
+                dashboardData.resources || [];
+
+
+            updateOperator();
+
+            updateMetrics(
+                emergencies,
+                resources
+            );
+
+            renderCriticalQueue(
+                emergencies
+            );
+
+            renderResources(
+                resources
+            );
+
+            renderAIOverview(
+                emergencies
+            );
+
+            initializeMap(
+                emergencies,
+                resources
+            );
+
+        }
+
+
+        /* =====================================================
+           OPERATOR
+        ===================================================== */
+
+        function updateOperator() {
+
+            const adminUser =
+                sessionStorage.getItem(
+                    "adminUser"
+                );
+
+            if (!adminUser) return;
+
+            try {
+
+                const user =
+                    JSON.parse(adminUser);
+
+                const name =
+                    user.name ||
+                    "Admin User";
+
+                document.getElementById(
+                    "operatorName"
+                ).textContent = name;
+
+                document.getElementById(
+                    "operatorAvatar"
+                ).textContent =
+                    name.charAt(0).toUpperCase();
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           METRICS
+        ===================================================== */
+
+        function updateMetrics(
+            emergencies,
+            resources
+        ) {
+
+            const critical =
+                emergencies.filter(
+                    emergency =>
+                        emergency.priority ===
+                        "critical"
+                ).length;
+
+
+            const active =
+                emergencies.filter(
+                    emergency =>
+                        emergency.status ===
+                            "active" ||
+                        emergency.status ===
+                            "dispatched"
+                ).length;
+
+
+            const dispatched =
+                resources.filter(
+                    resource =>
+                        resource.status ===
+                        "Busy"
+                ).length;
+
+
+            const available =
+                resources.filter(
+                    resource =>
+                        resource.status ===
+                        "Available"
+                ).length;
+
+
+            document.getElementById(
+                "criticalCount"
+            ).textContent = critical;
+
+
+            document.getElementById(
+                "activeCount"
+            ).textContent = active;
+
+
+            document.getElementById(
+                "dispatchedCount"
+            ).textContent = dispatched;
+
+
+            document.getElementById(
+                "availableCount"
+            ).textContent = available;
+
+        }
+
+
+        /* =====================================================
+           CRITICAL QUEUE
+        ===================================================== */
+
+        function renderCriticalQueue(
+            emergencies
+        ) {
+
+            const container =
+                document.getElementById(
+                    "criticalQueue"
+                );
+
+
+            const critical =
+                emergencies
+                    .filter(
+                        emergency =>
+                            emergency.priority ===
+                                "critical" ||
+                            emergency.priority ===
+                                "high"
+                    )
+                    .sort(
+                        (a, b) =>
+                            (b.risk_score || 0) -
+                            (a.risk_score || 0)
+                    )
+                    .slice(0, 6);
+
+
+            if (!critical.length) {
+
+                container.innerHTML = `
+                    <div
+                        style="
+                            padding:30px;
+                            text-align:center;
+                            color:#718197;
+                            font-size:11px;
+                        "
+                    >
+                        لا توجد حالات حرجة حاليًا
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                critical.map(
+                    emergency => {
+
+                        const icon =
+                            emergencyIcon(
+                                emergency.emergency_type
+                            );
+
+
+                        const risk =
+                            emergency.risk_score ||
+                            0;
+
+
+                        const priority =
+                            emergency.priority ===
+                            "critical"
+                                ? "حرج"
+                                : "مرتفع";
+
+
+                        return `
+
+                            <div
+                                class="emergency-item"
+                                onclick="
+                                    window.location.href =
+                                    'emergency-details.html?id=${encodeURIComponent(
+                                        emergency.emergency_id
+                                    )}'
+                                "
+                            >
+
+                                <div class="emergency-icon-box">
+
+                                    ${icon}
+
+                                </div>
+
+
+                                <div class="emergency-info">
+
+                                    <div
+                                        class="emergency-info-top"
+                                    >
+
+                                        <strong>
+                                            ${escapeHtml(
+                                                translateEmergencyType(
+                                                    emergency.emergency_type
+                                                )
+                                            )}
+                                        </strong>
+
+                                        <span>
+                                            ${priority}
+                                        </span>
+
+                                    </div>
+
+
+                                    <span
+                                        class="emergency-id"
+                                    >
+                                        ${escapeHtml(
+                                            emergency.emergency_id
+                                        )}
+                                    </span>
+
+
+                                    <div
+                                        class="emergency-description"
+                                    >
+                                        ${escapeHtml(
+                                            emergency.description ||
+                                            "لا يوجد وصف"
+                                        )}
+                                    </div>
+
+                                </div>
+
+
+                                <div class="risk-score">
+
+                                    <strong>
+                                        ${risk}
+                                    </strong>
+
+                                    <span>
+                                        خطر
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                ).join("");
+
+        }
+
+
+        /* =====================================================
+           RESOURCES
+        ===================================================== */
+
+        function renderResources(
+            resources
+        ) {
+
+            const container =
+                document.getElementById(
+                    "resourceList"
+                );
+
+
+            container.innerHTML =
+                resources.map(
+                    resource => {
+
+                        const icon =
+                            resource.resource_type ===
+                            "Ambulance"
+                                ? "🚑"
+                                : resource.resource_type ===
+                                  "Fire Rescue"
+                                    ? "🚒"
+                                    : "🛟";
+
+
+                        const available =
+                            resource.status ===
+                            "Available";
+
+
+                        return `
+
+                            <div
+                                class="resource-row"
+                            >
+
+                                <div
+                                    class="resource-icon"
+                                >
+                                    ${icon}
+                                </div>
+
+
+                                <div
+                                    class="resource-name"
+                                >
+
+                                    <strong>
+                                        ${escapeHtml(
+                                            resource.resource_name
+                                        )}
+                                    </strong>
+
+                                    <span>
+                                        ${escapeHtml(
+                                            resource.resource_id
+                                        )}
+                                        ·
+                                        ${escapeHtml(
+                                            translateResourceType(
+                                                resource.resource_type
+                                            )
+                                        )}
+                                    </span>
+
+                                </div>
+
+
+                                <span
+                                    class="
+                                        resource-status
+                                        ${
+                                            available
+                                                ? "resource-available"
+                                                : "resource-busy"
+                                        }
+                                    "
+                                >
+
+                                    ${
+                                        available
+                                            ? "متاح"
+                                            : "مشغول"
+                                    }
+
+                                </span>
+
+                            </div>
+
+                        `;
+
+                    }
+                ).join("");
+
+        }
+
+
+        /* =====================================================
+           AI OVERVIEW
+        ===================================================== */
+
+        function renderAIOverview(
+            emergencies
+        ) {
+
+            if (!emergencies.length) {
+                return;
+            }
+
+
+            const totalRisk =
+                emergencies.reduce(
+                    (
+                        total,
+                        emergency
+                    ) =>
+                        total +
+                        Number(
+                            emergency.risk_score ||
+                            0
+                        ),
+                    0
+                );
+
+
+            const average =
+                Math.round(
+                    totalRisk /
+                    emergencies.length
+                );
+
+
+            document.getElementById(
+                "averageRisk"
+            ).textContent = average;
+
+
+            const critical =
+                emergencies.filter(
+                    emergency =>
+                        Number(
+                            emergency.risk_score
+                        ) >= 85
+                ).length;
+
+
+            const high =
+                emergencies.filter(
+                    emergency =>
+                        Number(
+                            emergency.risk_score
+                        ) >= 70 &&
+                        Number(
+                            emergency.risk_score
+                        ) < 85
+                ).length;
+
+
+            const medium =
+                emergencies.filter(
+                    emergency =>
+                        Number(
+                            emergency.risk_score
+                        ) < 70
+                ).length;
+
+
+            const total =
+                emergencies.length;
+
+
+            const criticalPercent =
+                Math.round(
+                    (critical / total) *
+                    100
+                );
+
+
+            const highPercent =
+                Math.round(
+                    (high / total) *
+                    100
+                );
+
+
+            const mediumPercent =
+                Math.round(
+                    (medium / total) *
+                    100
+                );
+
+
+            document.getElementById(
+                "criticalBar"
+            ).style.width =
+                criticalPercent + "%";
+
+
+            document.getElementById(
+                "highBar"
+            ).style.width =
+                highPercent + "%";
+
+
+            document.getElementById(
+                "mediumBar"
+            ).style.width =
+                mediumPercent + "%";
+
+
+            document.getElementById(
+                "criticalPercent"
+            ).textContent =
+                criticalPercent + "%";
+
+
+            document.getElementById(
+                "highPercent"
+            ).textContent =
+                highPercent + "%";
+
+
+            document.getElementById(
+                "mediumPercent"
+            ).textContent =
+                mediumPercent + "%";
+
+        }
+
+
+        /* =====================================================
+           MAP
+        ===================================================== */
+
+        function initializeMap(
+            emergencies,
+            resources
+        ) {
+
+            const map =
+                L.map(
+                    "operationsMap",
+                    {
+                        zoomControl: true
+                    }
+                ).setView(
+                    [15.3694, 44.1910],
+                    12
+                );
+
+
+            L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+                    attribution:
+                        "&copy; OpenStreetMap contributors"
+                }
+            ).addTo(map);
+
+
+            const bounds = [];
+
+
+            /* ---------------------------------------------
+               EMERGENCIES
+            --------------------------------------------- */
+
+            emergencies.forEach(
+                emergency => {
+
+                    if (
+                        !emergency.latitude ||
+                        !emergency.longitude
+                    ) {
+                        return;
+                    }
+
+
+                    const isCritical =
+                        emergency.priority ===
+                        "critical";
+
+
+                    const marker =
+                        L.marker(
+                            [
+                                Number(
+                                    emergency.latitude
+                                ),
+                                Number(
+                                    emergency.longitude
+                                )
+                            ],
+                            {
+                                icon:
+                                    L.divIcon({
+                                        className: "",
+                                        html: `
+                                            <div
+                                                class="
+                                                    map-marker
+                                                    ${
+                                                        isCritical
+                                                            ? "marker-critical"
+                                                            : "marker-emergency"
+                                                    }
+                                                "
+                                            >
+                                                ${emergencyIcon(
+                                                    emergency.emergency_type
+                                                )}
+                                            </div>
+                                        `,
+                                        iconSize: [
+                                            28,
+                                            28
+                                        ],
+                                        iconAnchor: [
+                                            14,
+                                            14
+                                        ]
+                                    })
+                            }
+                        )
+                        .addTo(map);
+
+
+                    marker.bindPopup(`
+                        <strong>
+                            ${escapeHtml(
+                                translateEmergencyType(
+                                    emergency.emergency_type
+                                )
+                            )}
+                        </strong>
+
+                        <br>
+
+                        <small>
+                            ${escapeHtml(
+                                emergency.emergency_id
+                            )}
+                        </small>
+
+                        <br><br>
+
+                        مستوى الخطر:
+                        <strong>
+                            ${emergency.risk_score || 0}/100
+                        </strong>
+
+                        <br>
+
+                        الحالة:
+                        ${escapeHtml(
+                            translateStatus(
+                                emergency.status
+                            )
+                        )}
+                    `);
+
+
+                    bounds.push([
+                        Number(
+                            emergency.latitude
+                        ),
+                        Number(
+                            emergency.longitude
+                        )
+                    ]);
+
+                }
+            );
+
+
+            /* ---------------------------------------------
+               RESOURCES
+            --------------------------------------------- */
+
+            resources.forEach(
+                resource => {
+
+                    if (
+                        !resource.latitude ||
+                        !resource.longitude
+                    ) {
+                        return;
+                    }
+
+
+                    const marker =
+                        L.marker(
+                            [
+                                Number(
+                                    resource.latitude
+                                ),
+                                Number(
+                                    resource.longitude
+                                )
+                            ],
+                            {
+                                icon:
+                                    L.divIcon({
+                                        className: "",
+                                        html: `
+                                            <div
+                                                class="
+                                                    map-marker
+                                                    marker-resource
+                                                "
+                                            >
+                                                ${resource.resource_type === "Ambulance"
+                                                    ? "🚑"
+                                                    : resource.resource_type === "Fire Rescue"
+                                                        ? "🚒"
+                                                        : "🛟"
+                                                }
+                                            </div>
+                                        `,
+                                        iconSize: [
+                                            28,
+                                            28
+                                        ],
+                                        iconAnchor: [
+                                            14,
+                                            14
+                                        ]
+                                    })
+                            }
+                        )
+                        .addTo(map);
+
+
+                    marker.bindPopup(`
+                        <strong>
+                            ${escapeHtml(
+                                resource.resource_name
+                            )}
+                        </strong>
+
+                        <br>
+
+                        <small>
+                            ${escapeHtml(
+                                resource.resource_id
+                            )}
+                        </small>
+
+                        <br><br>
+
+                        الحالة:
+                        <strong>
+                            ${escapeHtml(
+                                resource.status ===
+                                "Available"
+                                    ? "متاح"
+                                    : "مشغول"
+                            )}
+                        </strong>
+                    `);
+
+
+                    bounds.push([
+                        Number(
+                            resource.latitude
+                        ),
+                        Number(
+                            resource.longitude
+                        )
+                    ]);
+
+                }
+            );
+
+
+            if (bounds.length) {
+
+                map.fitBounds(
+                    bounds,
+                    {
+                        padding: [
+                            40,
+                            40
+                        ],
+                        maxZoom: 13
+                    }
+                );
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TRANSLATIONS
+        ===================================================== */
+
+        function translateEmergencyType(
+            type
+        ) {
+
+            const map = {
+
+                "Fire":
+                    "حريق",
+
+                "Flood":
+                    "فيضان",
+
+                "Earthquake":
+                    "زلزال",
+
+                "Traffic Accident":
+                    "حادث مروري",
+
+                "Medical Emergency":
+                    "حالة طبية طارئة",
+
+                "Other":
+                    "حالة أخرى",
+
+                "Normal":
+                    "عادي"
+
+            };
+
+
+            return map[type] || type;
+
+        }
+
+
+        function translateResourceType(
+            type
+        ) {
+
+            const map = {
+
+                "Fire Rescue":
+                    "إنقاذ وإطفاء",
+
+                "Ambulance":
+                    "إسعاف",
+
+                "Rescue Team":
+                    "فريق إنقاذ"
+
+            };
+
+
+            return map[type] || type;
+
+        }
+
+
+        function translateStatus(
+            status
+        ) {
+
+            const map = {
+
+                "active":
+                    "نشط",
+
+                "dispatched":
+                    "تم توجيه الفريق",
+
+                "processing":
+                    "قيد المعالجة",
+
+                "resolved":
+                    "مكتمل"
+
+            };
+
+
+            return map[status] || status;
+
+        }
+
+
+        /* =====================================================
+           CLOCK
+        ===================================================== */
+
+        function updateClock() {
+
+            const now =
+                new Date();
+
+
+            const time =
+                now.toLocaleTimeString(
+                    "ar-SA",
+                    {
+                        hour:
+                            "2-digit",
+
+                        minute:
+                            "2-digit",
+
+                        second:
+                            "2-digit",
+
+                        hour12:
+                            false
+                    }
+                );
+
+
+            document.getElementById(
+                "liveClock"
+            ).textContent =
+                time;
+
+        }
+
+
+        setInterval(
+            updateClock,
+            1000
+        );
+
+        updateClock();
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        loadDashboardData();
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>نتيجة البلاغ | Emergency Response</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/app.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+
+            font-family: "Cairo", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 50% 0%,
+                    rgba(37, 99, 235, .16),
+                    transparent 32%
+                ),
+                #07111f;
+
+            color: #f8fafc;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .result-page {
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           TOP BAR
+        ========================= */
+
+        .result-topbar {
+            height: 72px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.08);
+
+            display: flex;
+            align-items: center;
+        }
+
+        .result-topbar-inner {
+            width: min(1100px, 92%);
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .result-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .brand-mark {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: #dc2626;
+            color: white;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .secure-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #94a3b8;
+
+            font-size: 12px;
+        }
+
+        .secure-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #22c55e;
+
+            box-shadow:
+                0 0 12px rgba(34,197,94,.6);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .result-main {
+            width: min(920px, 92%);
+            margin: auto;
+
+            padding: 55px 0 80px;
+        }
+
+
+        /* =========================
+           SUCCESS HEADER
+        ========================= */
+
+        .result-header {
+            text-align: center;
+
+            margin-bottom: 38px;
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+
+            margin: 0 auto 20px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(34,197,94,.10);
+
+            border:
+                1px solid rgba(34,197,94,.25);
+
+            color: #4ade80;
+
+            font-size: 30px;
+
+            box-shadow:
+                0 0 35px rgba(34,197,94,.08);
+        }
+
+        .result-header h1 {
+            margin: 0;
+
+            font-size: clamp(26px, 4vw, 36px);
+
+            font-weight: 800;
+        }
+
+        .result-header p {
+            margin: 10px auto 0;
+
+            max-width: 600px;
+
+            color: #94a3b8;
+
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+
+        /* =========================
+           MAIN RESULT CARD
+        ========================= */
+
+        .result-card {
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.055),
+                    rgba(255,255,255,.025)
+                );
+
+            border:
+                1px solid rgba(255,255,255,.09);
+
+            box-shadow:
+                0 25px 70px rgba(0,0,0,.22);
+        }
+
+
+        /* =========================
+           CARD TOP
+        ========================= */
+
+        .result-card-top {
+            display: grid;
+
+            grid-template-columns:
+                1fr 230px;
+
+            gap: 30px;
+
+            padding: 30px;
+        }
+
+        .emergency-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-label {
+            color: #64748b;
+
+            font-size: 11px;
+
+            margin-bottom: 6px;
+        }
+
+        .emergency-type {
+            margin: 0;
+
+            font-size: 27px;
+
+            font-weight: 800;
+        }
+
+        .emergency-description {
+            margin: 10px 0 0;
+
+            color: #94a3b8;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =========================
+           RISK SCORE
+        ========================= */
+
+        .risk-box {
+            min-height: 190px;
+
+            display: flex;
+            flex-direction: column;
+
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 18px;
+
+            background:
+                rgba(220,38,38,.07);
+
+            border:
+                1px solid rgba(220,38,38,.18);
+        }
+
+        .risk-label {
+            color: #94a3b8;
+
+            font-size: 12px;
+
+            margin-bottom: 5px;
+        }
+
+        .risk-score {
+            font-size: 58px;
+
+            line-height: 1;
+
+            font-weight: 800;
+
+            color: #f87171;
+        }
+
+        .risk-score span {
+            font-size: 20px;
+
+            color: #64748b;
+        }
+
+        .risk-level {
+            margin-top: 10px;
+
+            padding: 5px 13px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(220,38,38,.12);
+
+            color: #f87171;
+
+            font-size: 11px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           DETAILS GRID
+        ========================= */
+
+        .details-section {
+            padding: 0 30px 30px;
+        }
+
+        .section-title {
+            margin: 0 0 15px;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #e2e8f0;
+        }
+
+        .details-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+        }
+
+        .detail-item {
+            padding: 16px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .detail-label {
+            display: block;
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            margin-bottom: 5px;
+        }
+
+        .detail-value {
+            display: block;
+
+            color: #e2e8f0;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           AI ANALYSIS
+        ========================= */
+
+        .analysis-section {
+            margin: 0 30px 30px;
+
+            padding: 20px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(59,130,246,.045);
+
+            border:
+                1px solid rgba(96,165,250,.12);
+        }
+
+        .analysis-header {
+            display: flex;
+
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 16px;
+        }
+
+        .analysis-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .ai-badge {
+            padding: 4px 8px;
+
+            border-radius: 6px;
+
+            background:
+                rgba(59,130,246,.12);
+
+            color: #60a5fa;
+
+            font-size: 9px;
+
+            font-weight: 700;
+        }
+
+        .analysis-modules {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 10px;
+        }
+
+        .analysis-module {
+            padding: 13px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.05);
+        }
+
+        .module-name {
+            color: #94a3b8;
+
+            font-size: 10px;
+        }
+
+        .module-status {
+            margin-top: 5px;
+
+            font-size: 12px;
+
+            font-weight: 700;
+        }
+
+        .module-status.used {
+            color: #4ade80;
+        }
+
+        .module-status.not-used {
+            color: #64748b;
+        }
+
+
+        /* =========================
+           RESPONSE SECTION
+        ========================= */
+
+        .response-section {
+            padding: 25px 30px;
+
+            border-top:
+                1px solid rgba(255,255,255,.07);
+
+            border-bottom:
+                1px solid rgba(255,255,255,.07);
+        }
+
+        .response-content {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .response-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .response-icon {
+            width: 52px;
+            height: 52px;
+
+            flex: 0 0 52px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                rgba(220,38,38,.10);
+
+            color: #f87171;
+
+            font-size: 21px;
+
+            font-weight: 800;
+        }
+
+        .response-label {
+            color: #64748b;
+
+            font-size: 10px;
+        }
+
+        .response-name {
+            margin-top: 3px;
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+        .response-status {
+            padding: 7px 12px;
+
+            border-radius: 8px;
+
+            background:
+                rgba(34,197,94,.08);
+
+            color: #4ade80;
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           EMERGENCY ID
+        ========================= */
+
+        .emergency-id-section {
+            padding: 20px 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .id-label {
+            color: #64748b;
+
+            font-size: 10px;
+        }
+
+        .id-value {
+            margin-top: 3px;
+
+            color: #cbd5e1;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            direction: ltr;
+        }
+
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .result-actions {
+            display: flex;
+
+            gap: 10px;
+
+            padding: 0 30px 30px;
+        }
+
+        .action-btn {
+            flex: 1;
+
+            min-height: 52px;
+
+            border-radius: 12px;
+
+            border: 1px solid transparent;
+
+            font-family: inherit;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            transition: .2s ease;
+        }
+
+        .track-btn {
+            background: #dc2626;
+
+            color: white;
+
+            box-shadow:
+                0 8px 25px rgba(220,38,38,.18);
+        }
+
+        .track-btn:hover {
+            background: #ef4444;
+
+            transform: translateY(-1px);
+        }
+
+        .new-report-btn {
+            background:
+                rgba(255,255,255,.04);
+
+            border-color:
+                rgba(255,255,255,.09);
+
+            color: #cbd5e1;
+        }
+
+        .new-report-btn:hover {
+            background:
+                rgba(255,255,255,.07);
+        }
+
+
+        /* =========================
+           FOOTER NOTE
+        ========================= */
+
+        .result-note {
+            margin-top: 18px;
+
+            text-align: center;
+
+            color: #475569;
+
+            font-size: 10px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .result-main {
+                padding-top: 40px;
+            }
+
+            .result-card-top {
+                grid-template-columns: 1fr;
+            }
+
+            .risk-box {
+                min-height: 160px;
+            }
+
+            .details-grid {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .analysis-modules {
+                grid-template-columns:
+                    1fr;
+            }
+
+            .response-content {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .response-status {
+                margin-right: 67px;
+            }
+
+            .emergency-id-section {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+
+        @media (max-width: 480px) {
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .result-actions {
+                flex-direction: column;
+            }
+
+            .result-card-top,
+            .details-section,
+            .response-section {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .analysis-section {
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+
+            .result-actions {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .emergency-type {
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="result-page">
+
+    <!-- =========================
+         TOP BAR
+    ========================== -->
+
+    <header class="result-topbar">
+
+        <div class="result-topbar-inner">
+
+            <div class="result-brand">
+
+                <span class="brand-mark">
+                    ER
+                </span>
+
+                <span>
+                    Emergency Response
+                </span>
+
+            </div>
+
+
+            <div class="secure-status">
+
+                <span class="secure-dot"></span>
+
+                تم تحليل البلاغ
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="result-main">
+
+        <!-- HEADER -->
+
+        <section class="result-header">
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h1>
+                تم تحليل البلاغ
+            </h1>
+
+            <p>
+                تم تقييم الحالة وتحديد مستوى الخطورة
+                وفريق الاستجابة المناسب بناءً على المعلومات المتوفرة.
+            </p>
+
+        </section>
+
+
+        <!-- RESULT CARD -->
+
+        <section class="result-card">
+
+
+            <!-- =========================
+                 EMERGENCY + RISK
+            ========================== -->
+
+            <div class="result-card-top">
+
+
+                <div class="emergency-info">
+
+                    <span class="info-label">
+                        نوع الحالة
+                    </span>
+
+                    <h2
+                        class="emergency-type"
+                        id="emergencyType"
+                    >
+                        —
+                    </h2>
+
+                    <p
+                        class="emergency-description"
+                        id="emergencyDescription"
+                    >
+                        —
+                    </p>
+
+                </div>
+
+
+                <!-- RISK -->
+
+                <div class="risk-box">
+
+                    <div class="risk-label">
+                        مستوى الخطورة
+                    </div>
+
+                    <div
+                        class="risk-score"
+                        id="riskScore"
+                    >
+                        —
+                    </div>
+
+                    <div
+                        class="risk-level"
+                        id="riskLevel"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 DETAILS
+            ========================== -->
+
+            <div class="details-section">
+
+                <h3 class="section-title">
+                    تفاصيل البلاغ
+                </h3>
+
+
+                <div class="details-grid">
+
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            الحالة
+                        </span>
+
+                        <span
+                            class="detail-value"
+                            id="emergencyStatus"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            وقت البلاغ
+                        </span>
+
+                        <span
+                            class="detail-value"
+                            id="createdAt"
+                        >
+                            —
+                        </span>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span class="detail-label">
+                            الموقع
+                        </span>
+
+                        <span
+                            class="detail-value"
+                            id="locationStatus"
+                        >
+                            تم تحديده
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 AI ANALYSIS
+            ========================== -->
+
+            <div class="analysis-section">
+
+                <div class="analysis-header">
+
+                    <div class="analysis-title">
+
+                        <span>
+                            تحليل الذكاء الاصطناعي
+                        </span>
+
+                        <span class="ai-badge">
+                            AI ANALYSIS
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="analysis-modules">
+
+
+                    <!-- NLP -->
+
+                    <div class="analysis-module">
+
+                        <div class="module-name">
+                            تحليل النص
+                        </div>
+
+                        <div
+                            class="module-status"
+                            id="nlpStatus"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <!-- CV -->
+
+                    <div class="analysis-module">
+
+                        <div class="module-name">
+                            تحليل الصورة
+                        </div>
+
+                        <div
+                            class="module-status"
+                            id="visionStatus"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+
+                    <!-- Fusion -->
+
+                    <div class="analysis-module">
+
+                        <div class="module-name">
+                            Decision Fusion
+                        </div>
+
+                        <div
+                            class="module-status"
+                            id="fusionStatus"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 RESPONSE
+            ========================== -->
+
+            <div class="response-section">
+
+                <div class="response-content">
+
+
+                    <div class="response-left">
+
+                        <div
+                            class="response-icon"
+                            id="responseIcon"
+                        >
+                            +
+                        </div>
+
+
+                        <div>
+
+                            <div class="response-label">
+                                فريق الاستجابة المحدد
+                            </div>
+
+                            <div
+                                class="response-name"
+                                id="responseType"
+                            >
+                                —
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="response-status"
+                        id="responseStatus"
+                    >
+                        تم التوجيه
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 EMERGENCY ID
+            ========================== -->
+
+            <div class="emergency-id-section">
+
+                <div>
+
+                    <div class="id-label">
+                        رقم البلاغ
+                    </div>
+
+                    <div
+                        class="id-value"
+                        id="emergencyId"
+                    >
+                        —
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <div class="id-label">
+                        حالة المعالجة
+                    </div>
+
+                    <div
+                        class="detail-value"
+                        id="processingStatus"
+                    >
+                        مكتمل
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =========================
+                 ACTIONS
+            ========================== -->
+
+            <div class="result-actions">
+
+                <a
+                    href="tracking.html"
+                    class="action-btn track-btn"
+                    id="trackButton"
+                >
+                    تتبع فريق الاستجابة
+                    <span style="margin-right:8px;">
+                        ←
+                    </span>
+                </a>
+
+
+                <a
+                    href="report.html"
+                    class="action-btn new-report-btn"
+                >
+                    إرسال بلاغ جديد
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <p class="result-note">
+
+            في الحالات الحرجة، يرجى الابتعاد عن مصدر الخطر
+            واتباع تعليمات فريق الاستجابة.
+
+        </p>
+
+    </main>
+
+</div>
+
+
+<script src="../js/app.js"></script>
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        /* =========================
+           GET RESULT
+        ========================= */
+
+        const rawEmergency =
+            sessionStorage.getItem(
+                "currentEmergency"
+            );
+
+
+        if (!rawEmergency) {
+
+            window.location.href =
+                "report.html";
+
+            return;
+
+        }
+
+
+        let emergency;
+
+        try {
+
+            emergency =
+                JSON.parse(
+                    rawEmergency
+                );
+
+        } catch (error) {
+
+            window.location.href =
+                "report.html";
+
+            return;
+
+        }
+
+
+        /* =========================
+           SAFE VALUE
+        ========================= */
+
+        function safe(value) {
+
+            return (
+                value === null ||
+                value === undefined ||
+                value === ""
+            )
+                ? "غير متوفر"
+                : String(value);
+
+        }
+
+
+        /* =========================
+           BASIC INFORMATION
+        ========================= */
+
+        document.getElementById(
+            "emergencyType"
+        ).textContent =
+            safe(
+                emergency.emergency_type
+            );
+
+
+        document.getElementById(
+            "emergencyDescription"
+        ).textContent =
+            emergency.description &&
+            emergency.description.trim()
+                ? emergency.description
+                : "تم تقديم صورة للحالة دون وصف نصي.";
+
+
+        document.getElementById(
+            "emergencyId"
+        ).textContent =
+            safe(
+                emergency.emergency_id
+            );
+
+
+        document.getElementById(
+            "emergencyStatus"
+        ).textContent =
+            getStatusText(
+                emergency.status
+            );
+
+
+        document.getElementById(
+            "createdAt"
+        ).textContent =
+            formatDate(
+                emergency.created_at
+            );
+
+
+        /* =========================
+           RISK
+        ========================= */
+
+        const riskScore =
+            Number(
+                emergency.risk_score
+            ) || 0;
+
+
+        document.getElementById(
+            "riskScore"
+        ).innerHTML = `
+            ${riskScore}
+            <span>/100</span>
+        `;
+
+
+        const riskLevel =
+            getRiskLevel(
+                riskScore
+            );
+
+
+        document.getElementById(
+            "riskLevel"
+        ).textContent =
+            riskLevel;
+
+
+        /* =========================
+           RESPONSE
+        ========================= */
+
+        const responseType =
+            safe(
+                emergency.response_type
+            );
+
+
+        document.getElementById(
+            "responseType"
+        ).textContent =
+            responseType;
+
+
+        document.getElementById(
+            "responseIcon"
+        ).textContent =
+            getResponseIcon(
+                responseType
+            );
+
+
+        /* =========================
+           AI MODULES
+        ========================= */
+
+        const analysis =
+            emergency.analysis || {};
+
+
+        updateModule(
+            "nlpStatus",
+            analysis.nlp_used,
+            "تم التحليل",
+            "لم يتم استخدامه"
+        );
+
+
+        updateModule(
+            "visionStatus",
+            analysis.vision_used,
+            "تم التحليل",
+            "لم يتم استخدامه"
+        );
+
+
+        updateModule(
+            "fusionStatus",
+            analysis.fusion_used,
+            "تم التقييم",
+            "غير متوفر"
+        );
+
+
+        /* =========================
+           TRACKING LINK
+        ========================= */
+
+        const trackButton =
+            document.getElementById(
+                "trackButton"
+            );
+
+
+        if (trackButton) {
+
+            trackButton.href =
+                `tracking.html?id=${encodeURIComponent(
+                    emergency.emergency_id || ""
+                )}`;
+
+        }
+
+    }
+);
+
+
+/* =========================
+   RISK LEVEL
+========================= */
+
+function getRiskLevel(score) {
+
+    if (score >= 85) {
+
+        return "حرج";
+
+    }
+
+    if (score >= 70) {
+
+        return "مرتفع";
+
+    }
+
+    if (score >= 40) {
+
+        return "متوسط";
+
+    }
+
+    return "منخفض";
+}
+
+
+/* =========================
+   STATUS
+========================= */
+
+function getStatusText(status) {
+
+    const statuses = {
+
+        "processing":
+            "قيد المعالجة",
+
+        "active":
+            "نشط",
+
+        "dispatched":
+            "تم توجيه الفريق",
+
+        "resolved":
+            "تم الحل"
+
+    };
+
+
+    return (
+        statuses[status] ||
+        safeStatus(status)
+    );
+}
+
+
+function safeStatus(status) {
+
+    return status
+        ? String(status)
+        : "غير متوفر";
+
+}
+
+
+/* =========================
+   DATE
+========================= */
+
+function formatDate(value) {
+
+    if (!value) {
+
+        return "غير متوفر";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (Number.isNaN(
+        date.getTime()
+    )) {
+
+        return String(value);
+
+    }
+
+
+    return date.toLocaleString(
+        "ar-SA",
+        {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+/* =========================
+   AI MODULE
+========================= */
+
+function updateModule(
+    elementId,
+    used,
+    activeText,
+    inactiveText
+) {
+
+    const element =
+        document.getElementById(
+            elementId
+        );
+
+
+    if (!element) return;
+
+
+    element.textContent =
+        used
+            ? activeText
+            : inactiveText;
+
+
+    element.classList.remove(
+        "used",
+        "not-used"
+    );
+
+
+    element.classList.add(
+        used
+            ? "used"
+            : "not-used"
+    );
+
+}
+
+
+/* =========================
+   RESPONSE ICON
+========================= */
+
+function getResponseIcon(
+    response
+) {
+
+    if (
+        response ===
+        "Ambulance"
+    ) {
+
+        return "+";
+
+    }
+
+
+    if (
+        response ===
+        "Fire Rescue"
+    ) {
+
+        return "FR";
+
+    }
+
+
+    if (
+        response ===
+        "Rescue Team"
+    ) {
+
+        return "RS";
+
+    }
+
+
+    return "AI";
+
+}
+
+</script>
+
+</body>
+
+</html>

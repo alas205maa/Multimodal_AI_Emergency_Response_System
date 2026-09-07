@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>نظام الاستجابة للطوارئ | الصفحة الرئيسية</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+    <header class="topbar">
+
+        <div class="brand">
+            <div class="brand-mark">
+                <span>+</span>
+            </div>
+
+            <div class="brand-text">
+                <strong>استجابة</strong>
+                <span>نظام الاستجابة للطوارئ</span>
+            </div>
+        </div>
+
+        <div class="topbar-actions">
+
+            <a href="citizen/history.html" class="text-link">
+                بلاغاتي
+            </a>
+
+            <a href="admin/login.html" class="staff-link">
+                دخول الموظفين
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <!-- =================================================
+             EMERGENCY HERO
+        ================================================== -->
+        <section class="emergency-hero">
+
+            <div class="hero-content">
+
+                <div class="status-pill">
+                    <span class="status-dot"></span>
+                    نظام الاستجابة يعمل الآن
+                </div>
+
+                <h1>
+                    هل هناك حالة
+                    <span>طارئة؟</span>
+                </h1>
+
+                <p class="hero-description">
+                    أرسل البلاغ الآن، وسيتولى النظام تحليل الحالة
+                    وتحديد مستوى الخطورة والاستجابة المناسبة.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="citizen/report.html" class="primary-emergency-btn">
+                        <span class="btn-icon">+</span>
+
+                        <span class="btn-content">
+                            <strong>إرسال بلاغ طارئ</strong>
+                            <small>ابدأ البلاغ الآن</small>
+                        </span>
+
+                        <span class="btn-arrow">←</span>
+                    </a>
+
+                </div>
+
+                <div class="hero-note">
+                    <span class="check-icon">✓</span>
+                    لا تحتاج إلى تسجيل حساب للإبلاغ عن حالة طارئة
+                </div>
+
+            </div>
+
+
+            <!-- Visual emergency panel -->
+            <div class="hero-visual">
+
+                <div class="visual-card">
+
+                    <div class="visual-header">
+                        <div>
+                            <span class="mini-label">LIVE SYSTEM</span>
+                            <strong>مركز الاستجابة</strong>
+                        </div>
+
+                        <span class="live-indicator">
+                            <i></i>
+                            مباشر
+                        </span>
+                    </div>
+
+
+                    <div class="radar">
+
+                        <div class="radar-ring ring-one"></div>
+                        <div class="radar-ring ring-two"></div>
+                        <div class="radar-ring ring-three"></div>
+
+                        <div class="radar-cross horizontal"></div>
+                        <div class="radar-cross vertical"></div>
+
+                        <div class="radar-center">
+                            <span></span>
+                        </div>
+
+                        <div class="map-point point-one"></div>
+                        <div class="map-point point-two"></div>
+                        <div class="map-point point-three"></div>
+
+                    </div>
+
+
+                    <div class="visual-footer">
+
+                        <div>
+                            <span>الحالات النشطة</span>
+                            <strong>04</strong>
+                        </div>
+
+                        <div>
+                            <span>فرق الاستجابة</span>
+                            <strong>05</strong>
+                        </div>
+
+                        <div>
+                            <span>المراقبة</span>
+                            <strong class="online-text">●</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             EMERGENCY TYPES
+        ================================================== -->
+        <section class="emergency-types-section">
+
+            <div class="section-heading">
+
+                <div>
+                    <span class="section-label">اختر نوع الحالة</span>
+
+                    <h2>
+                        ماذا حدث؟
+                    </h2>
+                </div>
+
+                <p>
+                    اختر نوع الطوارئ لبدء البلاغ مباشرة.
+                </p>
+
+            </div>
+
+
+            <div class="emergency-grid">
+
+                <!-- Fire -->
+                <a
+                    href="citizen/report.html?type=Fire"
+                    class="emergency-card fire-card"
+                >
+                    <div class="card-icon">
+                        🔥
+                    </div>
+
+                    <div class="card-info">
+                        <strong>حريق</strong>
+                        <span>حريق في منزل، مبنى أو مركبة</span>
+                    </div>
+
+                    <span class="card-arrow">←</span>
+                </a>
+
+
+                <!-- Accident -->
+                <a
+                    href="citizen/report.html?type=Traffic%20Accident"
+                    class="emergency-card accident-card"
+                >
+                    <div class="card-icon">
+                        🚗
+                    </div>
+
+                    <div class="card-info">
+                        <strong>حادث مروري</strong>
+                        <span>تصادم أو حادث على الطريق</span>
+                    </div>
+
+                    <span class="card-arrow">←</span>
+                </a>
+
+
+                <!-- Medical -->
+                <a
+                    href="citizen/report.html?type=Medical%20Emergency"
+                    class="emergency-card medical-card"
+                >
+                    <div class="card-icon">
+                        ✚
+                    </div>
+
+                    <div class="card-info">
+                        <strong>حالة طبية</strong>
+                        <span>إصابة أو حالة صحية عاجلة</span>
+                    </div>
+
+                    <span class="card-arrow">←</span>
+                </a>
+
+
+                <!-- Flood -->
+                <a
+                    href="citizen/report.html?type=Flood"
+                    class="emergency-card flood-card"
+                >
+                    <div class="card-icon">
+                        ≋
+                    </div>
+
+                    <div class="card-info">
+                        <strong>فيضان</strong>
+                        <span>تجمع مياه أو خطر فيضان</span>
+                    </div>
+
+                    <span class="card-arrow">←</span>
+                </a>
+
+
+                <!-- Earthquake -->
+                <a
+                    href="citizen/report.html?type=Earthquake"
+                    class="emergency-card earthquake-card"
+                >
+                    <div class="card-icon">
+                        ◈
+                    </div>
+
+                    <div class="card-info">
+                        <strong>زلزال</strong>
+                        <span>هزة أرضية أو أضرار ناتجة عنها</span>
+                    </div>
+
+                    <span class="card-arrow">←</span>
+                </a>
+
+
+                <!-- Other -->
+                <a
+                    href="citizen/report.html?type=Other"
+                    class="emergency-card other-card"
+                >
+                    <div class="card-icon">
+                        !
+                    </div>
+
+                    <div class="card-info">
+                        <strong>حالة أخرى</strong>
+                        <span>حالة طارئة غير مصنفة</span>
+                    </div>
+
+                    <span class="card-arrow">←</span>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             HOW IT WORKS
+        ================================================== -->
+        <section class="response-flow">
+
+            <div class="section-heading centered">
+
+                <span class="section-label">
+                    ماذا يحدث بعد البلاغ؟
+                </span>
+
+                <h2>
+                    من البلاغ إلى الاستجابة
+                </h2>
+
+                <p>
+                    يعمل النظام على تحليل البلاغ ومساعدتك في الوصول إلى الاستجابة المناسبة.
+                </p>
+
+            </div>
+
+
+            <div class="flow-container">
+
+                <div class="flow-step">
+
+                    <div class="flow-number">
+                        01
+                    </div>
+
+                    <div class="flow-icon">
+                        ↑
+                    </div>
+
+                    <h3>إرسال البلاغ</h3>
+
+                    <p>
+                        أرسل وصف الحالة، الصورة والموقع.
+                    </p>
+
+                </div>
+
+
+                <div class="flow-line"></div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">
+                        02
+                    </div>
+
+                    <div class="flow-icon">
+                        AI
+                    </div>
+
+                    <h3>تحليل بالذكاء الاصطناعي</h3>
+
+                    <p>
+                        تحليل النصوص والصور وتقييم مستوى الخطورة.
+                    </p>
+
+                </div>
+
+
+                <div class="flow-line"></div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">
+                        03
+                    </div>
+
+                    <div class="flow-icon">
+                        !
+                    </div>
+
+                    <h3>تحديد الأولوية</h3>
+
+                    <p>
+                        تحديد درجة الخطورة ونوع الاستجابة المطلوبة.
+                    </p>
+
+                </div>
+
+
+                <div class="flow-line"></div>
+
+
+                <div class="flow-step">
+
+                    <div class="flow-number">
+                        04
+                    </div>
+
+                    <div class="flow-icon">
+                        ↗
+                    </div>
+
+                    <h3>إرسال فريق الاستجابة</h3>
+
+                    <p>
+                        اختيار أقرب مورد مناسب ومتابعة الحالة.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             TRUST / INFO
+        ================================================== -->
+        <section class="citizen-info">
+
+            <div class="info-box">
+
+                <div class="info-icon">
+                    i
+                </div>
+
+                <div>
+                    <strong>أرسل المعلومات التي تعرفها فقط</strong>
+
+                    <p>
+                        لا تقلق إذا لم تكن لديك كل التفاصيل.
+                        يمكنك إرسال وصف مختصر وصورة وموقعك،
+                        وسيقوم النظام بتحليل البلاغ.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <a href="citizen/report.html" class="secondary-report-btn">
+                إرسال بلاغ
+                <span>←</span>
+            </a>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+    <footer class="site-footer">
+
+        <div class="footer-brand">
+            <div class="brand-mark small">
+                <span>+</span>
+            </div>
+
+            <span>
+                نظام الاستجابة للطوارئ
+            </span>
+        </div>
+
+        <p>
+            نظام ذكي لدعم تحليل البلاغات وتنسيق الاستجابة للطوارئ.
+        </p>
+
+        <span class="footer-copy">
+            © 2026 Emergency Response System
+        </span>
+
+    </footer>
+
+
+    <!-- Main JS -->
+    <script src="js/app.js"></script>
+
+</body>
+</html>

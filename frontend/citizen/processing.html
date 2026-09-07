@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>جاري تحليل البلاغ | Emergency Response</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="../css/app.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Cairo", sans-serif;
+            background:
+                radial-gradient(
+                    circle at 50% 20%,
+                    rgba(30, 64, 175, 0.18),
+                    transparent 35%
+                ),
+                #07111f;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .processing-page {
+            min-height: 100vh;
+        }
+
+        /* =========================
+           TOP BAR
+        ========================= */
+
+        .processing-topbar {
+            height: 72px;
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            display: flex;
+            align-items: center;
+        }
+
+        .processing-topbar-inner {
+            width: min(1100px, 92%);
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .processing-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .brand-mark {
+            width: 36px;
+            height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background: #dc2626;
+            color: white;
+
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .processing-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #94a3b8;
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #f59e0b;
+
+            box-shadow: 0 0 12px rgba(245,158,11,.7);
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .processing-main {
+            width: min(760px, 92%);
+            margin: auto;
+
+            padding: 65px 0 80px;
+
+            text-align: center;
+        }
+
+        .processing-title {
+            margin: 0;
+
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 800;
+
+            letter-spacing: -.5px;
+        }
+
+        .processing-subtitle {
+            margin: 12px 0 0;
+
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* =========================
+           AI ORB
+        ========================= */
+
+        .ai-orb-wrapper {
+            margin: 42px auto 34px;
+
+            width: 150px;
+            height: 150px;
+
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ai-orb-ring {
+            position: absolute;
+            inset: 0;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(96,165,250,.35);
+
+            animation: rotate 7s linear infinite;
+        }
+
+        .ai-orb-ring::before {
+            content: "";
+
+            position: absolute;
+
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #60a5fa;
+
+            top: -4px;
+            left: calc(50% - 4px);
+
+            box-shadow: 0 0 18px #60a5fa;
+        }
+
+        .ai-orb {
+            width: 100px;
+            height: 100px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(59,130,246,.35),
+                    rgba(15,23,42,.9) 70%
+                );
+
+            border: 1px solid rgba(96,165,250,.35);
+
+            box-shadow:
+                0 0 40px rgba(59,130,246,.2),
+                inset 0 0 30px rgba(59,130,246,.12);
+        }
+
+        .ai-core {
+            width: 30px;
+            height: 30px;
+
+            border-radius: 50%;
+
+            background: #60a5fa;
+
+            box-shadow:
+                0 0 20px rgba(96,165,250,.9),
+                0 0 50px rgba(59,130,246,.5);
+
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(.85);
+                opacity: .7;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+        }
+
+        /* =========================
+           EMERGENCY SUMMARY
+        ========================= */
+
+        .emergency-summary {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+
+            margin-bottom: 36px;
+        }
+
+        .summary-item {
+            padding: 9px 15px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.08);
+
+            color: #cbd5e1;
+
+            font-size: 13px;
+        }
+
+        .summary-item strong {
+            color: #fff;
+        }
+
+        /* =========================
+           PIPELINE
+        ========================= */
+
+        .pipeline {
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 12px;
+
+            text-align: right;
+        }
+
+        .pipeline::before {
+            content: "";
+
+            position: absolute;
+
+            top: 30px;
+            bottom: 30px;
+
+            right: 24px;
+
+            width: 2px;
+
+            background: rgba(255,255,255,.08);
+        }
+
+        .pipeline-step {
+            position: relative;
+            z-index: 1;
+
+            min-height: 72px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 13px 15px;
+
+            border-radius: 14px;
+
+            background: rgba(255,255,255,.035);
+
+            border: 1px solid rgba(255,255,255,.07);
+
+            transition:
+                .3s ease;
+        }
+
+        .pipeline-step.active {
+            background: rgba(59,130,246,.08);
+            border-color: rgba(96,165,250,.3);
+        }
+
+        .pipeline-step.completed {
+            background: rgba(34,197,94,.06);
+            border-color: rgba(34,197,94,.2);
+        }
+
+        .pipeline-step.skipped {
+            opacity: .48;
+        }
+
+        .step-icon {
+            width: 48px;
+            height: 48px;
+
+            flex: 0 0 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background: #111c2e;
+
+            color: #64748b;
+
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .pipeline-step.active .step-icon {
+            color: #60a5fa;
+
+            background: rgba(59,130,246,.12);
+        }
+
+        .pipeline-step.completed .step-icon {
+            color: #4ade80;
+
+            background: rgba(34,197,94,.1);
+        }
+
+        .step-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .step-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #e2e8f0;
+        }
+
+        .step-description {
+            margin-top: 3px;
+
+            color: #64748b;
+
+            font-size: 11px;
+        }
+
+        .step-status {
+            min-width: 90px;
+
+            text-align: left;
+
+            color: #64748b;
+
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .pipeline-step.active .step-status {
+            color: #60a5fa;
+        }
+
+        .pipeline-step.completed .step-status {
+            color: #4ade80;
+        }
+
+        .pipeline-step.skipped .step-status {
+            color: #64748b;
+        }
+
+        /* =========================
+           SPINNER
+        ========================= */
+
+        .spinner {
+            width: 17px;
+            height: 17px;
+
+            display: inline-block;
+
+            border: 2px solid rgba(96,165,250,.2);
+            border-top-color: #60a5fa;
+
+            border-radius: 50%;
+
+            animation: spin .8s linear infinite;
+
+            vertical-align: middle;
+
+            margin-left: 5px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================
+           INFO
+        ========================= */
+
+        .ai-info {
+            margin-top: 24px;
+
+            padding: 13px 16px;
+
+            border-radius: 12px;
+
+            background: rgba(255,255,255,.025);
+
+            border: 1px solid rgba(255,255,255,.06);
+
+            color: #64748b;
+
+            font-size: 11px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .processing-main {
+                padding-top: 45px;
+            }
+
+            .processing-topbar-inner {
+                width: 90%;
+            }
+
+            .processing-status {
+                display: none;
+            }
+
+            .pipeline-step {
+                min-height: 66px;
+            }
+
+            .step-icon {
+                width: 42px;
+                height: 42px;
+                flex-basis: 42px;
+            }
+
+            .step-status {
+                min-width: auto;
+            }
+
+            .step-description {
+                display: none;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="processing-page">
+
+    <!-- =========================
+         TOP BAR
+    ========================== -->
+
+    <header class="processing-topbar">
+
+        <div class="processing-topbar-inner">
+
+            <div class="processing-brand">
+
+                <span class="brand-mark">
+                    ER
+                </span>
+
+                <span>
+                    Emergency Response
+                </span>
+
+            </div>
+
+
+            <div class="processing-status">
+
+                <span class="status-dot"></span>
+
+                جاري التحليل الذكي
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="processing-main">
+
+        <h1 class="processing-title">
+            جاري تحليل البلاغ
+        </h1>
+
+        <p class="processing-subtitle">
+            يتم تحليل المعلومات المتوفرة لتحديد مستوى الخطورة والاستجابة المناسبة.
+        </p>
+
+
+        <!-- AI ORB -->
+
+        <div class="ai-orb-wrapper">
+
+            <div class="ai-orb-ring"></div>
+
+            <div class="ai-orb">
+
+                <div class="ai-core"></div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <div class="emergency-summary">
+
+            <div class="summary-item">
+
+                نوع الحالة:
+
+                <strong id="emergencyType">
+                    —
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                رقم البلاغ:
+
+                <strong id="emergencyId">
+                    —
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <!-- PIPELINE -->
+
+        <section class="pipeline">
+
+            <!-- STEP 1 -->
+
+            <div
+                class="pipeline-step"
+                id="step1"
+            >
+
+                <div
+                    class="step-icon"
+                    id="icon1"
+                >
+                    01
+                </div>
+
+                <div class="step-content">
+
+                    <div class="step-title">
+                        استلام البلاغ
+                    </div>
+
+                    <div class="step-description">
+                        التحقق من بيانات البلاغ والمدخلات المتوفرة
+                    </div>
+
+                </div>
+
+                <div
+                    class="step-status"
+                    id="status1"
+                >
+                    انتظار
+                </div>
+
+            </div>
+
+
+            <!-- STEP 2 -->
+
+            <div
+                class="pipeline-step"
+                id="step2"
+                data-module="nlp"
+            >
+
+                <div
+                    class="step-icon"
+                    id="icon2"
+                >
+                    NLP
+                </div>
+
+                <div class="step-content">
+
+                    <div class="step-title">
+                        تحليل وصف الحالة
+                    </div>
+
+                    <div class="step-description">
+                        استخراج المعلومات المهمة من وصف المستخدم
+                    </div>
+
+                </div>
+
+                <div
+                    class="step-status"
+                    id="status2"
+                >
+                    انتظار
+                </div>
+
+            </div>
+
+
+            <!-- STEP 3 -->
+
+            <div
+                class="pipeline-step"
+                id="step3"
+                data-module="cv"
+            >
+
+                <div
+                    class="step-icon"
+                    id="icon3"
+                >
+                    CV
+                </div>
+
+                <div class="step-content">
+
+                    <div class="step-title">
+                        تحليل الصورة
+                    </div>
+
+                    <div class="step-description">
+                        فحص الصورة واستخراج المؤشرات البصرية
+                    </div>
+
+                </div>
+
+                <div
+                    class="step-status"
+                    id="status3"
+                >
+                    انتظار
+                </div>
+
+            </div>
+
+
+            <!-- STEP 4 -->
+
+            <div
+                class="pipeline-step"
+                id="step4"
+            >
+
+                <div
+                    class="step-icon"
+                    id="icon4"
+                >
+                    AI
+                </div>
+
+                <div class="step-content">
+
+                    <div class="step-title">
+                        تقييم مستوى الخطورة
+                    </div>
+
+                    <div class="step-description">
+                        دمج نتائج التحليل وتحديد مستوى الخطورة
+                    </div>
+
+                </div>
+
+                <div
+                    class="step-status"
+                    id="status4"
+                >
+                    انتظار
+                </div>
+
+            </div>
+
+
+            <!-- STEP 5 -->
+
+            <div
+                class="pipeline-step"
+                id="step5"
+            >
+
+                <div
+                    class="step-icon"
+                    id="icon5"
+                >
+                    →
+                </div>
+
+                <div class="step-content">
+
+                    <div class="step-title">
+                        تحديد الاستجابة
+                    </div>
+
+                    <div class="step-description">
+                        تحديد نوع فريق الاستجابة المناسب
+                    </div>
+
+                </div>
+
+                <div
+                    class="step-status"
+                    id="status5"
+                >
+                    انتظار
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="ai-info">
+
+            هذه الواجهة تعمل حاليًا بوضع المحاكاة.
+            سيتم ربط NLP وComputer Vision والـDecision Engine
+            عبر الـAPI في مرحلة التكامل.
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="../js/app.js"></script>
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================
+       GET CURRENT EMERGENCY
+    ========================= */
+
+    const rawEmergency =
+        sessionStorage.getItem(
+            "currentEmergency"
+        );
+
+    if (!rawEmergency) {
+
+        window.location.href =
+            "report.html";
+
+        return;
+    }
+
+
+    const emergency =
+        JSON.parse(rawEmergency);
+
+
+    /* =========================
+       INPUT AVAILABILITY
+    ========================= */
+
+    const hasDescription =
+        Boolean(
+            emergency.description &&
+            emergency.description.trim().length > 0
+        );
+
+
+    const hasImage =
+        Boolean(
+            emergency.has_image
+        );
+
+
+    /* =========================
+       SUMMARY
+    ========================= */
+
+    document.getElementById(
+        "emergencyType"
+    ).textContent =
+        emergency.emergency_type || "غير محدد";
+
+
+    document.getElementById(
+        "emergencyId"
+    ).textContent =
+        emergency.emergency_id || "—";
+
+
+    /* =========================
+       STEP HELPERS
+    ========================= */
+
+    function activateStep(index) {
+
+        const step =
+            document.getElementById(
+                `step${index}`
+            );
+
+        const icon =
+            document.getElementById(
+                `icon${index}`
+            );
+
+        const status =
+            document.getElementById(
+                `status${index}`
+            );
+
+        if (!step) return;
+
+        step.classList.add("active");
+
+        status.innerHTML = `
+            <span class="spinner"></span>
+            جاري التحليل
+        `;
+
+        icon.style.transform =
+            "scale(1.05)";
+    }
+
+
+    function completeStep(index) {
+
+        const step =
+            document.getElementById(
+                `step${index}`
+            );
+
+        const icon =
+            document.getElementById(
+                `icon${index}`
+            );
+
+        const status =
+            document.getElementById(
+                `status${index}`
+            );
+
+        if (!step) return;
+
+        step.classList.remove("active");
+
+        step.classList.add("completed");
+
+        icon.textContent = "✓";
+
+        status.textContent =
+            "تم التحليل";
+
+        icon.style.transform =
+            "scale(1)";
+    }
+
+
+    function skipStep(
+        index,
+        reason = "غير متوفر"
+    ) {
+
+        const step =
+            document.getElementById(
+                `step${index}`
+            );
+
+        const icon =
+            document.getElementById(
+                `icon${index}`
+            );
+
+        const status =
+            document.getElementById(
+                `status${index}`
+            );
+
+        if (!step) return;
+
+        step.classList.add("skipped");
+
+        icon.textContent = "—";
+
+        status.textContent =
+            reason;
+    }
+
+
+    /* =========================
+       PREPARE NLP / CV
+    ========================= */
+
+    if (!hasDescription) {
+
+        skipStep(
+            2,
+            "لا يوجد وصف"
+        );
+
+    }
+
+
+    if (!hasImage) {
+
+        skipStep(
+            3,
+            "لا توجد صورة"
+        );
+
+    }
+
+
+    /* =========================
+       RUN ONE STEP
+    ========================= */
+
+    function runStep(index, duration = 1200) {
+
+        return new Promise(resolve => {
+
+            activateStep(index);
+
+            setTimeout(() => {
+
+                completeStep(index);
+
+                resolve();
+
+            }, duration);
+
+        });
+
+    }
+
+
+    /* =========================
+       RUN PIPELINE
+    ========================= */
+
+    async function runPipeline() {
+
+        /*
+         * STEP 1
+         * Receive report
+         */
+
+        await runStep(1, 900);
+
+
+        /*
+         * STEP 2
+         * NLP
+         *
+         * Run ONLY when description exists.
+         */
+
+        if (hasDescription) {
+
+            await runStep(2, 1400);
+
+        }
+
+
+        /*
+         * STEP 3
+         * Computer Vision
+         *
+         * Run ONLY when image exists.
+         */
+
+        if (hasImage) {
+
+            await runStep(3, 1600);
+
+        }
+
+
+        /*
+         * STEP 4
+         * Decision / Risk Assessment
+         *
+         * This always runs because
+         * at least one input exists.
+         */
+
+        await runStep(4, 1400);
+
+
+        /*
+         * STEP 5
+         * Response Selection
+         */
+
+        await runStep(5, 1000);
+
+
+        /*
+         * SAVE MOCK RESULT
+         */
+
+        const result = {
+
+            ...emergency,
+
+            priority:
+                calculatePriority(
+                    emergency.emergency_type
+                ),
+
+            risk_score:
+                calculateRiskScore(
+                    emergency.emergency_type,
+                    hasDescription,
+                    hasImage
+                ),
+
+            response_type:
+                determineResponse(
+                    emergency.emergency_type
+                ),
+
+            status:
+                "dispatched",
+
+            analysis:
+
+                {
+
+                    nlp_used:
+                        hasDescription,
+
+                    vision_used:
+                        hasImage,
+
+                    fusion_used:
+                        true
+
+                }
+
+        };
+
+
+        sessionStorage.setItem(
+            "currentEmergency",
+            JSON.stringify(result)
+        );
+
+
+        /*
+         * MOVE TO RESULT PAGE
+         */
+
+        setTimeout(() => {
+
+            window.location.href =
+                "result.html";
+
+        }, 500);
+
+    }
+
+
+    /* =========================
+       MOCK AI LOGIC
+       TEMPORARY ONLY
+    ========================= */
+
+    function calculateRiskScore(
+        type,
+        hasText,
+        hasImage
+    ) {
+
+        const baseScores = {
+
+            "Fire": 92,
+
+            "Traffic Accident": 78,
+
+            "Medical Emergency": 81,
+
+            "Flood": 61,
+
+            "Earthquake": 88,
+
+            "Other": 50
+
+        };
+
+
+        let score =
+            baseScores[type] || 50;
+
+
+        /*
+         * More evidence can slightly
+         * increase confidence/risk.
+         *
+         * This is NOT the real AI model.
+         */
+
+        if (hasText && hasImage) {
+
+            score += 3;
+
+        }
+
+
+        return Math.min(
+            score,
+            99
+        );
+
+    }
+
+
+    function calculatePriority(type) {
+
+        const priorities = {
+
+            "Fire": "critical",
+
+            "Traffic Accident": "high",
+
+            "Medical Emergency": "high",
+
+            "Flood": "medium",
+
+            "Earthquake": "critical",
+
+            "Other": "medium"
+
+        };
+
+
+        return (
+            priorities[type] ||
+            "medium"
+        );
+
+    }
+
+
+    function determineResponse(type) {
+
+        const responses = {
+
+            "Fire":
+                "Fire Rescue",
+
+            "Traffic Accident":
+                "Ambulance",
+
+            "Medical Emergency":
+                "Ambulance",
+
+            "Flood":
+                "Rescue Team",
+
+            "Earthquake":
+                "Rescue Team",
+
+            "Other":
+                "Rescue Team"
+
+        };
+
+
+        return (
+            responses[type] ||
+            "Rescue Team"
+        );
+
+    }
+
+
+    /* =========================
+       START
+    ========================= */
+
+    runPipeline();
+
+});
+
+</script>
+
+</body>
+
+</html>

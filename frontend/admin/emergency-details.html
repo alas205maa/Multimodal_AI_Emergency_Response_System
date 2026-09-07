@@ -1,0 +1,2904 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>تفاصيل البلاغ | مركز العمليات</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/app.css"
+    >
+
+    <style>
+
+        body {
+            background: #07111f;
+        }
+
+        .admin-main {
+            margin-right: 260px;
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+
+        .page-content {
+            max-width: 1800px;
+            margin: auto;
+            padding: 24px;
+        }
+
+        /* HEADER */
+
+        .admin-header {
+            position: fixed;
+            top: 0;
+            right: 260px;
+            left: 0;
+            height: 72px;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+
+            background: rgba(7,17,31,.95);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-title {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .page-title strong {
+            font-size: 16px;
+        }
+
+        .page-title span {
+            color: #718198;
+            font-size: 10px;
+        }
+
+        .admin-user-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            background: rgba(40,200,120,.08);
+            border: 1px solid rgba(40,200,120,.17);
+
+            color: #75dda5;
+            font-size: 10px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #31d47f;
+
+            box-shadow:
+                0 0 9px rgba(49,212,127,.8);
+        }
+
+        .operator {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .operator-avatar {
+            width: 37px;
+            height: 37px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: #16283f;
+            border: 1px solid rgba(255,255,255,.08);
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .operator-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .operator-info strong {
+            font-size: 11px;
+        }
+
+        .operator-info span {
+            color: #708096;
+            font-size: 9px;
+        }
+
+        /* BACK */
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-bottom: 18px;
+
+            color: #7590ad;
+            text-decoration: none;
+
+            font-size: 10px;
+        }
+
+        .back-link:hover {
+            color: #b7c8dc;
+        }
+
+        /* HERO */
+
+        .emergency-hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 22px;
+
+            margin-bottom: 18px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #101f33,
+                    #0b192b
+                );
+
+            border:
+                1px solid rgba(255,255,255,.07);
+        }
+
+        .hero-main {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .hero-icon {
+            width: 58px;
+            height: 58px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 15px;
+
+            background: rgba(255,76,88,.10);
+
+            border:
+                1px solid rgba(255,76,88,.15);
+
+            font-size: 25px;
+        }
+
+        .hero-info h1 {
+            margin: 0 0 4px;
+
+            font-size: 22px;
+        }
+
+        .hero-id {
+            color: #687b92;
+
+            font-size: 9px;
+
+            direction: ltr;
+            display: block;
+
+            text-align: right;
+        }
+
+        .hero-description {
+            margin-top: 8px;
+
+            color: #8595aa;
+            font-size: 10px;
+        }
+
+        .hero-side {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .hero-status {
+            text-align: center;
+        }
+
+        .hero-status span {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #667890;
+            font-size: 8px;
+        }
+
+        .hero-status strong {
+            display: inline-flex;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 9px;
+        }
+
+        .hero-status-active {
+            color: #69baff;
+            background: rgba(101,185,255,.09);
+        }
+
+        .hero-status-dispatched {
+            color: #ffc15c;
+            background: rgba(255,184,77,.09);
+        }
+
+        .hero-status-processing {
+            color: #b899ff;
+            background: rgba(169,128,255,.09);
+        }
+
+        .hero-status-resolved {
+            color: #62dfa2;
+            background: rgba(81,215,152,.09);
+        }
+
+        /* GRID */
+
+        .top-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0,1.1fr)
+                minmax(0,1fr);
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+        }
+
+        .bottom-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0,1.35fr)
+                minmax(300px,.65fr);
+
+            gap: 18px;
+        }
+
+        .panel {
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            border-radius: 16px;
+
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 16px 18px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .panel-header strong {
+            font-size: 13px;
+        }
+
+        .panel-header span {
+            color: #687990;
+            font-size: 9px;
+        }
+
+        .panel-body {
+            padding: 18px;
+        }
+
+        /* REPORT DETAILS */
+
+        .detail-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2,minmax(0,1fr));
+
+            gap: 15px;
+        }
+
+        .detail-item {
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.04);
+        }
+
+        .detail-label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #65768c;
+            font-size: 8px;
+        }
+
+        .detail-value {
+            color: #d4deea;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .detail-value.ltr {
+            direction: ltr;
+            text-align: right;
+        }
+
+        .description-box {
+            margin-top: 15px;
+
+            padding: 14px;
+
+            border-radius: 11px;
+
+            background: #091625;
+
+            color: #9baabd;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+        }
+
+        /* AI */
+
+        .ai-score-section {
+            display: flex;
+            align-items: center;
+
+            gap: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .score-ring {
+            width: 110px;
+            height: 110px;
+
+            flex: 0 0 110px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                conic-gradient(
+                    #ff525e 0 92%,
+                    #182a40 92% 100%
+                );
+
+            position: relative;
+        }
+
+        .score-ring::before {
+            content: "";
+
+            position: absolute;
+
+            width: 84px;
+            height: 84px;
+
+            border-radius: 50%;
+
+            background: #0d1b2d;
+        }
+
+        .score-content {
+            position: relative;
+
+            text-align: center;
+        }
+
+        .score-content strong {
+            display: block;
+
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .score-content span {
+            color: #728198;
+            font-size: 8px;
+        }
+
+        .score-info h3 {
+            margin: 0 0 5px;
+
+            font-size: 14px;
+        }
+
+        .score-info p {
+            margin: 0;
+
+            color: #78899e;
+
+            font-size: 9px;
+
+            line-height: 1.8;
+        }
+
+        .ai-modules {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,minmax(0,1fr));
+
+            gap: 9px;
+        }
+
+        .ai-module {
+            padding: 13px;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.05);
+        }
+
+        .module-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+        }
+
+        .module-name {
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .module-status {
+            width: 19px;
+            height: 19px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background: rgba(71,211,147,.10);
+
+            color: #59d99c;
+
+            font-size: 9px;
+        }
+
+        .module-description {
+            color: #687990;
+
+            font-size: 8px;
+
+            line-height: 1.6;
+        }
+
+        .risk-bar {
+            margin-top: 16px;
+        }
+
+        .risk-bar-top {
+            display: flex;
+            justify-content: space-between;
+
+            margin-bottom: 6px;
+
+            font-size: 9px;
+        }
+
+        .risk-bar-top span:first-child {
+            color: #728198;
+        }
+
+        .risk-bar-top span:last-child {
+            color: #ff6570;
+            font-weight: 700;
+        }
+
+        .risk-track {
+            height: 7px;
+
+            background: #182a40;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .risk-fill {
+            height: 100%;
+
+            width: 92%;
+
+            background: #ff525e;
+
+            border-radius: inherit;
+        }
+
+        /* MAP */
+
+        #emergencyMap {
+            width: 100%;
+            height: 330px;
+        }
+
+        .leaflet-container {
+            background: #091524;
+
+            font-family: Cairo, sans-serif;
+        }
+
+        .leaflet-control-zoom a {
+            background: #0d1b2d !important;
+            color: white !important;
+            border-color: #26384e !important;
+        }
+
+        .leaflet-popup-content-wrapper,
+        .leaflet-popup-tip {
+            background: #0d1b2d;
+            color: #dce5ef;
+        }
+
+        .leaflet-popup-content {
+            font-family: Cairo, sans-serif;
+            font-size: 10px;
+        }
+
+        .location-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 11px 15px;
+
+            background: #0a1727;
+
+            border-top:
+                1px solid rgba(255,255,255,.05);
+        }
+
+        .coordinates {
+            direction: ltr;
+
+            color: #718198;
+
+            font-size: 9px;
+        }
+
+        .open-map {
+            color: #68b8ff;
+
+            text-decoration: none;
+
+            font-size: 9px;
+        }
+
+        /* RESPONSE TEAM */
+
+        .team-card {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 14px;
+
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.05);
+
+            margin-bottom: 14px;
+        }
+
+        .team-icon {
+            width: 44px;
+            height: 44px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background: rgba(56,205,144,.09);
+
+            font-size: 19px;
+        }
+
+        .team-info {
+            flex: 1;
+        }
+
+        .team-info strong {
+            display: block;
+
+            font-size: 11px;
+        }
+
+        .team-info span {
+            color: #66788f;
+
+            font-size: 9px;
+        }
+
+        .team-status {
+            padding: 5px 8px;
+
+            border-radius: 20px;
+
+            color: #ffc15c;
+
+            background: rgba(255,184,77,.09);
+
+            font-size: 8px;
+        }
+
+        .team-stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap: 8px;
+
+            margin-bottom: 15px;
+        }
+
+        .team-stat {
+            padding: 11px;
+
+            border-radius: 9px;
+
+            background: #091625;
+
+            text-align: center;
+        }
+
+        .team-stat strong {
+            display: block;
+
+            font-size: 15px;
+        }
+
+        .team-stat span {
+            color: #65768d;
+
+            font-size: 8px;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+
+            gap: 9px;
+        }
+
+        .action-btn {
+            width: 100%;
+
+            min-height: 42px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            background: rgba(255,255,255,.03);
+
+            color: #d4deea;
+
+            cursor: pointer;
+
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 600;
+
+            transition: .2s ease;
+        }
+
+        .action-btn:hover {
+            background: rgba(255,255,255,.07);
+        }
+
+        .action-primary {
+            background: #e94d59;
+
+            border-color: #e94d59;
+
+            color: white;
+        }
+
+        .action-primary:hover {
+            background: #f15a66;
+        }
+
+        .action-success {
+            background: rgba(49,210,132,.08);
+
+            border-color:
+                rgba(49,210,132,.16);
+
+            color: #63dda3;
+        }
+
+        .action-danger {
+            color: #ff6a74;
+        }
+
+        /* TIMELINE */
+
+        .timeline {
+            position: relative;
+
+            padding: 5px 0;
+        }
+
+        .timeline::before {
+            content: "";
+
+            position: absolute;
+
+            top: 13px;
+            bottom: 13px;
+
+            right: 7px;
+
+            width: 1px;
+
+            background: #23364c;
+        }
+
+        .timeline-item {
+            position: relative;
+
+            display: flex;
+
+            gap: 13px;
+
+            margin-bottom: 19px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            width: 15px;
+            height: 15px;
+
+            flex: 0 0 15px;
+
+            border-radius: 50%;
+
+            background: #172a40;
+
+            border:
+                3px solid #0d1b2d;
+
+            box-shadow:
+                0 0 0 1px #30435b;
+        }
+
+        .timeline-item.completed
+        .timeline-dot {
+            background: #42d494;
+
+            box-shadow:
+                0 0 0 1px #42d494;
+        }
+
+        .timeline-item.current
+        .timeline-dot {
+            background: #ff5964;
+
+            box-shadow:
+                0 0 0 1px #ff5964,
+                0 0 10px rgba(255,89,100,.5);
+        }
+
+        .timeline-content strong {
+            display: block;
+
+            font-size: 10px;
+        }
+
+        .timeline-content span {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #687990;
+
+            font-size: 8px;
+        }
+
+        /* TOAST */
+
+        .toast {
+            position: fixed;
+
+            bottom: 25px;
+            left: 25px;
+
+            z-index: 3000;
+
+            padding: 12px 16px;
+
+            border-radius: 10px;
+
+            background: #13243a;
+
+            border:
+                1px solid rgba(255,255,255,.09);
+
+            color: #e2eaf2;
+
+            font-size: 10px;
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.3);
+
+            transform: translateY(100px);
+
+            opacity: 0;
+
+            transition: .25s ease;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1200px) {
+
+            .top-grid,
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 900px) {
+
+            .admin-main {
+                margin-right: 0;
+            }
+
+            .admin-header {
+                right: 0;
+            }
+
+            .page-content {
+                padding: 16px;
+            }
+
+            .system-status,
+            .operator-info {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .emergency-hero {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .hero-side {
+                width: 100%;
+
+                justify-content: flex-start;
+            }
+
+            .detail-grid,
+            .ai-modules {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-score-section {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- AUTH GUARD -->
+
+    <script>
+
+        if (
+            sessionStorage.getItem(
+                "adminAuthenticated"
+            ) !== "true"
+        ) {
+
+            window.location.href =
+                "login.html";
+
+        }
+
+    </script>
+
+
+    <!-- NAVIGATION -->
+
+    <div id="adminNav"></div>
+
+
+    <!-- HEADER -->
+
+    <header class="admin-header">
+
+        <div class="admin-header-left">
+
+            <button
+                class="menu-toggle"
+                onclick="toggleSidebar()"
+                aria-label="فتح القائمة"
+            >
+                ☰
+            </button>
+
+            <div class="page-title">
+
+                <strong>
+                    تفاصيل البلاغ
+                </strong>
+
+                <span>
+                    Emergency Incident Control
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="admin-user-area">
+
+            <div class="system-status">
+
+                <span class="status-dot"></span>
+
+                النظام يعمل
+
+            </div>
+
+
+            <div class="operator">
+
+                <div
+                    class="operator-avatar"
+                    id="operatorAvatar"
+                >
+                    A
+                </div>
+
+                <div class="operator-info">
+
+                    <strong id="operatorName">
+                        Admin User
+                    </strong>
+
+                    <span>
+                        مسؤول العمليات
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="admin-main">
+
+        <div class="page-content">
+
+
+            <!-- BACK -->
+
+            <a
+                href="emergencies.html"
+                class="back-link"
+            >
+                → العودة إلى جميع البلاغات
+            </a>
+
+
+            <!-- HERO -->
+
+            <section class="emergency-hero">
+
+                <div class="hero-main">
+
+                    <div
+                        class="hero-icon"
+                        id="heroIcon"
+                    >
+                        ⚠
+                    </div>
+
+                    <div class="hero-info">
+
+                        <h1 id="emergencyType">
+                            حالة طوارئ
+                        </h1>
+
+                        <span
+                            class="hero-id"
+                            id="emergencyId"
+                        >
+                            EMG-000001
+                        </span>
+
+                        <div
+                            class="hero-description"
+                            id="heroDescription"
+                        >
+                            —
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-side">
+
+                    <div class="hero-status">
+
+                        <span>
+                            حالة البلاغ
+                        </span>
+
+                        <strong
+                            id="heroStatus"
+                            class="hero-status-active"
+                        >
+                            نشط
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- TOP GRID -->
+
+            <section class="top-grid">
+
+
+                <!-- REPORT DETAILS -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <strong>
+                            معلومات البلاغ
+                        </strong>
+
+                        <span>
+                            Incident Information
+                        </span>
+
+                    </div>
+
+
+                    <div class="panel-body">
+
+                        <div class="detail-grid">
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    نوع الطوارئ
+                                </span>
+
+                                <span
+                                    class="detail-value"
+                                    id="detailType"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    مستوى الأولوية
+                                </span>
+
+                                <span
+                                    class="detail-value"
+                                    id="detailPriority"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    وقت إنشاء البلاغ
+                                </span>
+
+                                <span
+                                    class="detail-value ltr"
+                                    id="detailCreated"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    رقم البلاغ
+                                </span>
+
+                                <span
+                                    class="detail-value ltr"
+                                    id="detailId"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    فريق الاستجابة
+                                </span>
+
+                                <span
+                                    class="detail-value"
+                                    id="detailResource"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+
+                            <div class="detail-item">
+
+                                <span class="detail-label">
+                                    نوع الاستجابة
+                                </span>
+
+                                <span
+                                    class="detail-value"
+                                    id="detailResponse"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="description-box">
+
+                            <strong
+                                style="
+                                    display:block;
+                                    color:#718299;
+                                    font-size:8px;
+                                    margin-bottom:5px;
+                                "
+                            >
+                                وصف الحالة
+                            </strong>
+
+                            <span id="fullDescription">
+                                لا يوجد وصف للحالة.
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AI -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <strong>
+                            تحليل الذكاء الاصطناعي
+                        </strong>
+
+                        <span>
+                            AI Decision Pipeline
+                        </span>
+
+                    </div>
+
+
+                    <div class="panel-body">
+
+
+                        <div class="ai-score-section">
+
+                            <div
+                                class="score-ring"
+                                id="scoreRing"
+                            >
+
+                                <div class="score-content">
+
+                                    <strong
+                                        id="riskScore"
+                                    >
+                                        0
+                                    </strong>
+
+                                    <span>
+                                        / 100
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="score-info">
+
+                                <h3
+                                    id="riskLabel"
+                                >
+                                    —
+                                </h3>
+
+                                <p>
+                                    تم تحديد مستوى الخطورة
+                                    بناءً على نتائج تحليل
+                                    المدخلات المتاحة ودمجها
+                                    في قرار موحد.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="ai-modules">
+
+
+                            <div class="ai-module">
+
+                                <div class="module-top">
+
+                                    <span class="module-name">
+                                        NLP
+                                    </span>
+
+                                    <span
+                                        class="module-status"
+                                        id="nlpStatus"
+                                    >
+                                        ✓
+                                    </span>
+
+                                </div>
+
+                                <div
+                                    class="module-description"
+                                    id="nlpDescription"
+                                >
+                                    تحليل وصف البلاغ
+                                </div>
+
+                            </div>
+
+
+                            <div class="ai-module">
+
+                                <div class="module-top">
+
+                                    <span class="module-name">
+                                        Computer Vision
+                                    </span>
+
+                                    <span
+                                        class="module-status"
+                                        id="visionStatus"
+                                    >
+                                        ✓
+                                    </span>
+
+                                </div>
+
+                                <div
+                                    class="module-description"
+                                    id="visionDescription"
+                                >
+                                    تحليل الصورة المرفقة
+                                </div>
+
+                            </div>
+
+
+                            <div class="ai-module">
+
+                                <div class="module-top">
+
+                                    <span class="module-name">
+                                        Decision Fusion
+                                    </span>
+
+                                    <span
+                                        class="module-status"
+                                        id="fusionStatus"
+                                    >
+                                        ✓
+                                    </span>
+
+                                </div>
+
+                                <div class="module-description">
+                                    دمج نتائج التحليل
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="risk-bar">
+
+                            <div class="risk-bar-top">
+
+                                <span>
+                                    درجة الخطورة
+                                </span>
+
+                                <span
+                                    id="riskPercent"
+                                >
+                                    0%
+                                </span>
+
+                            </div>
+
+                            <div class="risk-track">
+
+                                <div
+                                    class="risk-fill"
+                                    id="riskFill"
+                                ></div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- BOTTOM GRID -->
+
+            <section class="bottom-grid">
+
+
+                <!-- LEFT -->
+
+                <div>
+
+
+                    <!-- MAP -->
+
+                    <div
+                        class="panel"
+                        style="margin-bottom:18px;"
+                    >
+
+                        <div class="panel-header">
+
+                            <strong>
+                                موقع الحالة
+                            </strong>
+
+                            <span>
+                                Incident Location
+                            </span>
+
+                        </div>
+
+
+                        <div id="emergencyMap"></div>
+
+
+                        <div class="location-footer">
+
+                            <span
+                                class="coordinates"
+                                id="coordinates"
+                            >
+                                —
+                            </span>
+
+                            <a
+                                href="#"
+                                class="open-map"
+                                id="openMap"
+                                target="_blank"
+                            >
+                                فتح في الخريطة الخارجية ↗
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TIMELINE -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <strong>
+                                مسار الاستجابة
+                            </strong>
+
+                            <span>
+                                Response Timeline
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="panel-body"
+                        >
+
+                            <div
+                                class="timeline"
+                                id="timeline"
+                            ></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT -->
+
+                <div>
+
+
+                    <!-- RESPONSE TEAM -->
+
+                    <div
+                        class="panel"
+                        style="margin-bottom:18px;"
+                    >
+
+                        <div class="panel-header">
+
+                            <strong>
+                                فريق الاستجابة
+                            </strong>
+
+                            <span>
+                                Assigned Resource
+                            </span>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+
+                            <div
+                                class="team-card"
+                                id="teamCard"
+                            >
+
+                                <div class="team-icon">
+                                    🚑
+                                </div>
+
+                                <div class="team-info">
+
+                                    <strong
+                                        id="teamName"
+                                    >
+                                        —
+                                    </strong>
+
+                                    <span
+                                        id="teamId"
+                                    >
+                                        —
+                                    </span>
+
+                                </div>
+
+                                <span
+                                    class="team-status"
+                                    id="teamStatus"
+                                >
+                                    —
+                                </span>
+
+                            </div>
+
+
+                            <div class="team-stats">
+
+                                <div class="team-stat">
+
+                                    <strong
+                                        id="teamDistance"
+                                    >
+                                        —
+                                    </strong>
+
+                                    <span>
+                                        كم للموقع
+                                    </span>
+
+                                </div>
+
+
+                                <div class="team-stat">
+
+                                    <strong
+                                        id="teamEta"
+                                    >
+                                        —
+                                    </strong>
+
+                                    <span>
+                                        دقيقة للوصول
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="panel">
+
+                        <div class="panel-header">
+
+                            <strong>
+                                إجراءات المشغّل
+                            </strong>
+
+                            <span>
+                                Operator Actions
+                            </span>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="actions">
+
+                                <button
+                                    class="
+                                        action-btn
+                                        action-primary
+                                    "
+                                    id="dispatchBtn"
+                                >
+                                    🚨 توجيه فريق استجابة
+                                </button>
+
+
+                                <button
+                                    class="
+                                        action-btn
+                                        action-success
+                                    "
+                                    id="trackBtn"
+                                >
+                                    📍 فتح التتبع المباشر
+                                </button>
+
+
+                                <button
+                                    class="action-btn"
+                                    id="statusBtn"
+                                >
+                                    تحديث حالة البلاغ
+                                </button>
+
+
+                                <button
+                                    class="
+                                        action-btn
+                                        action-danger
+                                    "
+                                    id="resolveBtn"
+                                >
+                                    ✓ إغلاق البلاغ
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+    <!-- TOAST -->
+
+    <div
+        class="toast"
+        id="toast"
+    ></div>
+
+
+    <!-- LEAFLET -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    ></script>
+
+
+    <!-- APP JS -->
+
+    <script src="../js/app.js"></script>
+
+
+    <script>
+
+        /* =====================================================
+           NAV
+        ===================================================== */
+
+        document.getElementById(
+            "adminNav"
+        ).innerHTML =
+            adminNav("emergencies");
+
+
+        /* =====================================================
+           STATE
+        ===================================================== */
+
+        let emergency = null;
+
+        let map = null;
+
+
+        /* =====================================================
+           HELPERS
+        ===================================================== */
+
+        function translateType(type) {
+
+            const map = {
+
+                "Fire":
+                    "حريق",
+
+                "Flood":
+                    "فيضان",
+
+                "Earthquake":
+                    "زلزال",
+
+                "Traffic Accident":
+                    "حادث مروري",
+
+                "Medical Emergency":
+                    "حالة طبية طارئة",
+
+                "Other":
+                    "حالة أخرى"
+
+            };
+
+            return map[type] || type;
+
+        }
+
+
+        function translatePriority(priority) {
+
+            const map = {
+
+                critical:
+                    "حرج",
+
+                high:
+                    "مرتفع",
+
+                medium:
+                    "متوسط",
+
+                low:
+                    "منخفض"
+
+            };
+
+            return map[priority] || priority;
+
+        }
+
+
+        function translateStatus(status) {
+
+            const map = {
+
+                active:
+                    "نشط",
+
+                dispatched:
+                    "تم توجيه الفريق",
+
+                processing:
+                    "قيد المعالجة",
+
+                resolved:
+                    "مكتمل"
+
+            };
+
+            return map[status] || status;
+
+        }
+
+
+        function translateResponse(type) {
+
+            const map = {
+
+                "Fire Rescue":
+                    "إنقاذ وإطفاء",
+
+                "Ambulance":
+                    "إسعاف",
+
+                "Rescue Team":
+                    "فريق إنقاذ"
+
+            };
+
+            return map[type] || type || "—";
+
+        }
+
+
+        function getRiskLabel(score) {
+
+            if (score >= 85)
+                return "خطر حرج";
+
+            if (score >= 70)
+                return "خطر مرتفع";
+
+            if (score >= 40)
+                return "خطر متوسط";
+
+            return "خطر منخفض";
+
+        }
+
+
+        function getStatusClass(status) {
+
+            return (
+                "hero-status-" +
+                (status || "active")
+            );
+
+        }
+
+
+        function escapeJs(value) {
+
+            return String(value || "")
+                .replaceAll("\\", "\\\\")
+                .replaceAll("'", "\\'");
+
+        }
+
+
+        /* =====================================================
+           LOAD
+        ===================================================== */
+
+        async function loadEmergency() {
+
+            const id =
+                new URLSearchParams(
+                    window.location.search
+                ).get("id");
+
+
+            if (!id) {
+
+                window.location.href =
+                    "emergencies.html";
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "../mock-data/data.json"
+                    );
+
+
+                const data =
+                    await response.json();
+
+
+                const sessionEmergency =
+                    sessionStorage.getItem(
+                        "currentEmergency"
+                    );
+
+
+                let sessionData = null;
+
+
+                if (sessionEmergency) {
+
+                    try {
+
+                        sessionData =
+                            JSON.parse(
+                                sessionEmergency
+                            );
+
+                    } catch (error) {
+
+                        console.error(error);
+
+                    }
+
+                }
+
+
+                emergency =
+                    sessionData &&
+                    sessionData.emergency_id === id
+
+                        ? sessionData
+
+                        : data.emergencies.find(
+                            item =>
+                                item.emergency_id === id
+                        );
+
+
+                if (!emergency) {
+
+                    showNotFound();
+
+                    return;
+
+                }
+
+
+                renderEmergency();
+
+            } catch (error) {
+
+                console.error(error);
+
+                showNotFound();
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RENDER
+        ===================================================== */
+
+        function renderEmergency() {
+
+            const type =
+                translateType(
+                    emergency.emergency_type
+                );
+
+
+            const score =
+                Number(
+                    emergency.risk_score || 0
+                );
+
+
+            /* HERO */
+
+            document.getElementById(
+                "heroIcon"
+            ).textContent =
+                emergencyIcon(
+                    emergency.emergency_type
+                );
+
+
+            document.getElementById(
+                "emergencyType"
+            ).textContent =
+                type;
+
+
+            document.getElementById(
+                "emergencyId"
+            ).textContent =
+                emergency.emergency_id;
+
+
+            document.getElementById(
+                "heroDescription"
+            ).textContent =
+                emergency.description ||
+                "لا يوجد وصف للحالة.";
+
+
+            const status =
+                document.getElementById(
+                    "heroStatus"
+                );
+
+
+            status.textContent =
+                translateStatus(
+                    emergency.status
+                );
+
+
+            status.className =
+                "hero-status " +
+                getStatusClass(
+                    emergency.status
+                );
+
+
+            /* DETAILS */
+
+            document.getElementById(
+                "detailType"
+            ).textContent =
+                type;
+
+
+            document.getElementById(
+                "detailPriority"
+            ).textContent =
+                translatePriority(
+                    emergency.priority
+                );
+
+
+            document.getElementById(
+                "detailCreated"
+            ).textContent =
+                emergency.created_at ||
+                "—";
+
+
+            document.getElementById(
+                "detailId"
+            ).textContent =
+                emergency.emergency_id;
+
+
+            document.getElementById(
+                "detailResource"
+            ).textContent =
+                emergency.resource_name ||
+                "لم يتم التعيين";
+
+
+            document.getElementById(
+                "detailResponse"
+            ).textContent =
+                translateResponse(
+                    emergency.response_type
+                );
+
+
+            document.getElementById(
+                "fullDescription"
+            ).textContent =
+                emergency.description ||
+                "لا يوجد وصف للحالة.";
+
+
+            /* AI */
+
+            document.getElementById(
+                "riskScore"
+            ).textContent =
+                score;
+
+
+            document.getElementById(
+                "riskLabel"
+            ).textContent =
+                getRiskLabel(score);
+
+
+            document.getElementById(
+                "riskPercent"
+            ).textContent =
+                score + "%";
+
+
+            document.getElementById(
+                "riskFill"
+            ).style.width =
+                score + "%";
+
+
+            document.getElementById(
+                "scoreRing"
+            ).style.background =
+                `conic-gradient(
+                    #ff525e 0 ${score}%,
+                    #182a40 ${score}% 100%
+                )`;
+
+
+            const analysis =
+                emergency.analysis || {};
+
+
+            updateModule(
+                "nlpStatus",
+                "nlpDescription",
+                analysis.nlp_used,
+                "تحليل وصف البلاغ"
+            );
+
+
+            updateModule(
+                "visionStatus",
+                "visionDescription",
+                analysis.vision_used,
+                "تحليل الصورة المرفقة"
+            );
+
+
+            updateModule(
+                "fusionStatus",
+                null,
+                analysis.fusion_used !== false,
+                "دمج نتائج التحليل وتحديد مستوى الخطر"
+            );
+
+
+            /* TEAM */
+
+            renderTeam();
+
+
+            /* MAP */
+
+            initializeMap();
+
+
+            /* TIMELINE */
+
+            renderTimeline();
+
+
+            /* OPERATOR */
+
+            updateOperator();
+
+        }
+
+
+        /* =====================================================
+           AI MODULE
+        ===================================================== */
+
+        function updateModule(
+            statusId,
+            descriptionId,
+            used,
+            defaultText
+        ) {
+
+            const status =
+                document.getElementById(
+                    statusId
+                );
+
+
+            if (used) {
+
+                status.textContent = "✓";
+
+                status.style.background =
+                    "rgba(71,211,147,.10)";
+
+                status.style.color =
+                    "#59d99c";
+
+                if (descriptionId) {
+
+                    document.getElementById(
+                        descriptionId
+                    ).textContent =
+                        defaultText +
+                        " · تم التحليل";
+
+                }
+
+            } else {
+
+                status.textContent = "—";
+
+                status.style.background =
+                    "rgba(255,255,255,.05)";
+
+                status.style.color =
+                    "#64758b";
+
+                if (descriptionId) {
+
+                    document.getElementById(
+                        descriptionId
+                    ).textContent =
+                        defaultText +
+                        " · غير متوفر";
+
+                }
+
+            }
+
+        }
+
+
+        /* =====================================================
+           TEAM
+        ===================================================== */
+
+        function renderTeam() {
+
+            document.getElementById(
+                "teamName"
+            ).textContent =
+                emergency.resource_name ||
+                "لم يتم تعيين فريق";
+
+
+            document.getElementById(
+                "teamId"
+            ).textContent =
+                emergency.resource_id ||
+                "لا يوجد Resource ID";
+
+
+            document.getElementById(
+                "teamStatus"
+            ).textContent =
+                emergency.status ===
+                "resolved"
+
+                    ? "اكتملت المهمة"
+
+                    : emergency.status ===
+                      "dispatched"
+
+                        ? "في الطريق"
+
+                        : emergency.resource_name
+                            ? "مخصص للحالة"
+                            : "غير مخصص";
+
+
+            document.getElementById(
+                "teamDistance"
+            ).textContent =
+                emergency.distance != null
+
+                    ? Number(
+                        emergency.distance
+                    ).toFixed(1)
+
+                    : "—";
+
+
+            document.getElementById(
+                "teamEta"
+            ).textContent =
+                emergency.eta != null
+
+                    ? Number(
+                        emergency.eta
+                    ).toFixed(1)
+
+                    : "—";
+
+
+            const icon =
+                emergency.response_type ===
+                "Fire Rescue"
+
+                    ? "🚒"
+
+                    : emergency.response_type ===
+                      "Ambulance"
+
+                        ? "🚑"
+
+                        : "🛟";
+
+
+            document.querySelector(
+                ".team-icon"
+            ).textContent =
+                icon;
+
+        }
+
+
+        /* =====================================================
+           MAP
+        ===================================================== */
+
+        function initializeMap() {
+
+            const lat =
+                Number(
+                    emergency.latitude
+                );
+
+
+            const lng =
+                Number(
+                    emergency.longitude
+                );
+
+
+            if (
+                !Number.isFinite(lat) ||
+                !Number.isFinite(lng)
+            ) {
+
+                return;
+
+            }
+
+
+            map =
+                L.map(
+                    "emergencyMap"
+                ).setView(
+                    [lat, lng],
+                    14
+                );
+
+
+            L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+                    attribution:
+                        "&copy; OpenStreetMap contributors"
+                }
+            ).addTo(map);
+
+
+            const emergencyMarker =
+                L.marker(
+                    [lat, lng]
+                ).addTo(map);
+
+
+            emergencyMarker.bindPopup(`
+                <strong>
+                    ${escapeHtml(
+                        translateType(
+                            emergency.emergency_type
+                        )
+                    )}
+                </strong>
+
+                <br>
+
+                ${escapeHtml(
+                    emergency.emergency_id
+                )}
+
+                <br><br>
+
+                مستوى الخطر:
+                <strong>
+                    ${emergency.risk_score || 0}/100
+                </strong>
+            `).openPopup();
+
+
+            document.getElementById(
+                "coordinates"
+            ).textContent =
+                `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+
+            document.getElementById(
+                "openMap"
+            ).href =
+                `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`;
+
+        }
+
+
+        /* =====================================================
+           TIMELINE
+        ===================================================== */
+
+        function renderTimeline() {
+
+            const container =
+                document.getElementById(
+                    "timeline"
+                );
+
+
+            const steps = [
+
+                {
+                    title:
+                        "تم استلام البلاغ",
+
+                    description:
+                        "تم تسجيل البلاغ في النظام.",
+
+                    completed:
+                        true
+                },
+
+                {
+                    title:
+                        "تم تحليل الحالة",
+
+                    description:
+                        "تم تشغيل وحدات الذكاء الاصطناعي المتاحة.",
+
+                    completed:
+                        true
+                },
+
+                {
+                    title:
+                        "تم تقييم مستوى الخطورة",
+
+                    description:
+                        "تم حساب درجة الخطورة وتحديد الأولوية.",
+
+                    completed:
+                        true
+                },
+
+                {
+                    title:
+                        "تم توجيه فريق الاستجابة",
+
+                    description:
+                        emergency.resource_name
+                            ? `الفريق: ${emergency.resource_name}`
+                            : "بانتظار تعيين فريق.",
+
+                    completed:
+                        Boolean(
+                            emergency.resource_name
+                        )
+                },
+
+                {
+                    title:
+                        "الفريق في الطريق",
+
+                    description:
+                        "متابعة موقع فريق الاستجابة.",
+
+                    current:
+                        emergency.status ===
+                        "dispatched"
+                },
+
+                {
+                    title:
+                        "تم الوصول إلى الموقع",
+
+                    description:
+                        "سيتم تسجيل الوصول عند تأكيد الفريق.",
+
+                    completed:
+                        emergency.status ===
+                        "resolved"
+                }
+
+            ];
+
+
+            container.innerHTML =
+                steps.map(
+                    step => `
+
+                        <div
+                            class="
+                                timeline-item
+                                ${
+                                    step.completed
+                                        ? "completed"
+                                        : ""
+                                }
+                                ${
+                                    step.current
+                                        ? "current"
+                                        : ""
+                                }
+                            "
+                        >
+
+                            <div
+                                class="timeline-dot"
+                            ></div>
+
+                            <div
+                                class="timeline-content"
+                            >
+
+                                <strong>
+                                    ${escapeHtml(
+                                        step.title
+                                    )}
+                                </strong>
+
+                                <span>
+                                    ${escapeHtml(
+                                        step.description
+                                    )}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    `
+                ).join("");
+
+        }
+
+
+        /* =====================================================
+           OPERATOR
+        ===================================================== */
+
+        function updateOperator() {
+
+            const stored =
+                sessionStorage.getItem(
+                    "adminUser"
+                );
+
+
+            if (!stored) return;
+
+
+            try {
+
+                const user =
+                    JSON.parse(
+                        stored
+                    );
+
+
+                const name =
+                    user.name ||
+                    "Admin User";
+
+
+                document.getElementById(
+                    "operatorName"
+                ).textContent =
+                    name;
+
+
+                document.getElementById(
+                    "operatorAvatar"
+                ).textContent =
+                    name
+                        .charAt(0)
+                        .toUpperCase();
+
+            } catch (error) {
+
+                console.error(error);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        document.getElementById(
+            "dispatchBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                if (!emergency) return;
+
+
+                emergency.status =
+                    "dispatched";
+
+
+                emergency.resource_name =
+                    emergency.resource_name ||
+                    "Fire Rescue 1";
+
+
+                sessionStorage.setItem(
+                    "currentEmergency",
+                    JSON.stringify(
+                        emergency
+                    )
+                );
+
+
+                showToast(
+                    "تم توجيه فريق الاستجابة للبلاغ."
+                );
+
+
+                renderEmergency();
+
+            }
+        );
+
+
+        document.getElementById(
+            "trackBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                if (!emergency) return;
+
+
+                window.location.href =
+                    `../citizen/tracking.html?id=${encodeURIComponent(
+                        emergency.emergency_id
+                    )}`;
+
+            }
+        );
+
+
+        document.getElementById(
+            "statusBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                if (!emergency) return;
+
+
+                const statuses = [
+                    "processing",
+                    "active",
+                    "dispatched",
+                    "resolved"
+                ];
+
+
+                const current =
+                    statuses.indexOf(
+                        emergency.status
+                    );
+
+
+                const next =
+                    statuses[
+                        (current + 1) %
+                        statuses.length
+                    ];
+
+
+                emergency.status =
+                    next;
+
+
+                sessionStorage.setItem(
+                    "currentEmergency",
+                    JSON.stringify(
+                        emergency
+                    )
+                );
+
+
+                showToast(
+                    `تم تحديث الحالة إلى: ${translateStatus(next)}`
+                );
+
+
+                renderEmergency();
+
+            }
+        );
+
+
+        document.getElementById(
+            "resolveBtn"
+        ).addEventListener(
+            "click",
+            () => {
+
+                if (!emergency) return;
+
+
+                emergency.status =
+                    "resolved";
+
+
+                sessionStorage.setItem(
+                    "currentEmergency",
+                    JSON.stringify(
+                        emergency
+                    )
+                );
+
+
+                showToast(
+                    "تم إغلاق البلاغ بنجاح."
+                );
+
+
+                renderEmergency();
+
+            }
+        );
+
+
+        /* =====================================================
+           NOT FOUND
+        ===================================================== */
+
+        function showNotFound() {
+
+            document.querySelector(
+                ".page-content"
+            ).innerHTML = `
+
+                <div
+                    style="
+                        min-height:60vh;
+                        display:grid;
+                        place-items:center;
+                        text-align:center;
+                    "
+                >
+
+                    <div>
+
+                        <div
+                            style="
+                                width:70px;
+                                height:70px;
+                                display:grid;
+                                place-items:center;
+                                margin:0 auto 15px;
+                                border-radius:18px;
+                                background:#0d1b2d;
+                                font-size:27px;
+                            "
+                        >
+                            ⚠
+                        </div>
+
+                        <h2
+                            style="
+                                margin:0 0 7px;
+                                font-size:17px;
+                            "
+                        >
+                            البلاغ غير موجود
+                        </h2>
+
+                        <p
+                            style="
+                                color:#6f8097;
+                                font-size:10px;
+                            "
+                        >
+                            لم يتم العثور على البلاغ المطلوب.
+                        </p>
+
+                        <a
+                            href="emergencies.html"
+                            style="
+                                display:inline-block;
+                                margin-top:10px;
+                                color:#69b8ff;
+                                text-decoration:none;
+                                font-size:10px;
+                            "
+                        >
+                            العودة إلى البلاغات
+                        </a>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+
+
+        /* =====================================================
+           START
+        ===================================================== */
+
+        loadEmergency();
+
+    </script>
+
+</body>
+
+</html>

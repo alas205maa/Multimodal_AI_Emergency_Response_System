@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>تسجيل الدخول | Emergency Response</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/app.css"
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: "Cairo", sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 80% 20%,
+                    rgba(220,38,38,.09),
+                    transparent 30%
+                ),
+                #050d18;
+
+            color: #f8fafc;
+        }
+
+
+        /* =====================================
+           PAGE
+        ====================================== */
+
+        .login-page {
+            min-height: 100vh;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr
+                460px;
+        }
+
+
+        /* =====================================
+           LEFT VISUAL PANEL
+        ====================================== */
+
+        .visual-panel {
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    #091525,
+                    #06101d
+                );
+
+            border-left:
+                1px solid rgba(255,255,255,.06);
+        }
+
+
+        .visual-grid {
+            position: absolute;
+
+            inset: 0;
+
+            opacity: .35;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.035) 1px,
+                    transparent 1px
+                );
+
+            background-size:
+                45px 45px;
+
+            transform:
+                perspective(600px)
+                rotateX(55deg)
+                scale(1.6);
+
+            transform-origin:
+                center bottom;
+        }
+
+
+        .glow {
+            position: absolute;
+
+            width: 430px;
+            height: 430px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(220,38,38,.07);
+
+            filter: blur(80px);
+
+            top: 25%;
+            left: 25%;
+        }
+
+
+        .visual-content {
+            position: relative;
+
+            z-index: 2;
+
+            width: min(650px, 82%);
+
+            margin: auto;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            padding: 60px;
+        }
+
+
+        .system-brand {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 65px;
+        }
+
+
+        .brand-mark {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            background: #dc2626;
+
+            color: white;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            box-shadow:
+                0 8px 30px rgba(220,38,38,.2);
+        }
+
+
+        .brand-name {
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+
+        .brand-subtitle {
+            margin-top: 2px;
+
+            color: #475569;
+
+            font-size: 9px;
+        }
+
+
+        .visual-content h1 {
+            max-width: 550px;
+
+            margin: 0;
+
+            font-size:
+                clamp(34px, 4vw, 55px);
+
+            line-height: 1.2;
+
+            font-weight: 800;
+
+            letter-spacing: -.8px;
+        }
+
+
+        .visual-content h1 span {
+            color: #f87171;
+        }
+
+
+        .visual-description {
+            max-width: 500px;
+
+            margin-top: 20px;
+
+            color: #64748b;
+
+            font-size: 12px;
+
+            line-height: 2;
+        }
+
+
+        /* =====================================
+           SYSTEM PIPELINE
+        ====================================== */
+
+        .system-status {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 45px;
+        }
+
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #4ade80;
+
+            box-shadow:
+                0 0 12px rgba(74,222,128,.6);
+        }
+
+
+        .system-status span {
+            color: #94a3b8;
+
+            font-size: 10px;
+        }
+
+
+        .pipeline {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 16px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .pipeline-item {
+            padding: 7px 11px;
+
+            border-radius: 7px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            color: #64748b;
+
+            font-size: 8px;
+        }
+
+
+        .pipeline-arrow {
+            color: #334155;
+
+            font-size: 10px;
+        }
+
+
+        /* =====================================
+           LOGIN PANEL
+        ====================================== */
+
+        .login-panel {
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 35px;
+
+            background:
+                rgba(6,14,25,.96);
+        }
+
+
+        .login-box {
+            width: 100%;
+
+            max-width: 360px;
+        }
+
+
+        .mobile-brand {
+            display: none;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 40px;
+        }
+
+
+        .login-header {
+            margin-bottom: 30px;
+        }
+
+
+        .login-label {
+            color: #dc2626;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+            letter-spacing: .5px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .login-header h2 {
+            margin: 0;
+
+            font-size: 27px;
+
+            font-weight: 800;
+        }
+
+
+        .login-header p {
+            margin: 7px 0 0;
+
+            color: #64748b;
+
+            font-size: 10px;
+
+            line-height: 1.8;
+        }
+
+
+        /* =====================================
+           FORM
+        ====================================== */
+
+        .field {
+            margin-bottom: 17px;
+        }
+
+
+        .field label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #94a3b8;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        .input-wrapper {
+            position: relative;
+        }
+
+
+        .input-icon {
+            position: absolute;
+
+            right: 13px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #475569;
+
+            font-size: 11px;
+
+            pointer-events: none;
+        }
+
+
+        .field input {
+            width: 100%;
+
+            height: 47px;
+
+            padding:
+                0 37px 0 13px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            outline: none;
+
+            background:
+                rgba(255,255,255,.035);
+
+            color: #f8fafc;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            transition: .2s ease;
+        }
+
+
+        .field input:focus {
+            border-color:
+                rgba(220,38,38,.55);
+
+            background:
+                rgba(255,255,255,.045);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(220,38,38,.06);
+        }
+
+
+        .field input::placeholder {
+            color: #334155;
+        }
+
+
+        .password-toggle {
+            position: absolute;
+
+            left: 12px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            border: 0;
+
+            background: transparent;
+
+            color: #475569;
+
+            cursor: pointer;
+
+            font-family: inherit;
+
+            font-size: 9px;
+        }
+
+
+        .password-toggle:hover {
+            color: #cbd5e1;
+        }
+
+
+        /* =====================================
+           OPTIONS
+        ====================================== */
+
+        .login-options {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin: 4px 0 22px;
+        }
+
+
+        .remember {
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #64748b;
+
+            font-size: 9px;
+
+            cursor: pointer;
+        }
+
+
+        .remember input {
+            accent-color: #dc2626;
+        }
+
+
+        .forgot {
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 9px;
+        }
+
+
+        .forgot:hover {
+            color: #cbd5e1;
+        }
+
+
+        /* =====================================
+           BUTTON
+        ====================================== */
+
+        .login-button {
+            width: 100%;
+
+            height: 48px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            background: #dc2626;
+
+            color: white;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition: .2s ease;
+        }
+
+
+        .login-button:hover {
+            background: #ef4444;
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(220,38,38,.16);
+        }
+
+
+        .login-button:disabled {
+            opacity: .65;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* =====================================
+           SECURITY NOTICE
+        ====================================== */
+
+        .security-notice {
+            display: flex;
+
+            gap: 9px;
+
+            margin-top: 22px;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.05);
+        }
+
+
+        .security-icon {
+            color: #60a5fa;
+
+            font-size: 10px;
+        }
+
+
+        .security-text {
+            color: #475569;
+
+            font-size: 8px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =====================================
+           ERROR
+        ====================================== */
+
+        .login-error {
+            display: none;
+
+            margin-bottom: 15px;
+
+            padding: 10px 12px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(220,38,38,.08);
+
+            border:
+                1px solid rgba(220,38,38,.14);
+
+            color: #f87171;
+
+            font-size: 9px;
+        }
+
+
+        .login-error.show {
+            display: block;
+        }
+
+
+        /* =====================================
+           FOOTER
+        ====================================== */
+
+        .login-footer {
+            margin-top: 35px;
+
+            text-align: center;
+
+            color: #334155;
+
+            font-size: 8px;
+        }
+
+
+        .citizen-link {
+            display: block;
+
+            margin-top: 10px;
+
+            color: #64748b;
+
+            text-decoration: none;
+
+            font-size: 9px;
+        }
+
+
+        .citizen-link:hover {
+            color: #cbd5e1;
+        }
+
+
+        /* =====================================
+           MOBILE
+        ====================================== */
+
+        @media (max-width: 850px) {
+
+            .login-page {
+                grid-template-columns: 1fr;
+            }
+
+
+            .visual-panel {
+                display: none;
+            }
+
+
+            .login-panel {
+                min-height: 100vh;
+
+                padding: 25px;
+            }
+
+
+            .login-box {
+                max-width: 390px;
+            }
+
+
+            .mobile-brand {
+                display: flex;
+            }
+
+        }
+
+
+        @media (max-width: 420px) {
+
+            .login-panel {
+                padding: 22px;
+            }
+
+            .login-header h2 {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-page">
+
+
+    <!-- =====================================
+         VISUAL PANEL
+    ====================================== -->
+
+    <section class="visual-panel">
+
+        <div class="visual-grid"></div>
+
+        <div class="glow"></div>
+
+
+        <div class="visual-content">
+
+
+            <div class="system-brand">
+
+                <div class="brand-mark">
+                    ER
+                </div>
+
+                <div>
+
+                    <div class="brand-name">
+                        Emergency Response
+                    </div>
+
+                    <div class="brand-subtitle">
+                        AI Emergency Operations Platform
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <h1>
+
+                مركز عمليات
+                <span>الاستجابة للطوارئ</span>
+
+            </h1>
+
+
+            <p class="visual-description">
+
+                منصة موحدة لاستقبال البلاغات وتحليلها بالذكاء الاصطناعي،
+                تقييم مستوى الخطورة، وتوجيه فرق الاستجابة المناسبة ومتابعتها.
+
+            </p>
+
+
+            <div class="system-status">
+
+                <span class="online-dot"></span>
+
+                <span>
+                    جميع خدمات النظام تعمل
+                </span>
+
+            </div>
+
+
+            <div class="pipeline">
+
+                <div class="pipeline-item">
+                    Emergency Report
+                </div>
+
+                <span class="pipeline-arrow">
+                    →
+                </span>
+
+                <div class="pipeline-item">
+                    AI Analysis
+                </div>
+
+                <span class="pipeline-arrow">
+                    →
+                </span>
+
+                <div class="pipeline-item">
+                    Risk Assessment
+                </div>
+
+                <span class="pipeline-arrow">
+                    →
+                </span>
+
+                <div class="pipeline-item">
+                    Response
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         LOGIN PANEL
+    ====================================== -->
+
+    <section class="login-panel">
+
+
+        <div class="login-box">
+
+
+            <!-- MOBILE BRAND -->
+
+            <div class="mobile-brand">
+
+                <div class="brand-mark">
+                    ER
+                </div>
+
+                <div>
+
+                    <div class="brand-name">
+                        Emergency Response
+                    </div>
+
+                    <div class="brand-subtitle">
+                        Operations Platform
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- HEADER -->
+
+            <div class="login-header">
+
+                <div class="login-label">
+                    OPERATIONS ACCESS
+                </div>
+
+                <h2>
+                    تسجيل الدخول
+                </h2>
+
+                <p>
+                    أدخل بيانات حساب الموظف للوصول إلى مركز عمليات الطوارئ.
+                </p>
+
+            </div>
+
+
+
+            <!-- ERROR -->
+
+            <div
+                class="login-error"
+                id="loginError"
+            >
+                البريد الإلكتروني أو كلمة المرور غير صحيحة.
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <form id="loginForm">
+
+
+                <div class="field">
+
+                    <label for="email">
+                        البريد الإلكتروني
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            @
+                        </span>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="admin@example.com"
+                            autocomplete="username"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="field">
+
+                    <label for="password">
+                        كلمة المرور
+                    </label>
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            •
+                        </span>
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="••••••••"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="togglePassword"
+                        >
+                            إظهار
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="login-options">
+
+                    <label class="remember">
+
+                        <input
+                            type="checkbox"
+                            id="remember"
+                        >
+
+                        تذكرني
+
+                    </label>
+
+
+                    <a
+                        href="#"
+                        class="forgot"
+                        id="forgotPassword"
+                    >
+                        نسيت كلمة المرور؟
+                    </a>
+
+                </div>
+
+
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton"
+                >
+                    الدخول إلى مركز العمليات
+                </button>
+
+
+            </form>
+
+
+
+            <!-- SECURITY -->
+
+            <div class="security-notice">
+
+                <div class="security-icon">
+                    ●
+                </div>
+
+                <div class="security-text">
+
+                    هذه المنطقة مخصصة للموظفين المصرح لهم فقط.
+                    يتم تسجيل عمليات الدخول والوصول إلى بيانات الطوارئ.
+
+                </div>
+
+            </div>
+
+
+
+            <div class="login-footer">
+
+                Emergency Response Platform
+
+                <a
+                    href="../index.html"
+                    class="citizen-link"
+                >
+                    ← العودة إلى واجهة المواطن
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<script>
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+
+        const form =
+            document.getElementById(
+                "loginForm"
+            );
+
+
+        const email =
+            document.getElementById(
+                "email"
+            );
+
+
+        const password =
+            document.getElementById(
+                "password"
+            );
+
+
+        const button =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        const error =
+            document.getElementById(
+                "loginError"
+            );
+
+
+        const togglePassword =
+            document.getElementById(
+                "togglePassword"
+            );
+
+
+        const forgotPassword =
+            document.getElementById(
+                "forgotPassword"
+            );
+
+
+
+        /* =====================================
+           PASSWORD VISIBILITY
+        ====================================== */
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                const visible =
+                    password.type ===
+                    "text";
+
+
+                password.type =
+                    visible
+                        ? "password"
+                        : "text";
+
+
+                togglePassword.textContent =
+                    visible
+                        ? "إظهار"
+                        : "إخفاء";
+
+            }
+        );
+
+
+
+        /* =====================================
+           LOGIN
+        ====================================== */
+
+        form.addEventListener(
+            "submit",
+            async event => {
+
+                event.preventDefault();
+
+
+                error.classList.remove(
+                    "show"
+                );
+
+
+                const emailValue =
+                    email.value.trim();
+
+
+                const passwordValue =
+                    password.value;
+
+
+                if (
+                    !emailValue ||
+                    !passwordValue
+                ) {
+
+                    error.textContent =
+                        "يرجى إدخال البريد الإلكتروني وكلمة المرور.";
+
+                    error.classList.add(
+                        "show"
+                    );
+
+                    return;
+
+                }
+
+
+
+                /* =================================
+                   MOCK AUTHENTICATION
+                ================================= */
+
+                button.disabled =
+                    true;
+
+
+                button.textContent =
+                    "جاري التحقق...";
+
+
+                await new Promise(
+                    resolve =>
+                        setTimeout(
+                            resolve,
+                            700
+                        )
+                );
+
+
+                /*
+                    Frontend demo credentials.
+
+                    Backend authentication
+                    will replace this later.
+                */
+
+                const validEmail =
+                    "admin@example.com";
+
+                const validPassword =
+                    "admin123";
+
+
+                if (
+                    emailValue ===
+                        validEmail &&
+                    passwordValue ===
+                        validPassword
+                ) {
+
+
+                    sessionStorage.setItem(
+                        "adminAuthenticated",
+                        "true"
+                    );
+
+
+                    sessionStorage.setItem(
+                        "adminUser",
+                        JSON.stringify({
+                            name:
+                                "Admin User",
+
+                            email:
+                                emailValue,
+
+                            role:
+                                "Admin"
+                        })
+                    );
+
+
+                    window.location.href =
+                        "dashboard.html";
+
+
+                } else {
+
+
+                    error.textContent =
+                        "بيانات الدخول غير صحيحة. استخدم حساب المشرف التجريبي.";
+
+
+                    error.classList.add(
+                        "show"
+                    );
+
+
+                    button.disabled =
+                        false;
+
+
+                    button.textContent =
+                        "الدخول إلى مركز العمليات";
+
+                }
+
+            }
+        );
+
+
+
+        /* =====================================
+           FORGOT PASSWORD
+        ====================================== */
+
+        forgotPassword.addEventListener(
+            "click",
+            event => {
+
+                event.preventDefault();
+
+
+                error.textContent =
+                    "استعادة كلمة المرور ستكون متاحة بعد ربط النظام بخدمة المصادقة الخلفية.";
+
+
+                error.classList.add(
+                    "show"
+                );
+
+            }
+        );
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

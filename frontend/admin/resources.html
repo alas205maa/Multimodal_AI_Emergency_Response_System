@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>موارد الاستجابة | مركز العمليات</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/app.css"
+    >
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #07111f;
+            color: #dce5ef;
+            font-family: Cairo, sans-serif;
+        }
+
+        .admin-main {
+            margin-right: 260px;
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            position: fixed;
+            top: 0;
+            right: 260px;
+            left: 0;
+            height: 72px;
+
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+
+            background: rgba(7,17,31,.95);
+
+            border-bottom:
+                1px solid rgba(255,255,255,.07);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-title strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .page-title span {
+            color: #687990;
+            font-size: 9px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            color: #69dda2;
+
+            background:
+                rgba(49,212,127,.07);
+
+            border:
+                1px solid rgba(49,212,127,.13);
+
+            font-size: 9px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #31d47f;
+
+            box-shadow:
+                0 0 9px rgba(49,212,127,.7);
+        }
+
+        .page-content {
+            max-width: 1700px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        /* ==============================================
+           PAGE HEADER
+        ============================================== */
+
+        .content-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 22px;
+        }
+
+        .content-heading h1 {
+            margin: 0 0 5px;
+
+            font-size: 22px;
+        }
+
+        .content-heading p {
+            margin: 0;
+
+            color: #6c7e95;
+
+            font-size: 9px;
+        }
+
+        .add-resource-btn {
+            min-height: 42px;
+
+            padding: 0 17px;
+
+            border: 0;
+            border-radius: 9px;
+
+            background: #e94f5b;
+
+            color: white;
+
+            font-family: inherit;
+            font-size: 9px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 8px 25px
+                rgba(233,79,91,.15);
+        }
+
+        .add-resource-btn:hover {
+            background: #f15b66;
+        }
+
+        /* ==============================================
+           SUMMARY
+        ============================================== */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0,1fr));
+
+            gap: 12px;
+
+            margin-bottom: 18px;
+        }
+
+        .summary-card {
+            position: relative;
+
+            padding: 16px;
+
+            border-radius: 13px;
+
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            overflow: hidden;
+        }
+
+        .summary-card::after {
+            content: "";
+
+            position: absolute;
+
+            left: -20px;
+            bottom: -30px;
+
+            width: 90px;
+            height: 90px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,.02);
+        }
+
+        .summary-label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #66788f;
+
+            font-size: 8px;
+        }
+
+        .summary-number {
+            display: block;
+
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .summary-sub {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #566a82;
+
+            font-size: 7px;
+        }
+
+        .green {
+            color: #5edb9e;
+        }
+
+        .orange {
+            color: #ffbd5d;
+        }
+
+        .red {
+            color: #ff606b;
+        }
+
+        .blue {
+            color: #67baff;
+        }
+
+        /* ==============================================
+           TOOLBAR
+        ============================================== */
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 12px;
+
+            margin-bottom: 12px;
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .search-box {
+            position: relative;
+
+            flex: 1;
+
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            box-sizing: border-box;
+
+            min-height: 37px;
+
+            padding: 0 35px 0 12px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            outline: none;
+
+            background: #091625;
+
+            color: #dce5ef;
+
+            font-family: inherit;
+            font-size: 9px;
+        }
+
+        .search-box input:focus {
+            border-color:
+                rgba(105,186,255,.35);
+        }
+
+        .search-icon {
+            position: absolute;
+
+            right: 11px;
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #60738a;
+
+            font-size: 11px;
+        }
+
+        .filters {
+            display: flex;
+            gap: 7px;
+        }
+
+        .filter-select {
+            min-width: 130px;
+
+            min-height: 37px;
+
+            padding: 0 9px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            outline: none;
+
+            background: #091625;
+
+            color: #8999ac;
+
+            font-family: inherit;
+            font-size: 8px;
+        }
+
+        /* ==============================================
+           TABLE
+        ============================================== */
+
+        .table-panel {
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+        }
+
+        .table-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 14px 17px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .table-top strong {
+            font-size: 11px;
+        }
+
+        .table-top span {
+            color: #64768d;
+            font-size: 8px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            min-width: 900px;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 11px 14px;
+
+            text-align: right;
+
+            background: #0a1727;
+
+            color: #62758c;
+
+            font-size: 7px;
+            font-weight: 600;
+
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px 14px;
+
+            border-top:
+                1px solid rgba(255,255,255,.045);
+
+            color: #aab8c8;
+
+            font-size: 8px;
+
+            vertical-align: middle;
+        }
+
+        tbody tr {
+            transition: .15s;
+        }
+
+        tbody tr:hover {
+            background:
+                rgba(255,255,255,.018);
+        }
+
+        .resource-name {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+        }
+
+        .resource-icon {
+            width: 35px;
+            height: 35px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.035);
+
+            font-size: 15px;
+        }
+
+        .resource-name strong {
+            display: block;
+
+            color: #d6e0ea;
+
+            font-size: 9px;
+        }
+
+        .resource-name span {
+            display: block;
+
+            margin-top: 2px;
+
+            direction: ltr;
+            text-align: right;
+
+            color: #53677e;
+
+            font-size: 7px;
+        }
+
+        .type-text {
+            color: #8798ac;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+
+            padding: 5px 8px;
+
+            border-radius: 20px;
+
+            font-size: 7px;
+        }
+
+        .status-badge::before {
+            content: "";
+
+            width: 5px;
+            height: 5px;
+
+            border-radius: 50%;
+        }
+
+        .status-available {
+            color: #63dca1;
+            background:
+                rgba(63,214,146,.07);
+        }
+
+        .status-available::before {
+            background: #42d493;
+        }
+
+        .status-busy {
+            color: #ffc15e;
+            background:
+                rgba(255,187,82,.07);
+        }
+
+        .status-busy::before {
+            background: #ffb94f;
+        }
+
+        .status-offline {
+            color: #8793a3;
+            background:
+                rgba(135,147,163,.07);
+        }
+
+        .status-offline::before {
+            background: #788597;
+        }
+
+        .assignment {
+            direction: ltr;
+            text-align: right;
+
+            color: #718399;
+
+            font-size: 8px;
+        }
+
+        .assignment.active {
+            color: #67baff;
+        }
+
+        .location {
+            direction: ltr;
+            text-align: right;
+
+            color: #64778e;
+
+            font-size: 7px;
+        }
+
+        .action-btn {
+            min-height: 30px;
+
+            padding: 0 10px;
+
+            border-radius: 7px;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            background:
+                rgba(255,255,255,.025);
+
+            color: #8fa0b3;
+
+            font-family: inherit;
+            font-size: 7px;
+
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            color: white;
+
+            background:
+                rgba(255,255,255,.07);
+        }
+
+        /* ==============================================
+           EMPTY
+        ============================================== */
+
+        .empty-state {
+            padding: 55px 20px;
+
+            text-align: center;
+
+            color: #61738a;
+        }
+
+        .empty-icon {
+            width: 55px;
+            height: 55px;
+
+            display: grid;
+            place-items: center;
+
+            margin: 0 auto 12px;
+
+            border-radius: 15px;
+
+            background: rgba(255,255,255,.025);
+
+            font-size: 22px;
+        }
+
+        .empty-state strong {
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #8b9caf;
+
+            font-size: 11px;
+        }
+
+        .empty-state span {
+            font-size: 8px;
+        }
+
+        /* ==============================================
+           MODAL
+        ============================================== */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 5000;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(3,8,15,.72);
+
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 500px;
+
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.09);
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,.45);
+
+            overflow: hidden;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 17px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .modal-header strong {
+            font-size: 12px;
+        }
+
+        .close-modal {
+            width: 28px;
+            height: 28px;
+
+            border: 0;
+
+            border-radius: 7px;
+
+            background:
+                rgba(255,255,255,.04);
+
+            color: #8b9aad;
+
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 13px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #718298;
+
+            font-size: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+
+            box-sizing: border-box;
+
+            height: 39px;
+
+            padding: 0 10px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            outline: none;
+
+            background: #091625;
+
+            color: #dce5ef;
+
+            font-family: inherit;
+            font-size: 9px;
+        }
+
+        .modal-actions {
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 8px;
+
+            margin-top: 18px;
+        }
+
+        .modal-btn {
+            min-height: 38px;
+
+            padding: 0 15px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            background:
+                rgba(255,255,255,.03);
+
+            color: #aab7c7;
+
+            font-family: inherit;
+            font-size: 8px;
+
+            cursor: pointer;
+        }
+
+        .modal-btn.primary {
+            background: #e94f5b;
+            border-color: #e94f5b;
+            color: white;
+        }
+
+        /* ==============================================
+           TOAST
+        ============================================== */
+
+        .toast {
+            position: fixed;
+
+            left: 22px;
+            bottom: 22px;
+
+            z-index: 7000;
+
+            padding: 11px 15px;
+
+            border-radius: 9px;
+
+            background: #13253b;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            color: #dce5ef;
+
+            font-size: 9px;
+
+            opacity: 0;
+
+            transform:
+                translateY(70px);
+
+            transition: .25s;
+        }
+
+        .toast.show {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+        /* ==============================================
+           RESPONSIVE
+        ============================================== */
+
+        @media (max-width: 1000px) {
+
+            .admin-main {
+                margin-right: 0;
+            }
+
+            .admin-header {
+                right: 0;
+            }
+
+            .summary-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .toolbar {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .search-box {
+                max-width: none;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .page-content {
+                padding: 16px;
+            }
+
+            .content-header {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<script>
+
+    /* ==============================================
+       AUTH GUARD
+    ============================================== */
+
+    if (
+        sessionStorage.getItem(
+            "adminAuthenticated"
+        ) !== "true"
+    ) {
+
+        window.location.href =
+            "login.html";
+
+    }
+
+</script>
+
+
+<div id="adminNav"></div>
+
+
+<header class="admin-header">
+
+    <div class="admin-header-left">
+
+        <button
+            class="menu-toggle"
+            onclick="toggleSidebar()"
+        >
+            ☰
+        </button>
+
+        <div class="page-title">
+
+            <strong>
+                موارد الاستجابة
+            </strong>
+
+            <span>
+                Response Resource Management
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="system-status">
+
+        <span class="status-dot"></span>
+
+        Resource System Online
+
+    </div>
+
+</header>
+
+
+<main class="admin-main">
+
+    <div class="page-content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="content-header">
+
+            <div class="content-heading">
+
+                <h1>
+                    فرق وموارد الاستجابة
+                </h1>
+
+                <p>
+                    إدارة سيارات الإسعاف وفرق الإطفاء والإنقاذ
+                    ومراقبة جاهزيتها ومواقعها.
+                </p>
+
+            </div>
+
+
+            <button
+                class="add-resource-btn"
+                id="addResourceBtn"
+            >
+                + إضافة مورد جديد
+            </button>
+
+        </div>
+
+
+        <!-- SUMMARY -->
+
+        <section class="summary-grid">
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    إجمالي الموارد
+                </span>
+
+                <strong
+                    class="summary-number"
+                    id="totalResources"
+                >
+                    0
+                </strong>
+
+                <span class="summary-sub">
+                    All Resources
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    متاحة الآن
+                </span>
+
+                <strong
+                    class="summary-number green"
+                    id="availableResources"
+                >
+                    0
+                </strong>
+
+                <span class="summary-sub">
+                    Ready for Dispatch
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    في مهمة
+                </span>
+
+                <strong
+                    class="summary-number orange"
+                    id="busyResources"
+                >
+                    0
+                </strong>
+
+                <span class="summary-sub">
+                    Currently Assigned
+                </span>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span class="summary-label">
+                    خارج الخدمة
+                </span>
+
+                <strong
+                    class="summary-number red"
+                    id="offlineResources"
+                >
+                    0
+                </strong>
+
+                <span class="summary-sub">
+                    Offline / Maintenance
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- TOOLBAR -->
+
+        <section class="toolbar">
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="ابحث باسم الفريق أو رقم المورد..."
+                >
+
+            </div>
+
+
+            <div class="filters">
+
+                <select
+                    class="filter-select"
+                    id="typeFilter"
+                >
+
+                    <option value="all">
+                        كل أنواع الموارد
+                    </option>
+
+                    <option value="Ambulance">
+                        إسعاف
+                    </option>
+
+                    <option value="Fire Rescue">
+                        إطفاء وإنقاذ
+                    </option>
+
+                    <option value="Rescue Team">
+                        فريق إنقاذ
+                    </option>
+
+                </select>
+
+
+                <select
+                    class="filter-select"
+                    id="statusFilter"
+                >
+
+                    <option value="all">
+                        كل الحالات
+                    </option>
+
+                    <option value="Available">
+                        متاح
+                    </option>
+
+                    <option value="Busy">
+                        في مهمة
+                    </option>
+
+                    <option value="Offline">
+                        خارج الخدمة
+                    </option>
+
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- TABLE -->
+
+        <section class="table-panel">
+
+            <div class="table-top">
+
+                <strong>
+                    قائمة الموارد
+                </strong>
+
+                <span id="resultCount">
+                    0 مورد
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                المورد
+                            </th>
+
+                            <th>
+                                النوع
+                            </th>
+
+                            <th>
+                                الحالة
+                            </th>
+
+                            <th>
+                                المهمة الحالية
+                            </th>
+
+                            <th>
+                                الموقع
+                            </th>
+
+                            <th>
+                                الإجراء
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="resourceTable"
+                    ></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- ADD RESOURCE MODAL -->
+
+<div
+    class="modal"
+    id="resourceModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <strong>
+                إضافة مورد استجابة
+            </strong>
+
+            <button
+                class="close-modal"
+                id="closeModal"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="form-group">
+
+                <label>
+                    اسم المورد
+                </label>
+
+                <input
+                    type="text"
+                    id="resourceName"
+                    placeholder="مثال: Ambulance 3"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    نوع المورد
+                </label>
+
+                <select id="resourceType">
+
+                    <option value="Ambulance">
+                        إسعاف
+                    </option>
+
+                    <option value="Fire Rescue">
+                        إطفاء وإنقاذ
+                    </option>
+
+                    <option value="Rescue Team">
+                        فريق إنقاذ
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    خط العرض Latitude
+                </label>
+
+                <input
+                    type="number"
+                    step="any"
+                    id="resourceLatitude"
+                    placeholder="15.330000"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    خط الطول Longitude
+                </label>
+
+                <input
+                    type="number"
+                    step="any"
+                    id="resourceLongitude"
+                    placeholder="44.220000"
+                >
+
+            </div>
+
+
+            <div class="modal-actions">
+
+                <button
+                    class="modal-btn"
+                    id="cancelModal"
+                >
+                    إلغاء
+                </button>
+
+                <button
+                    class="
+                        modal-btn
+                        primary
+                    "
+                    id="saveResource"
+                >
+                    إضافة المورد
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script src="../js/app.js"></script>
+
+
+<script>
+
+    /* ==============================================
+       NAVIGATION
+    ============================================== */
+
+    document.getElementById(
+        "adminNav"
+    ).innerHTML =
+        adminNav("resources");
+
+
+    /* ==============================================
+       STATE
+    ============================================== */
+
+    let resources = [];
+
+    let filteredResources = [];
+
+
+    /* ==============================================
+       TRANSLATIONS
+    ============================================== */
+
+    function typeAr(type) {
+
+        const types = {
+
+            "Ambulance":
+                "إسعاف",
+
+            "Fire Rescue":
+                "إطفاء وإنقاذ",
+
+            "Rescue Team":
+                "فريق إنقاذ"
+
+        };
+
+        return types[type] || type;
+
+    }
+
+
+    function typeIcon(type) {
+
+        if (
+            type === "Ambulance"
+        ) {
+
+            return "🚑";
+
+        }
+
+        if (
+            type === "Fire Rescue"
+        ) {
+
+            return "🚒";
+
+        }
+
+        return "🛟";
+
+    }
+
+
+    function statusAr(status) {
+
+        const statuses = {
+
+            "Available":
+                "متاح",
+
+            "Busy":
+                "في مهمة",
+
+            "Offline":
+                "خارج الخدمة"
+
+        };
+
+        return statuses[status] || status;
+
+    }
+
+
+    function normalizeStatus(status) {
+
+        const value =
+            String(
+                status || ""
+            ).toLowerCase();
+
+
+        if (
+            value === "available"
+        ) {
+
+            return "Available";
+
+        }
+
+        if (
+            value === "busy"
+        ) {
+
+            return "Busy";
+
+        }
+
+        return "Offline";
+
+    }
+
+
+    /* ==============================================
+       LOAD
+    ============================================== */
+
+    async function loadResources() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "../mock-data/data.json"
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load data"
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            resources =
+                data.resources || [];
+
+
+            filteredResources =
+                [...resources];
+
+
+            renderSummary();
+
+            renderTable();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showToast(
+                "تعذر تحميل بيانات الموارد."
+            );
+
+        }
+
+    }
+
+
+    /* ==============================================
+       SUMMARY
+    ============================================== */
+
+    function renderSummary() {
+
+        const total =
+            resources.length;
+
+
+        const available =
+            resources.filter(
+                resource =>
+                    normalizeStatus(
+                        resource.status
+                    ) === "Available"
+            ).length;
+
+
+        const busy =
+            resources.filter(
+                resource =>
+                    normalizeStatus(
+                        resource.status
+                    ) === "Busy"
+            ).length;
+
+
+        const offline =
+            resources.filter(
+                resource =>
+                    normalizeStatus(
+                        resource.status
+                    ) === "Offline"
+            ).length;
+
+
+        document.getElementById(
+            "totalResources"
+        ).textContent =
+            total;
+
+
+        document.getElementById(
+            "availableResources"
+        ).textContent =
+            available;
+
+
+        document.getElementById(
+            "busyResources"
+        ).textContent =
+            busy;
+
+
+        document.getElementById(
+            "offlineResources"
+        ).textContent =
+            offline;
+
+    }
+
+
+    /* ==============================================
+       FILTER
+    ============================================== */
+
+    function applyFilters() {
+
+        const search =
+            document.getElementById(
+                "searchInput"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+        const type =
+            document.getElementById(
+                "typeFilter"
+            ).value;
+
+
+        const status =
+            document.getElementById(
+                "statusFilter"
+            ).value;
+
+
+        filteredResources =
+            resources.filter(
+                resource => {
+
+                    const searchable = [
+
+                        resource.resource_name,
+
+                        resource.resource_id,
+
+                        resource.resource_type,
+
+                        resource.assignment
+
+                    ]
+                        .filter(Boolean)
+                        .join(" ")
+                        .toLowerCase();
+
+
+                    const matchesSearch =
+                        !search ||
+                        searchable.includes(
+                            search
+                        );
+
+
+                    const matchesType =
+                        type === "all" ||
+                        resource.resource_type ===
+                        type;
+
+
+                    const normalized =
+                        normalizeStatus(
+                            resource.status
+                        );
+
+
+                    const matchesStatus =
+                        status === "all" ||
+                        normalized === status;
+
+
+                    return (
+                        matchesSearch &&
+                        matchesType &&
+                        matchesStatus
+                    );
+
+                }
+            );
+
+
+        renderTable();
+
+    }
+
+
+    document.getElementById(
+        "searchInput"
+    ).addEventListener(
+        "input",
+        applyFilters
+    );
+
+
+    document.getElementById(
+        "typeFilter"
+    ).addEventListener(
+        "change",
+        applyFilters
+    );
+
+
+    document.getElementById(
+        "statusFilter"
+    ).addEventListener(
+        "change",
+        applyFilters
+    );
+
+
+    /* ==============================================
+       TABLE
+    ============================================== */
+
+    function renderTable() {
+
+        const tbody =
+            document.getElementById(
+                "resourceTable"
+            );
+
+
+        document.getElementById(
+            "resultCount"
+        ).textContent =
+            `${filteredResources.length} مورد`;
+
+
+        if (!filteredResources.length) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="6"
+                        style="padding:0;"
+                    >
+
+                        <div class="empty-state">
+
+                            <div class="empty-icon">
+                                🚑
+                            </div>
+
+                            <strong>
+                                لا توجد موارد مطابقة
+                            </strong>
+
+                            <span>
+                                جرّب تغيير الفلاتر أو كلمة البحث.
+                            </span>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        tbody.innerHTML =
+            filteredResources
+                .map(
+                    resource => {
+
+                        const status =
+                            normalizeStatus(
+                                resource.status
+                            );
+
+
+                        const assignment =
+                            resource.assignment &&
+                            resource.assignment !==
+                            "None"
+
+                                ? resource.assignment
+
+                                : "لا توجد مهمة";
+
+
+                        const assignmentClass =
+                            assignment !==
+                            "لا توجد مهمة"
+
+                                ? "active"
+
+                                : "";
+
+
+                        return `
+
+                            <tr>
+
+                                <td>
+
+                                    <div
+                                        class="resource-name"
+                                    >
+
+                                        <div
+                                            class="resource-icon"
+                                        >
+                                            ${typeIcon(
+                                                resource.resource_type
+                                            )}
+                                        </div>
+
+                                        <div>
+
+                                            <strong>
+                                                ${escapeHtml(
+                                                    resource.resource_name
+                                                )}
+                                            </strong>
+
+                                            <span>
+                                                ${escapeHtml(
+                                                    resource.resource_id
+                                                )}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="type-text"
+                                    >
+                                        ${escapeHtml(
+                                            typeAr(
+                                                resource.resource_type
+                                            )
+                                        )}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="
+                                            status-badge
+                                            ${
+                                                status ===
+                                                "Available"
+
+                                                    ? "status-available"
+
+                                                    : status ===
+                                                      "Busy"
+
+                                                        ? "status-busy"
+
+                                                        : "status-offline"
+                                            }
+                                        "
+                                    >
+
+                                        ${escapeHtml(
+                                            statusAr(
+                                                status
+                                            )
+                                        )}
+
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="
+                                            assignment
+                                            ${assignmentClass}
+                                        "
+                                    >
+                                        ${escapeHtml(
+                                            assignment
+                                        )}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="location"
+                                    >
+                                        ${Number(
+                                            resource.latitude
+                                        ).toFixed(5)}
+                                        ,
+                                        ${Number(
+                                            resource.longitude
+                                        ).toFixed(5)}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <button
+                                        class="action-btn"
+                                        onclick="viewResource(
+                                            '${escapeJs(
+                                                resource.resource_id
+                                            )}'
+                                        )"
+                                    >
+                                        عرض التفاصيل
+                                    </button>
+
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    /* ==============================================
+       VIEW RESOURCE
+    ============================================== */
+
+    function viewResource(id) {
+
+        const resource =
+            resources.find(
+                item =>
+                    item.resource_id === id
+            );
+
+
+        if (!resource)
+            return;
+
+
+        /*
+         * Prototype behavior:
+         * focus the selected resource and
+         * show operational information.
+         *
+         * Later:
+         * resource-details.html?id=...
+         */
+
+        showToast(
+            `${resource.resource_name} · ${statusAr(
+                normalizeStatus(
+                    resource.status
+                )
+            )} · ${
+                resource.assignment &&
+                resource.assignment !== "None"
+                    ? resource.assignment
+                    : "لا توجد مهمة"
+            }`
+        );
+
+    }
+
+
+    /* ==============================================
+       MODAL
+    ============================================== */
+
+    const modal =
+        document.getElementById(
+            "resourceModal"
+        );
+
+
+    document.getElementById(
+        "addResourceBtn"
+    ).addEventListener(
+        "click",
+        () => {
+
+            modal.classList.add(
+                "show"
+            );
+
+        }
+    );
+
+
+    function closeModal() {
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    document.getElementById(
+        "closeModal"
+    ).addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    document.getElementById(
+        "cancelModal"
+    ).addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    modal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target === modal
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    /* ==============================================
+       ADD RESOURCE
+    ============================================== */
+
+    document.getElementById(
+        "saveResource"
+    ).addEventListener(
+        "click",
+        () => {
+
+            const name =
+                document.getElementById(
+                    "resourceName"
+                ).value.trim();
+
+
+            const type =
+                document.getElementById(
+                    "resourceType"
+                ).value;
+
+
+            const latitude =
+                Number(
+                    document.getElementById(
+                        "resourceLatitude"
+                    ).value
+                );
+
+
+            const longitude =
+                Number(
+                    document.getElementById(
+                        "resourceLongitude"
+                    ).value
+                );
+
+
+            if (!name) {
+
+                showToast(
+                    "أدخل اسم المورد."
+                );
+
+                return;
+
+            }
+
+
+            if (
+                !Number.isFinite(latitude) ||
+                !Number.isFinite(longitude)
+            ) {
+
+                showToast(
+                    "أدخل إحداثيات صحيحة."
+                );
+
+                return;
+
+            }
+
+
+            const prefix =
+                type === "Ambulance"
+                    ? "AM"
+                    : type === "Fire Rescue"
+                        ? "FR"
+                        : "RS";
+
+
+            const number =
+                resources.length + 1;
+
+
+            const newResource = {
+
+                resource_id:
+                    `${prefix}-${String(
+                        number
+                    ).padStart(3,"0")}`,
+
+                resource_name:
+                    name,
+
+                resource_type:
+                    type,
+
+                latitude:
+                    latitude,
+
+                longitude:
+                    longitude,
+
+                status:
+                    "Available",
+
+                assignment:
+                    "None"
+
+            };
+
+
+            resources.push(
+                newResource
+            );
+
+
+            filteredResources =
+                [...resources];
+
+
+            renderSummary();
+
+            applyFilters();
+
+            closeModal();
+
+
+            document.getElementById(
+                "resourceName"
+            ).value = "";
+
+
+            document.getElementById(
+                "resourceLatitude"
+            ).value = "";
+
+
+            document.getElementById(
+                "resourceLongitude"
+            ).value = "";
+
+
+            showToast(
+                "تمت إضافة مورد الاستجابة بنجاح."
+            );
+
+        }
+    );
+
+
+    /* ==============================================
+       ESCAPE
+    ============================================== */
+
+    function escapeJs(value) {
+
+        return String(
+            value ?? ""
+        )
+            .replaceAll(
+                "\\",
+                "\\\\"
+            )
+            .replaceAll(
+                "'",
+                "\\'"
+            );
+
+    }
+
+
+    /* ==============================================
+       TOAST
+    ============================================== */
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        toast.textContent =
+            message;
+
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+    }
+
+
+    /* ==============================================
+       START
+    ============================================== */
+
+    loadResources();
+
+</script>
+
+
+</body>
+
+</html>

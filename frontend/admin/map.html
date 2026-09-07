@@ -1,0 +1,2148 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>الخريطة المباشرة | مركز العمليات</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/app.css"
+    >
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #07111f;
+            color: #dce5ef;
+            font-family: Cairo, sans-serif;
+        }
+
+        .admin-main {
+            margin-right: 260px;
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            position: fixed;
+            top: 0;
+            right: 260px;
+            left: 0;
+            height: 72px;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+
+            background: rgba(7,17,31,.95);
+            border-bottom: 1px solid rgba(255,255,255,.07);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-title strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .page-title span {
+            color: #687990;
+            font-size: 9px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            color: #69dda2;
+            background: rgba(49,212,127,.07);
+
+            border: 1px solid rgba(49,212,127,.13);
+
+            font-size: 9px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #31d47f;
+            box-shadow: 0 0 9px rgba(49,212,127,.7);
+        }
+
+        .map-layout {
+            height: calc(100vh - 72px);
+
+            display: grid;
+
+            grid-template-columns:
+                340px
+                minmax(0,1fr);
+
+            direction: ltr;
+        }
+
+        /* MAP */
+
+        .map-area {
+            position: relative;
+            min-width: 0;
+        }
+
+        #operationsMap {
+            width: 100%;
+            height: 100%;
+        }
+
+        .leaflet-container {
+            background: #091524;
+            font-family: Cairo, sans-serif;
+        }
+
+        .leaflet-control-zoom a {
+            background: #0d1b2d !important;
+            color: white !important;
+            border-color: #26384e !important;
+        }
+
+        .leaflet-popup-content-wrapper,
+        .leaflet-popup-tip {
+            background: #0d1b2d;
+            color: #dce5ef;
+        }
+
+        .leaflet-popup-content {
+            font-size: 10px;
+            line-height: 1.8;
+        }
+
+        .map-overlay {
+            position: absolute;
+
+            top: 18px;
+            left: 18px;
+
+            z-index: 500;
+
+            display: flex;
+            gap: 8px;
+
+            direction: rtl;
+        }
+
+        .map-control {
+            padding: 9px 12px;
+
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 9px;
+
+            background: rgba(7,17,31,.90);
+
+            color: #b9c7d7;
+
+            font-family: inherit;
+            font-size: 9px;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(12px);
+        }
+
+        .map-control:hover {
+            background: #122238;
+        }
+
+        /* SIDE PANEL */
+
+        .operations-panel {
+            direction: rtl;
+
+            height: 100%;
+
+            background: #0b192b;
+
+            border-left:
+                1px solid rgba(255,255,255,.07);
+
+            overflow-y: auto;
+
+            padding: 18px;
+
+            box-sizing: border-box;
+        }
+
+        .panel-title {
+            margin-bottom: 17px;
+        }
+
+        .panel-title strong {
+            display: block;
+            font-size: 14px;
+        }
+
+        .panel-title span {
+            color: #687990;
+            font-size: 8px;
+        }
+
+        /* SUMMARY */
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2,1fr);
+
+            gap: 8px;
+
+            margin-bottom: 18px;
+        }
+
+        .summary-card {
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.05);
+        }
+
+        .summary-card span {
+            display: block;
+
+            color: #697b91;
+
+            font-size: 8px;
+
+            margin-bottom: 5px;
+        }
+
+        .summary-card strong {
+            font-size: 19px;
+        }
+
+        .critical-number {
+            color: #ff5965;
+        }
+
+        .available-number {
+            color: #5fdaa0;
+        }
+
+        /* FILTER */
+
+        .section-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin: 18px 0 9px;
+        }
+
+        .section-label strong {
+            font-size: 10px;
+        }
+
+        .section-label span {
+            color: #62748b;
+            font-size: 8px;
+        }
+
+        .filter-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 7px;
+        }
+
+        .filter-btn {
+            min-height: 35px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            background: rgba(255,255,255,.025);
+
+            color: #8495aa;
+
+            font-family: inherit;
+            font-size: 8px;
+
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: rgba(255,76,88,.09);
+
+            color: #ff727c;
+
+            border-color:
+                rgba(255,76,88,.2);
+        }
+
+        /* INCIDENT LIST */
+
+        .incident-list {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .incident-card {
+            padding: 11px;
+
+            border-radius: 10px;
+
+            background: #0e1d30;
+
+            border:
+                1px solid rgba(255,255,255,.05);
+
+            cursor: pointer;
+
+            transition: .18s ease;
+        }
+
+        .incident-card:hover,
+        .incident-card.selected {
+            background: #12243a;
+
+            border-color:
+                rgba(255,255,255,.11);
+        }
+
+        .incident-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 7px;
+        }
+
+        .incident-type {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .incident-icon {
+            width: 24px;
+            height: 24px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 7px;
+
+            background: rgba(255,255,255,.04);
+
+            font-size: 11px;
+        }
+
+        .incident-score {
+            color: #ff6872;
+
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .incident-id {
+            direction: ltr;
+            text-align: right;
+
+            color: #596c83;
+
+            font-size: 7px;
+        }
+
+        .incident-meta {
+            display: flex;
+            justify-content: space-between;
+
+            margin-top: 7px;
+
+            color: #718399;
+
+            font-size: 7px;
+        }
+
+        .status-mini {
+            padding: 3px 6px;
+
+            border-radius: 10px;
+
+            font-size: 7px;
+        }
+
+        .status-active {
+            color: #67baff;
+            background: rgba(103,186,255,.08);
+        }
+
+        .status-dispatched {
+            color: #ffc15d;
+            background: rgba(255,193,93,.08);
+        }
+
+        .status-resolved {
+            color: #61dca0;
+            background: rgba(97,220,160,.08);
+        }
+
+        /* RESOURCE LIST */
+
+        .resource-card {
+            display: flex;
+            align-items: center;
+
+            gap: 9px;
+
+            padding: 9px;
+
+            border-radius: 9px;
+
+            background: rgba(255,255,255,.02);
+
+            border:
+                1px solid rgba(255,255,255,.04);
+        }
+
+        .resource-icon {
+            width: 31px;
+            height: 31px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 8px;
+
+            background: rgba(73,204,147,.07);
+
+            font-size: 13px;
+        }
+
+        .resource-info {
+            flex: 1;
+        }
+
+        .resource-info strong {
+            display: block;
+
+            font-size: 8px;
+        }
+
+        .resource-info span {
+            color: #61738a;
+            font-size: 7px;
+        }
+
+        .resource-status {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+        }
+
+        .resource-status.available {
+            background: #42d493;
+        }
+
+        .resource-status.busy {
+            background: #ffba55;
+        }
+
+        /* LEGEND */
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+
+            padding: 12px;
+
+            margin-top: 18px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.02);
+
+            border:
+                1px solid rgba(255,255,255,.05);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            color: #728399;
+
+            font-size: 7px;
+        }
+
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+        }
+
+        .legend-emergency {
+            background: #ff5964;
+        }
+
+        .legend-resource {
+            background: #43d69a;
+        }
+
+        .legend-high {
+            background: #ffb84f;
+        }
+
+        /* TOAST */
+
+        .toast {
+            position: fixed;
+
+            bottom: 22px;
+            left: 22px;
+
+            z-index: 3000;
+
+            padding: 11px 15px;
+
+            border-radius: 9px;
+
+            background: #13253b;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            color: #dce5ef;
+
+            font-size: 9px;
+
+            transform: translateY(80px);
+            opacity: 0;
+
+            transition: .25s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (max-width: 1000px) {
+
+            .admin-main {
+                margin-right: 0;
+            }
+
+            .admin-header {
+                right: 0;
+            }
+
+            .map-layout {
+                grid-template-columns:
+                    290px
+                    minmax(0,1fr);
+            }
+
+        }
+
+        @media (max-width: 750px) {
+
+            .map-layout {
+                display: flex;
+                flex-direction: column;
+                height: auto;
+            }
+
+            .map-area {
+                height: 55vh;
+            }
+
+            .operations-panel {
+                height: auto;
+            }
+
+            .system-status {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<script>
+
+    if (
+        sessionStorage.getItem(
+            "adminAuthenticated"
+        ) !== "true"
+    ) {
+
+        window.location.href =
+            "login.html";
+
+    }
+
+</script>
+
+
+<div id="adminNav"></div>
+
+
+<header class="admin-header">
+
+    <div class="admin-header-left">
+
+        <button
+            class="menu-toggle"
+            onclick="toggleSidebar()"
+        >
+            ☰
+        </button>
+
+        <div class="page-title">
+
+            <strong>
+                الخريطة المباشرة
+            </strong>
+
+            <span>
+                Emergency Operations Map
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="system-status">
+
+        <span class="status-dot"></span>
+
+        Live Operations
+
+    </div>
+
+</header>
+
+
+<main class="admin-main">
+
+    <div class="map-layout">
+
+
+        <!-- MAP -->
+
+        <section class="map-area">
+
+            <div
+                id="operationsMap"
+            ></div>
+
+
+            <div class="map-overlay">
+
+                <button
+                    class="map-control"
+                    id="centerAll"
+                >
+                    ⊙ عرض الكل
+                </button>
+
+                <button
+                    class="map-control"
+                    id="locateBtn"
+                >
+                    ◎ موقعي
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- OPERATIONS PANEL -->
+
+        <aside class="operations-panel">
+
+
+            <div class="panel-title">
+
+                <strong>
+                    مركز العمليات
+                </strong>
+
+                <span>
+                    مراقبة البلاغات وفرق الاستجابة
+                </span>
+
+            </div>
+
+
+            <!-- SUMMARY -->
+
+            <div class="summary-grid">
+
+                <div class="summary-card">
+
+                    <span>
+                        البلاغات
+                    </span>
+
+                    <strong id="incidentCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        حرجة
+                    </span>
+
+                    <strong
+                        id="criticalCount"
+                        class="critical-number"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        فرق الاستجابة
+                    </span>
+
+                    <strong id="resourceCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <span>
+                        متاحة
+                    </span>
+
+                    <strong
+                        id="availableCount"
+                        class="available-number"
+                    >
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- FILTER -->
+
+            <div class="section-label">
+
+                <strong>
+                    عرض الخريطة
+                </strong>
+
+                <span>
+                    FILTER
+                </span>
+
+            </div>
+
+
+            <div class="filter-row">
+
+                <button
+                    class="filter-btn active"
+                    data-filter="all"
+                >
+                    الكل
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="emergency"
+                >
+                    البلاغات
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="critical"
+                >
+                    الحرجة
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="resource"
+                >
+                    الفرق
+                </button>
+
+            </div>
+
+
+            <!-- INCIDENTS -->
+
+            <div class="section-label">
+
+                <strong>
+                    البلاغات الحالية
+                </strong>
+
+                <span id="incidentLabel">
+                    0
+                </span>
+
+            </div>
+
+
+            <div
+                class="incident-list"
+                id="incidentList"
+            ></div>
+
+
+            <!-- RESOURCES -->
+
+            <div class="section-label">
+
+                <strong>
+                    فرق الاستجابة
+                </strong>
+
+                <span>
+                    RESOURCES
+                </span>
+
+            </div>
+
+
+            <div
+                class="incident-list"
+                id="resourceList"
+            ></div>
+
+
+            <!-- LEGEND -->
+
+            <div class="legend">
+
+                <div class="legend-item">
+
+                    <span
+                        class="
+                            legend-dot
+                            legend-emergency
+                        "
+                    ></span>
+
+                    بلاغ
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="
+                            legend-dot
+                            legend-resource
+                        "
+                    ></span>
+
+                    فريق
+
+                </div>
+
+
+                <div class="legend-item">
+
+                    <span
+                        class="
+                            legend-dot
+                            legend-high
+                        "
+                    ></span>
+
+                    خطر مرتفع
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+<script src="../js/app.js"></script>
+
+
+<script>
+
+    /* =====================================================
+       NAV
+    ===================================================== */
+
+    document.getElementById(
+        "adminNav"
+    ).innerHTML =
+        adminNav("map");
+
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let map;
+
+    let emergencies = [];
+
+    let resources = [];
+
+    let emergencyMarkers = [];
+
+    let resourceMarkers = [];
+
+    let activeFilter = "all";
+
+
+    /* =====================================================
+       TRANSLATIONS
+    ===================================================== */
+
+    function typeAr(type) {
+
+        const types = {
+
+            "Fire": "حريق",
+
+            "Flood": "فيضان",
+
+            "Earthquake": "زلزال",
+
+            "Traffic Accident":
+                "حادث مروري",
+
+            "Medical Emergency":
+                "حالة طبية طارئة",
+
+            "Other":
+                "حالة أخرى"
+
+        };
+
+        return types[type] || type;
+
+    }
+
+
+    function statusAr(status) {
+
+        const statuses = {
+
+            active: "نشط",
+
+            dispatched:
+                "تم التوجيه",
+
+            processing:
+                "قيد المعالجة",
+
+            resolved:
+                "مكتمل"
+
+        };
+
+        return statuses[status] || status;
+
+    }
+
+
+    function responseIcon(type) {
+
+        if (type === "Fire Rescue")
+            return "🚒";
+
+        if (type === "Ambulance")
+            return "🚑";
+
+        return "🛟";
+
+    }
+
+
+    /* =====================================================
+       MAP INIT
+    ===================================================== */
+
+    function initializeMap() {
+
+        map =
+            L.map(
+                "operationsMap"
+            ).setView(
+                [15.33, 44.215],
+                13
+            );
+
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    "&copy; OpenStreetMap contributors"
+            }
+        ).addTo(map);
+
+    }
+
+
+    /* =====================================================
+       LOAD DATA
+    ===================================================== */
+
+    async function loadData() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "../mock-data/data.json"
+                );
+
+
+            const data =
+                await response.json();
+
+
+            emergencies =
+                data.emergencies || [];
+
+
+            resources =
+                data.resources || [];
+
+
+            renderSummary();
+
+            renderIncidents();
+
+            renderResources();
+
+            renderMap();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showToast(
+                "تعذر تحميل بيانات العمليات."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       SUMMARY
+    ===================================================== */
+
+    function renderSummary() {
+
+        document.getElementById(
+            "incidentCount"
+        ).textContent =
+            emergencies.length;
+
+
+        document.getElementById(
+            "criticalCount"
+        ).textContent =
+            emergencies.filter(
+                e =>
+                    Number(
+                        e.risk_score || 0
+                    ) >= 85
+            ).length;
+
+
+        document.getElementById(
+            "resourceCount"
+        ).textContent =
+            resources.length;
+
+
+        document.getElementById(
+            "availableCount"
+        ).textContent =
+            resources.filter(
+                r =>
+                    String(
+                        r.status
+                    ).toLowerCase()
+                    === "available"
+            ).length;
+
+    }
+
+
+    /* =====================================================
+       INCIDENT LIST
+    ===================================================== */
+
+    function renderIncidents() {
+
+        const container =
+            document.getElementById(
+                "incidentList"
+            );
+
+
+        let list =
+            emergencies.filter(
+                emergency => {
+
+                    if (
+                        activeFilter ===
+                        "critical"
+                    ) {
+
+                        return Number(
+                            emergency.risk_score || 0
+                        ) >= 85;
+
+                    }
+
+                    if (
+                        activeFilter ===
+                        "emergency"
+                    ) {
+
+                        return true;
+
+                    }
+
+                    if (
+                        activeFilter ===
+                        "resource"
+                    ) {
+
+                        return false;
+
+                    }
+
+                    return true;
+
+                }
+            );
+
+
+        list =
+            list.sort(
+                (a,b) =>
+                    Number(
+                        b.risk_score || 0
+                    ) -
+                    Number(
+                        a.risk_score || 0
+                    )
+            );
+
+
+        document.getElementById(
+            "incidentLabel"
+        ).textContent =
+            list.length;
+
+
+        if (!list.length) {
+
+            container.innerHTML = `
+
+                <div
+                    style="
+                        padding:20px;
+                        text-align:center;
+                        color:#60738a;
+                        font-size:8px;
+                    "
+                >
+                    لا توجد بلاغات مطابقة
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            list.map(
+                emergency => `
+
+                    <div
+                        class="incident-card"
+                        data-id="${escapeHtml(
+                            emergency.emergency_id
+                        )}"
+                    >
+
+                        <div class="incident-top">
+
+                            <div class="incident-type">
+
+                                <div class="incident-icon">
+                                    ${emergencyIcon(
+                                        emergency.emergency_type
+                                    )}
+                                </div>
+
+                                ${escapeHtml(
+                                    typeAr(
+                                        emergency.emergency_type
+                                    )
+                                )}
+
+                            </div>
+
+                            <span
+                                class="incident-score"
+                            >
+                                ${Number(
+                                    emergency.risk_score || 0
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <div class="incident-id">
+                            ${escapeHtml(
+                                emergency.emergency_id
+                            )}
+                        </div>
+
+
+                        <div class="incident-meta">
+
+                            <span>
+                                ${escapeHtml(
+                                    emergency.response_type ||
+                                    "غير محدد"
+                                )}
+                            </span>
+
+                            <span
+                                class="
+                                    status-mini
+                                    ${
+                                        emergency.status ===
+                                        "resolved"
+                                            ? "status-resolved"
+                                            : emergency.status ===
+                                              "dispatched"
+                                                ? "status-dispatched"
+                                                : "status-active"
+                                    }
+                                "
+                            >
+                                ${escapeHtml(
+                                    statusAr(
+                                        emergency.status
+                                    )
+                                )}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                `
+            ).join("");
+
+
+        document
+            .querySelectorAll(
+                ".incident-card"
+            )
+            .forEach(
+                card => {
+
+                    card.addEventListener(
+                        "click",
+                        () => {
+
+                            const id =
+                                card.dataset.id;
+
+                            focusEmergency(
+                                id
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       RESOURCE LIST
+    ===================================================== */
+
+    function renderResources() {
+
+        const container =
+            document.getElementById(
+                "resourceList"
+            );
+
+
+        container.innerHTML =
+            resources.map(
+                resource => `
+
+                    <div
+                        class="resource-card"
+                        data-resource-id="${escapeHtml(
+                            resource.resource_id
+                        )}"
+                    >
+
+                        <div class="resource-icon">
+                            ${responseIcon(
+                                resource.resource_type
+                            )}
+                        </div>
+
+
+                        <div class="resource-info">
+
+                            <strong>
+                                ${escapeHtml(
+                                    resource.resource_name
+                                )}
+                            </strong>
+
+                            <span>
+                                ${escapeHtml(
+                                    resource.resource_id
+                                )}
+                                ·
+                                ${escapeHtml(
+                                    resource.resource_type
+                                )}
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            class="
+                                resource-status
+                                ${
+                                    String(
+                                        resource.status
+                                    ).toLowerCase()
+                                    === "available"
+                                        ? "available"
+                                        : "busy"
+                                }
+                            "
+                        ></span>
+
+                    </div>
+
+                `
+            ).join("");
+
+
+        container
+            .querySelectorAll(
+                ".resource-card"
+            )
+            .forEach(
+                card => {
+
+                    card.addEventListener(
+                        "click",
+                        () => {
+
+                            const resource =
+                                resources.find(
+                                    r =>
+                                        r.resource_id ===
+                                        card.dataset.resourceId
+                                );
+
+
+                            if (resource) {
+
+                                focusResource(
+                                    resource
+                                );
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       MAP MARKERS
+    ===================================================== */
+
+    function clearMarkers() {
+
+        emergencyMarkers.forEach(
+            marker =>
+                map.removeLayer(marker)
+        );
+
+
+        resourceMarkers.forEach(
+            marker =>
+                map.removeLayer(marker)
+        );
+
+
+        emergencyMarkers = [];
+
+        resourceMarkers = [];
+
+    }
+
+
+    function createEmergencyMarker(
+        emergency
+    ) {
+
+        const score =
+            Number(
+                emergency.risk_score || 0
+            );
+
+
+        const marker =
+            L.circleMarker(
+                [
+                    Number(
+                        emergency.latitude
+                    ),
+                    Number(
+                        emergency.longitude
+                    )
+                ],
+                {
+                    radius:
+                        score >= 85
+                            ? 11
+                            : score >= 70
+                                ? 9
+                                : 7,
+
+                    color:
+                        score >= 85
+                            ? "#ff5964"
+                            : "#ffb84f",
+
+                    fillColor:
+                        score >= 85
+                            ? "#ff5964"
+                            : "#ffb84f",
+
+                    fillOpacity:
+                        .85,
+
+                    weight:
+                        2
+                }
+            ).addTo(map);
+
+
+        marker.bindPopup(`
+
+            <div>
+
+                <strong>
+                    ${escapeHtml(
+                        typeAr(
+                            emergency.emergency_type
+                        )
+                    )}
+                </strong>
+
+                <br>
+
+                <span>
+                    ${escapeHtml(
+                        emergency.emergency_id
+                    )}
+                </span>
+
+                <br>
+
+                مستوى الخطر:
+                <strong>
+                    ${score}/100
+                </strong>
+
+                <br>
+
+                الحالة:
+                ${escapeHtml(
+                    statusAr(
+                        emergency.status
+                    )
+                )}
+
+                <br><br>
+
+                <a
+                    href="emergency-details.html?id=${encodeURIComponent(
+                        emergency.emergency_id
+                    )}"
+                    style="
+                        color:#69b8ff;
+                        text-decoration:none;
+                    "
+                >
+                    فتح التفاصيل →
+                </a>
+
+            </div>
+
+        `);
+
+
+        marker.on(
+            "click",
+            () => {
+
+                highlightIncident(
+                    emergency.emergency_id
+                );
+
+            }
+        );
+
+
+        return marker;
+
+    }
+
+
+    function createResourceMarker(
+        resource
+    ) {
+
+        const marker =
+            L.circleMarker(
+                [
+                    Number(
+                        resource.latitude
+                    ),
+                    Number(
+                        resource.longitude
+                    )
+                ],
+                {
+                    radius: 7,
+
+                    color: "#43d69a",
+
+                    fillColor: "#43d69a",
+
+                    fillOpacity: .9,
+
+                    weight: 2
+                }
+            ).addTo(map);
+
+
+        marker.bindPopup(`
+
+            <div>
+
+                <strong>
+                    ${escapeHtml(
+                        resource.resource_name
+                    )}
+                </strong>
+
+                <br>
+
+                ${escapeHtml(
+                    resource.resource_type
+                )}
+
+                <br>
+
+                الحالة:
+                <strong>
+                    ${escapeHtml(
+                        resource.status
+                    )}
+                </strong>
+
+                <br>
+
+                ID:
+                ${escapeHtml(
+                    resource.resource_id
+                )}
+
+            </div>
+
+        `);
+
+
+        return marker;
+
+    }
+
+
+    function renderMap() {
+
+        clearMarkers();
+
+
+        emergencies.forEach(
+            emergency => {
+
+                const marker =
+                    createEmergencyMarker(
+                        emergency
+                    );
+
+                emergencyMarkers.push(
+                    marker
+                );
+
+            }
+        );
+
+
+        resources.forEach(
+            resource => {
+
+                const marker =
+                    createResourceMarker(
+                        resource
+                    );
+
+                resourceMarkers.push(
+                    marker
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       FOCUS
+    ===================================================== */
+
+    function focusEmergency(id) {
+
+        const emergency =
+            emergencies.find(
+                e =>
+                    e.emergency_id === id
+            );
+
+
+        if (!emergency) return;
+
+
+        const lat =
+            Number(
+                emergency.latitude
+            );
+
+
+        const lng =
+            Number(
+                emergency.longitude
+            );
+
+
+        map.setView(
+            [lat,lng],
+            16,
+            {
+                animate: true
+            }
+        );
+
+
+        const index =
+            emergencies.findIndex(
+                e =>
+                    e.emergency_id === id
+            );
+
+
+        if (
+            emergencyMarkers[index]
+        ) {
+
+            emergencyMarkers[index]
+                .openPopup();
+
+        }
+
+
+        highlightIncident(id);
+
+    }
+
+
+    function focusResource(resource) {
+
+        const lat =
+            Number(
+                resource.latitude
+            );
+
+
+        const lng =
+            Number(
+                resource.longitude
+            );
+
+
+        map.setView(
+            [lat,lng],
+            16,
+            {
+                animate: true
+            }
+        );
+
+
+        const index =
+            resources.findIndex(
+                r =>
+                    r.resource_id ===
+                    resource.resource_id
+            );
+
+
+        if (
+            resourceMarkers[index]
+        ) {
+
+            resourceMarkers[index]
+                .openPopup();
+
+        }
+
+    }
+
+
+    function highlightIncident(id) {
+
+        document
+            .querySelectorAll(
+                ".incident-card"
+            )
+            .forEach(
+                card => {
+
+                    card.classList.toggle(
+                        "selected",
+                        card.dataset.id === id
+                    );
+
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       FILTERS
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".filter-btn"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        document
+                            .querySelectorAll(
+                                ".filter-btn"
+                            )
+                            .forEach(
+                                b =>
+                                    b.classList.remove(
+                                        "active"
+                                    )
+                            );
+
+
+                        button.classList.add(
+                            "active"
+                        );
+
+
+                        activeFilter =
+                            button.dataset.filter;
+
+
+                        renderIncidents();
+
+
+                        /*
+                         * For map filtering:
+                         * rebuild visible markers.
+                         */
+
+                        clearMarkers();
+
+
+                        if (
+                            activeFilter ===
+                            "resource"
+                        ) {
+
+                            resources.forEach(
+                                resource => {
+
+                                    resourceMarkers.push(
+                                        createResourceMarker(
+                                            resource
+                                        )
+                                    );
+
+                                }
+                            );
+
+                            return;
+
+                        }
+
+
+                        if (
+                            activeFilter ===
+                            "emergency"
+                        ) {
+
+                            emergencies.forEach(
+                                emergency => {
+
+                                    emergencyMarkers.push(
+                                        createEmergencyMarker(
+                                            emergency
+                                        )
+                                    );
+
+                                }
+                            );
+
+                            return;
+
+                        }
+
+
+                        if (
+                            activeFilter ===
+                            "critical"
+                        ) {
+
+                            emergencies
+                                .filter(
+                                    e =>
+                                        Number(
+                                            e.risk_score || 0
+                                        ) >= 85
+                                )
+                                .forEach(
+                                    emergency => {
+
+                                        emergencyMarkers.push(
+                                            createEmergencyMarker(
+                                                emergency
+                                            )
+                                        );
+
+                                    }
+                                );
+
+                            return;
+
+                        }
+
+
+                        renderMap();
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       MAP CONTROLS
+    ===================================================== */
+
+    document.getElementById(
+        "centerAll"
+    ).addEventListener(
+        "click",
+        () => {
+
+            const points = [
+
+                ...emergencies.map(
+                    e => [
+                        Number(e.latitude),
+                        Number(e.longitude)
+                    ]
+                ),
+
+                ...resources.map(
+                    r => [
+                        Number(r.latitude),
+                        Number(r.longitude)
+                    ]
+                )
+
+            ];
+
+
+            if (!points.length)
+                return;
+
+
+            map.fitBounds(
+                points,
+                {
+                    padding: [30,30]
+                }
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "locateBtn"
+    ).addEventListener(
+        "click",
+        () => {
+
+            if (!navigator.geolocation) {
+
+                showToast(
+                    "تحديد الموقع غير مدعوم."
+                );
+
+                return;
+
+            }
+
+
+            navigator.geolocation.getCurrentPosition(
+                position => {
+
+                    map.setView(
+                        [
+                            position.coords.latitude,
+                            position.coords.longitude
+                        ],
+                        16
+                    );
+
+
+                    L.circleMarker(
+                        [
+                            position.coords.latitude,
+                            position.coords.longitude
+                        ],
+                        {
+                            radius: 8,
+
+                            color: "#69b8ff",
+
+                            fillColor: "#69b8ff",
+
+                            fillOpacity: .9
+                        }
+                    )
+                    .addTo(map)
+                    .bindPopup(
+                        "موقع الجهاز"
+                    )
+                    .openPopup();
+
+                },
+
+                () => {
+
+                    showToast(
+                        "تعذر الحصول على الموقع."
+                    );
+
+                }
+
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        toast.textContent =
+            message;
+
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+    }
+
+
+    /* =====================================================
+       START
+    ===================================================== */
+
+    initializeMap();
+
+    loadData();
+
+</script>
+
+
+</body>
+
+</html>

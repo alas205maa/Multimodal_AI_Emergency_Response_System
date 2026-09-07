@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>المستخدمون | مركز عمليات الطوارئ</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/app.css"
+    >
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #07111f;
+            color: #dce5ef;
+            font-family: Cairo, sans-serif;
+        }
+
+        .admin-main {
+            margin-right: 260px;
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            position: fixed;
+            top: 0;
+            right: 260px;
+            left: 0;
+            height: 72px;
+
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+
+            background: rgba(7,17,31,.96);
+
+            border-bottom:
+                1px solid rgba(255,255,255,.07);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-title strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .page-title span {
+            color: #687990;
+            font-size: 9px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            color: #69dda2;
+
+            background:
+                rgba(49,212,127,.07);
+
+            border:
+                1px solid rgba(49,212,127,.13);
+
+            font-size: 9px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #31d47f;
+
+            box-shadow:
+                0 0 9px rgba(49,212,127,.7);
+        }
+
+        .page-content {
+            max-width: 1700px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .content-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            margin-bottom: 20px;
+        }
+
+        .content-heading h1 {
+            margin: 0 0 5px;
+            font-size: 22px;
+        }
+
+        .content-heading p {
+            margin: 0;
+
+            color: #6c7e95;
+            font-size: 9px;
+        }
+
+        .add-user-btn {
+            border: 0;
+            outline: none;
+
+            padding: 10px 16px;
+
+            border-radius: 9px;
+
+            background: #d83243;
+
+            color: white;
+
+            font-family: inherit;
+            font-size: 8px;
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .add-user-btn:hover {
+            background: #ef4657;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0,1fr));
+
+            gap: 12px;
+
+            margin-bottom: 15px;
+        }
+
+        .stat-card {
+            padding: 16px;
+
+            border-radius: 13px;
+
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .stat-label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #687b92;
+            font-size: 8px;
+        }
+
+        .stat-number {
+            display: block;
+
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .blue {
+            color: #67baff;
+        }
+
+        .green {
+            color: #60dda0;
+        }
+
+        .orange {
+            color: #ffb75c;
+        }
+
+        .red {
+            color: #ff626d;
+        }
+
+        /* =========================
+           FILTERS
+        ========================= */
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 12px;
+
+            margin-bottom: 12px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 11px 14px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            outline: none;
+
+            background: #0d1b2d;
+
+            color: #d8e2ec;
+
+            font-family: inherit;
+            font-size: 8px;
+        }
+
+        .search-box input:focus {
+            border-color:
+                rgba(103,186,255,.35);
+        }
+
+        .filters {
+            display: flex;
+            gap: 8px;
+        }
+
+        .filters select {
+            min-width: 130px;
+
+            padding: 10px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            outline: none;
+
+            background: #0d1b2d;
+
+            color: #9babbc;
+
+            font-family: inherit;
+            font-size: 8px;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .panel {
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            border-radius: 14px;
+
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 14px 17px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .panel-header strong {
+            font-size: 10px;
+        }
+
+        .panel-header span {
+            color: #60738a;
+            font-size: 7px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 850px;
+
+            border-collapse: collapse;
+        }
+
+        th {
+            padding: 11px 14px;
+
+            text-align: right;
+
+            background: #0a1727;
+
+            color: #60738a;
+
+            font-size: 7px;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 13px 14px;
+
+            border-top:
+                1px solid rgba(255,255,255,.045);
+
+            color: #9aaabd;
+
+            font-size: 8px;
+        }
+
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .avatar {
+            width: 31px;
+            height: 31px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 50%;
+
+            background:
+                rgba(103,186,255,.08);
+
+            color: #67baff;
+
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .user-name {
+            display: block;
+
+            color: #c5d0dc;
+
+            font-weight: 600;
+        }
+
+        .user-email {
+            display: block;
+
+            margin-top: 2px;
+
+            color: #53677d;
+
+            font-size: 7px;
+        }
+
+        .role-badge,
+        .status-badge {
+            display: inline-flex;
+
+            padding: 5px 8px;
+
+            border-radius: 15px;
+
+            font-size: 7px;
+        }
+
+        .role-admin {
+            color: #ff6c76;
+            background:
+                rgba(255,96,107,.08);
+        }
+
+        .role-operator {
+            color: #ffbf61;
+            background:
+                rgba(255,191,97,.08);
+        }
+
+        .role-citizen {
+            color: #68bbff;
+            background:
+                rgba(104,187,255,.08);
+        }
+
+        .status-active {
+            color: #62dca0;
+            background:
+                rgba(98,220,160,.08);
+        }
+
+        .status-inactive {
+            color: #ff6873;
+            background:
+                rgba(255,104,115,.08);
+        }
+
+        .actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .action-btn {
+            padding: 6px 8px;
+
+            border: 1px solid
+                rgba(255,255,255,.06);
+
+            border-radius: 6px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            color: #8193a7;
+
+            font-family: inherit;
+            font-size: 7px;
+
+            cursor: pointer;
+        }
+
+        .action-btn:hover {
+            background:
+                rgba(255,255,255,.06);
+
+            color: #c8d3de;
+        }
+
+        .action-danger:hover {
+            color: #ff6671;
+        }
+
+        /* =========================
+           ROLES
+        ========================= */
+
+        .roles-section {
+            margin-top: 15px;
+        }
+
+        .roles-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 10px;
+
+            padding: 15px;
+        }
+
+        .role-card {
+            padding: 14px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.045);
+        }
+
+        .role-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+        }
+
+        .role-card strong {
+            font-size: 9px;
+        }
+
+        .role-count {
+            color: #61758c;
+            font-size: 7px;
+        }
+
+        .permissions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .permission {
+            padding: 4px 6px;
+
+            border-radius: 5px;
+
+            color: #71859b;
+
+            background:
+                rgba(255,255,255,.035);
+
+            font-size: 6px;
+        }
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 3000;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                rgba(0,0,0,.68);
+
+            backdrop-filter: blur(7px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 470px;
+
+            padding: 22px;
+
+            border-radius: 15px;
+
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            box-shadow:
+                0 25px 80px
+                rgba(0,0,0,.45);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 18px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+
+            font-size: 14px;
+        }
+
+        .close-btn {
+            width: 28px;
+            height: 28px;
+
+            border: 0;
+            border-radius: 7px;
+
+            background:
+                rgba(255,255,255,.04);
+
+            color: #8293a6;
+
+            cursor: pointer;
+        }
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 10px;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #75879b;
+
+            font-size: 7px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            box-sizing: border-box;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            outline: none;
+
+            background: #091625;
+
+            color: #cbd6e1;
+
+            font-family: inherit;
+            font-size: 8px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-start;
+
+            gap: 8px;
+
+            margin-top: 18px;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            border: 0;
+
+            padding: 9px 15px;
+
+            border-radius: 8px;
+
+            font-family: inherit;
+            font-size: 8px;
+
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #d83243;
+            color: white;
+        }
+
+        .cancel-btn {
+            background:
+                rgba(255,255,255,.05);
+
+            color: #8a9bad;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            padding: 40px;
+
+            text-align: center;
+
+            color: #60738a;
+
+            font-size: 8px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .admin-main {
+                margin-right: 0;
+            }
+
+            .admin-header {
+                right: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+            .roles-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .page-content {
+                padding: 16px;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filters {
+                flex-direction: column;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full {
+                grid-column: auto;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<script>
+
+    /* =========================
+       AUTH GUARD
+    ========================= */
+
+    if (
+        sessionStorage.getItem(
+            "adminAuthenticated"
+        ) !== "true"
+    ) {
+
+        window.location.href =
+            "login.html";
+
+    }
+
+</script>
+
+
+<!-- NAV -->
+
+<div id="adminNav"></div>
+
+
+<!-- HEADER -->
+
+<header class="admin-header">
+
+    <div class="admin-header-left">
+
+        <button
+            class="menu-toggle"
+            onclick="toggleSidebar()"
+        >
+            ☰
+        </button>
+
+        <div class="page-title">
+
+            <strong>
+                إدارة المستخدمين
+            </strong>
+
+            <span>
+                USER & ACCESS MANAGEMENT
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="system-status">
+
+        <span class="status-dot"></span>
+
+        Access Control Online
+
+    </div>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="admin-main">
+
+    <div class="page-content">
+
+
+        <!-- HEADER -->
+
+        <div class="content-header">
+
+            <div class="content-heading">
+
+                <h1>
+                    المستخدمون والصلاحيات
+                </h1>
+
+                <p>
+                    إدارة حسابات المستخدمين وأدوار الوصول
+                    داخل مركز عمليات الطوارئ.
+                </p>
+
+            </div>
+
+
+            <button
+                class="add-user-btn"
+                id="addUserBtn"
+            >
+                + إضافة مستخدم
+            </button>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    إجمالي المستخدمين
+                </span>
+
+                <strong
+                    class="stat-number blue"
+                    id="totalUsers"
+                >
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    المستخدمون النشطون
+                </span>
+
+                <strong
+                    class="stat-number green"
+                    id="activeUsers"
+                >
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    المشرفون
+                </span>
+
+                <strong
+                    class="stat-number red"
+                    id="adminUsers"
+                >
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <span class="stat-label">
+                    المشغلون
+                </span>
+
+                <strong
+                    class="stat-number orange"
+                    id="operatorUsers"
+                >
+                    0
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- TOOLBAR -->
+
+        <div class="toolbar">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="البحث بالاسم أو البريد الإلكتروني..."
+                >
+
+            </div>
+
+
+            <div class="filters">
+
+                <select id="roleFilter">
+
+                    <option value="all">
+                        جميع الأدوار
+                    </option>
+
+                    <option value="Admin">
+                        Admin
+                    </option>
+
+                    <option value="Operator">
+                        Operator
+                    </option>
+
+                    <option value="Citizen">
+                        Citizen
+                    </option>
+
+                </select>
+
+
+                <select id="statusFilter">
+
+                    <option value="all">
+                        جميع الحالات
+                    </option>
+
+                    <option value="Active">
+                        نشط
+                    </option>
+
+                    <option value="Inactive">
+                        غير نشط
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <!-- USERS -->
+
+        <section class="panel">
+
+            <div class="panel-header">
+
+                <strong>
+                    قائمة المستخدمين
+                </strong>
+
+                <span id="resultCount">
+                    0 مستخدم
+                </span>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                المستخدم
+                            </th>
+
+                            <th>
+                                الدور
+                            </th>
+
+                            <th>
+                                الحالة
+                            </th>
+
+                            <th>
+                                تاريخ الإنشاء
+                            </th>
+
+                            <th>
+                                الإجراءات
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="usersTable"
+                    ></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ROLES -->
+
+        <section
+            class="panel roles-section"
+        >
+
+            <div class="panel-header">
+
+                <strong>
+                    الأدوار والصلاحيات
+                </strong>
+
+                <span>
+                    ROLE BASED ACCESS CONTROL
+                </span>
+
+            </div>
+
+
+            <div class="roles-grid">
+
+
+                <div class="role-card">
+
+                    <div class="role-card-header">
+
+                        <strong>
+                            Admin
+                        </strong>
+
+                        <span
+                            class="role-count"
+                            id="adminRoleCount"
+                        >
+                            0 users
+                        </span>
+
+                    </div>
+
+
+                    <div class="permissions">
+
+                        <span class="permission">
+                            إدارة المستخدمين
+                        </span>
+
+                        <span class="permission">
+                            إدارة البلاغات
+                        </span>
+
+                        <span class="permission">
+                            إدارة الموارد
+                        </span>
+
+                        <span class="permission">
+                            التحليلات
+                        </span>
+
+                        <span class="permission">
+                            الإعدادات
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="role-card">
+
+                    <div class="role-card-header">
+
+                        <strong>
+                            Operator
+                        </strong>
+
+                        <span
+                            class="role-count"
+                            id="operatorRoleCount"
+                        >
+                            0 users
+                        </span>
+
+                    </div>
+
+
+                    <div class="permissions">
+
+                        <span class="permission">
+                            عرض البلاغات
+                        </span>
+
+                        <span class="permission">
+                            توجيه الفرق
+                        </span>
+
+                        <span class="permission">
+                            تحديث الحالة
+                        </span>
+
+                        <span class="permission">
+                            الخريطة الحية
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="role-card">
+
+                    <div class="role-card-header">
+
+                        <strong>
+                            Citizen
+                        </strong>
+
+                        <span
+                            class="role-count"
+                            id="citizenRoleCount"
+                        >
+                            0 users
+                        </span>
+
+                    </div>
+
+
+                    <div class="permissions">
+
+                        <span class="permission">
+                            إرسال بلاغ
+                        </span>
+
+                        <span class="permission">
+                            تتبع البلاغ
+                        </span>
+
+                        <span class="permission">
+                            سجل البلاغات
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </div>
+
+</main>
+
+
+<!-- ADD USER MODAL -->
+
+<div
+    class="modal"
+    id="userModal"
+>
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                إضافة مستخدم جديد
+            </h2>
+
+            <button
+                class="close-btn"
+                id="closeModal"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="userForm">
+
+            <div class="form-grid">
+
+
+                <div class="form-group full">
+
+                    <label>
+                        الاسم
+                    </label>
+
+                    <input
+                        type="text"
+                        id="userName"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group full">
+
+                    <label>
+                        البريد الإلكتروني
+                    </label>
+
+                    <input
+                        type="email"
+                        id="userEmail"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        الدور
+                    </label>
+
+                    <select
+                        id="userRole"
+                    >
+
+                        <option value="Admin">
+                            Admin
+                        </option>
+
+                        <option value="Operator">
+                            Operator
+                        </option>
+
+                        <option value="Citizen">
+                            Citizen
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        الحالة
+                    </label>
+
+                    <select
+                        id="userStatus"
+                    >
+
+                        <option value="Active">
+                            Active
+                        </option>
+
+                        <option value="Inactive">
+                            Inactive
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="form-actions">
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    حفظ المستخدم
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-btn"
+                    id="cancelModal"
+                >
+                    إلغاء
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script src="../js/app.js"></script>
+
+
+<script>
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    document.getElementById(
+        "adminNav"
+    ).innerHTML =
+        adminNav("users");
+
+
+    /* =========================
+       STATE
+    ========================= */
+
+    let users = [];
+
+
+    /* =========================
+       LOAD USERS
+    ========================= */
+
+    async function loadUsers() {
+
+        try {
+
+            const response =
+                await fetch(
+                    "../mock-data/data.json"
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load users"
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            users =
+                data.users || [];
+
+
+            render();
+
+        } catch (error) {
+
+            console.error(error);
+
+        }
+
+    }
+
+
+    /* =========================
+       RENDER
+    ========================= */
+
+    function render() {
+
+        updateStats();
+
+        renderTable();
+
+        updateRoleCounts();
+
+    }
+
+
+    /* =========================
+       STATS
+    ========================= */
+
+    function updateStats() {
+
+        const total =
+            users.length;
+
+
+        const active =
+            users.filter(
+                user =>
+                    user.status ===
+                    "Active"
+            ).length;
+
+
+        const admins =
+            users.filter(
+                user =>
+                    user.role ===
+                    "Admin"
+            ).length;
+
+
+        const operators =
+            users.filter(
+                user =>
+                    user.role ===
+                    "Operator"
+            ).length;
+
+
+        document.getElementById(
+            "totalUsers"
+        ).textContent =
+            total;
+
+
+        document.getElementById(
+            "activeUsers"
+        ).textContent =
+            active;
+
+
+        document.getElementById(
+            "adminUsers"
+        ).textContent =
+            admins;
+
+
+        document.getElementById(
+            "operatorUsers"
+        ).textContent =
+            operators;
+
+    }
+
+
+    /* =========================
+       FILTER
+    ========================= */
+
+    function getFilteredUsers() {
+
+        const search =
+            document.getElementById(
+                "searchInput"
+            )
+            .value
+            .trim()
+            .toLowerCase();
+
+
+        const role =
+            document.getElementById(
+                "roleFilter"
+            ).value;
+
+
+        const status =
+            document.getElementById(
+                "statusFilter"
+            ).value;
+
+
+        return users.filter(
+            user => {
+
+                const matchesSearch =
+                    !search ||
+                    String(
+                        user.name || ""
+                    )
+                    .toLowerCase()
+                    .includes(search) ||
+
+                    String(
+                        user.email || ""
+                    )
+                    .toLowerCase()
+                    .includes(search);
+
+
+                const matchesRole =
+                    role === "all" ||
+                    user.role === role;
+
+
+                const matchesStatus =
+                    status === "all" ||
+                    user.status === status;
+
+
+                return (
+                    matchesSearch &&
+                    matchesRole &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    function renderTable() {
+
+        const tbody =
+            document.getElementById(
+                "usersTable"
+            );
+
+
+        const filtered =
+            getFilteredUsers();
+
+
+        document.getElementById(
+            "resultCount"
+        ).textContent =
+            `${filtered.length} مستخدم`;
+
+
+        if (!filtered.length) {
+
+            tbody.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="5"
+                        class="empty"
+                    >
+                        لا توجد نتائج مطابقة.
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        tbody.innerHTML =
+            filtered
+                .map(
+                    user => {
+
+                        const initial =
+                            String(
+                                user.name ||
+                                "U"
+                            )
+                            .charAt(0)
+                            .toUpperCase();
+
+
+                        const roleClass =
+                            user.role ===
+                            "Admin"
+                                ? "role-admin"
+                                : user.role ===
+                                  "Operator"
+                                    ? "role-operator"
+                                    : "role-citizen";
+
+
+                        const statusClass =
+                            user.status ===
+                            "Active"
+                                ? "status-active"
+                                : "status-inactive";
+
+
+                        return `
+
+                            <tr>
+
+                                <td>
+
+                                    <div
+                                        class="user-cell"
+                                    >
+
+                                        <div
+                                            class="avatar"
+                                        >
+                                            ${escapeHtml(
+                                                initial
+                                            )}
+                                        </div>
+
+                                        <div>
+
+                                            <span
+                                                class="user-name"
+                                            >
+                                                ${escapeHtml(
+                                                    user.name ||
+                                                    "—"
+                                                )}
+                                            </span>
+
+                                            <span
+                                                class="user-email"
+                                            >
+                                                ${escapeHtml(
+                                                    user.email ||
+                                                    "—"
+                                                )}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="
+                                            role-badge
+                                            ${roleClass}
+                                        "
+                                    >
+                                        ${escapeHtml(
+                                            user.role ||
+                                            "—"
+                                        )}
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    <span
+                                        class="
+                                            status-badge
+                                            ${statusClass}
+                                        "
+                                    >
+                                        ${
+                                            user.status ===
+                                            "Active"
+                                                ? "نشط"
+                                                : "غير نشط"
+                                        }
+                                    </span>
+
+                                </td>
+
+
+                                <td>
+
+                                    ${escapeHtml(
+                                        user.created_at ||
+                                        "—"
+                                    )}
+
+                                </td>
+
+
+                                <td>
+
+                                    <div
+                                        class="actions"
+                                    >
+
+                                        <button
+                                            class="action-btn"
+                                            onclick="
+                                                editUser(
+                                                    ${user.id}
+                                                )
+                                            "
+                                        >
+                                            تعديل
+                                        </button>
+
+
+                                        <button
+                                            class="
+                                                action-btn
+                                                action-danger
+                                            "
+                                            onclick="
+                                                toggleUserStatus(
+                                                    ${user.id}
+                                                )
+                                            "
+                                        >
+                                            ${
+                                                user.status ===
+                                                "Active"
+                                                    ? "تعطيل"
+                                                    : "تفعيل"
+                                            }
+                                        </button>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    /* =========================
+       ROLE COUNTS
+    ========================= */
+
+    function updateRoleCounts() {
+
+        const count =
+            role =>
+                users.filter(
+                    user =>
+                        user.role ===
+                        role
+                ).length;
+
+
+        document.getElementById(
+            "adminRoleCount"
+        ).textContent =
+            `${count("Admin")} users`;
+
+
+        document.getElementById(
+            "operatorRoleCount"
+        ).textContent =
+            `${count("Operator")} users`;
+
+
+        document.getElementById(
+            "citizenRoleCount"
+        ).textContent =
+            `${count("Citizen")} users`;
+
+    }
+
+
+    /* =========================
+       SEARCH EVENTS
+    ========================= */
+
+    document.getElementById(
+        "searchInput"
+    ).addEventListener(
+        "input",
+        renderTable
+    );
+
+
+    document.getElementById(
+        "roleFilter"
+    ).addEventListener(
+        "change",
+        renderTable
+    );
+
+
+    document.getElementById(
+        "statusFilter"
+    ).addEventListener(
+        "change",
+        renderTable
+    );
+
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    const modal =
+        document.getElementById(
+            "userModal"
+        );
+
+
+    document.getElementById(
+        "addUserBtn"
+    ).addEventListener(
+        "click",
+        () => {
+
+            document.getElementById(
+                "userForm"
+            ).reset();
+
+            modal.classList.add(
+                "show"
+            );
+
+        }
+    );
+
+
+    function closeModal() {
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    document.getElementById(
+        "closeModal"
+    ).addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    document.getElementById(
+        "cancelModal"
+    ).addEventListener(
+        "click",
+        closeModal
+    );
+
+
+    modal.addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target ===
+                modal
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+    /* =========================
+       ADD USER
+    ========================= */
+
+    document.getElementById(
+        "userForm"
+    ).addEventListener(
+        "submit",
+        event => {
+
+            event.preventDefault();
+
+
+            const newUser = {
+
+                id:
+                    Date.now(),
+
+                name:
+                    document.getElementById(
+                        "userName"
+                    ).value.trim(),
+
+                email:
+                    document.getElementById(
+                        "userEmail"
+                    ).value.trim(),
+
+                role:
+                    document.getElementById(
+                        "userRole"
+                    ).value,
+
+                status:
+                    document.getElementById(
+                        "userStatus"
+                    ).value,
+
+                created_at:
+                    new Date()
+                        .toISOString()
+                        .split("T")[0]
+
+            };
+
+
+            users.unshift(
+                newUser
+            );
+
+
+            closeModal();
+
+            render();
+
+            showToast(
+                "تمت إضافة المستخدم محليًا."
+            );
+
+        }
+    );
+
+
+    /* =========================
+       EDIT USER
+    ========================= */
+
+    function editUser(id) {
+
+        const user =
+            users.find(
+                item =>
+                    item.id === id
+            );
+
+
+        if (!user)
+            return;
+
+
+        document.getElementById(
+            "userName"
+        ).value =
+            user.name || "";
+
+
+        document.getElementById(
+            "userEmail"
+        ).value =
+            user.email || "";
+
+
+        document.getElementById(
+            "userRole"
+        ).value =
+            user.role || "Citizen";
+
+
+        document.getElementById(
+            "userStatus"
+        ).value =
+            user.status || "Active";
+
+
+        modal.classList.add(
+            "show"
+        );
+
+
+        showToast(
+            "وضع التعديل تجريبي حاليًا."
+        );
+
+    }
+
+
+    /* =========================
+       TOGGLE STATUS
+    ========================= */
+
+    function toggleUserStatus(id) {
+
+        const user =
+            users.find(
+                item =>
+                    item.id === id
+            );
+
+
+        if (!user)
+            return;
+
+
+        user.status =
+            user.status ===
+            "Active"
+                ? "Inactive"
+                : "Active";
+
+
+        render();
+
+
+        showToast(
+            `تم ${
+                user.status === "Active"
+                    ? "تفعيل"
+                    : "تعطيل"
+            } المستخدم محليًا.`
+        );
+
+    }
+
+
+    /* =========================
+       START
+    ========================= */
+
+    loadUsers();
+
+</script>
+
+
+</body>
+
+</html>

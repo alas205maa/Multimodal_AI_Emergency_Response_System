@@ -1,0 +1,141 @@
+{
+  "emergencies": [
+    {
+      "emergency_id": "EMG-000001",
+      "emergency_type": "Fire",
+      "priority": "critical",
+      "risk_score": 92,
+      "response_type": "Fire Rescue",
+      "status": "active",
+      "description": "Fire reported in a residential building.",
+      "latitude": 15.3180519,
+      "longitude": 44.2350112,
+      "created_at": "2026-09-06 20:18",
+      "resource_id": "FR-001",
+      "resource_name": "Fire Rescue 1",
+      "distance": 2.4,
+      "eta": 4.8
+    },
+    {
+      "emergency_id": "EMG-000002",
+      "emergency_type": "Traffic Accident",
+      "priority": "high",
+      "risk_score": 78,
+      "response_type": "Ambulance",
+      "status": "dispatched",
+      "description": "Two-vehicle traffic accident.",
+      "latitude": 15.3262,
+      "longitude": 44.2074,
+      "created_at": "2026-09-06 20:03",
+      "resource_id": "AM-002",
+      "resource_name": "Ambulance 2",
+      "distance": 3.1,
+      "eta": 7.2
+    },
+    {
+      "emergency_id": "EMG-000003",
+      "emergency_type": "Medical Emergency",
+      "priority": "high",
+      "risk_score": 81,
+      "response_type": "Ambulance",
+      "status": "active",
+      "description": "Person needs urgent medical assistance.",
+      "latitude": 15.3451,
+      "longitude": 44.2067,
+      "created_at": "2026-09-06 19:45",
+      "resource_id": "AM-001",
+      "resource_name": "Ambulance 1",
+      "distance": 1.8,
+      "eta": 5.1
+    },
+    {
+      "emergency_id": "EMG-000004",
+      "emergency_type": "Flood",
+      "priority": "medium",
+      "risk_score": 61,
+      "response_type": "Rescue Team",
+      "status": "resolved",
+      "description": "Water accumulation affecting a road.",
+      "latitude": 15.332,
+      "longitude": 44.221,
+      "created_at": "2026-09-06 18:52",
+      "resource_id": "RS-001",
+      "resource_name": "Rescue Team 1",
+      "distance": 4.6,
+      "eta": 9.4
+    }
+  ],
+  "resources": [
+    {
+      "resource_id": "FR-001",
+      "resource_name": "Fire Rescue 1",
+      "resource_type": "Fire Rescue",
+      "latitude": 15.31805,
+      "longitude": 44.23501,
+      "status": "Available",
+      "assignment": "None"
+    },
+    {
+      "resource_id": "FR-002",
+      "resource_name": "Fire Rescue 2",
+      "resource_type": "Fire Rescue",
+      "latitude": 15.3062,
+      "longitude": 44.226,
+      "status": "Busy",
+      "assignment": "EMG-000001"
+    },
+    {
+      "resource_id": "AM-001",
+      "resource_name": "Ambulance 1",
+      "resource_type": "Ambulance",
+      "latitude": 15.3451,
+      "longitude": 44.2067,
+      "status": "Busy",
+      "assignment": "EMG-000003"
+    },
+    {
+      "resource_id": "AM-002",
+      "resource_name": "Ambulance 2",
+      "resource_type": "Ambulance",
+      "latitude": 15.3262,
+      "longitude": 44.2074,
+      "status": "Available",
+      "assignment": "None"
+    },
+    {
+      "resource_id": "RS-001",
+      "resource_name": "Rescue Team 1",
+      "resource_type": "Rescue Team",
+      "latitude": 15.332,
+      "longitude": 44.221,
+      "status": "Available",
+      "assignment": "None"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Admin User",
+      "email": "admin@example.com",
+      "role": "Admin",
+      "status": "Active",
+      "created_at": "2026-08-01"
+    },
+    {
+      "id": 2,
+      "name": "Emergency Operator",
+      "email": "operator@example.com",
+      "role": "Operator",
+      "status": "Active",
+      "created_at": "2026-08-05"
+    },
+    {
+      "id": 3,
+      "name": "Citizen Demo",
+      "email": "citizen@example.com",
+      "role": "Citizen",
+      "status": "Active",
+      "created_at": "2026-08-10"
+    }
+  ]
+}

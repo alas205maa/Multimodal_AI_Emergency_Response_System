@@ -1,0 +1,2237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>تفاصيل المورد | مركز العمليات</title>
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="../css/app.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <style>
+
+        body {
+            margin: 0;
+            background: #07111f;
+            color: #dce5ef;
+            font-family: Cairo, sans-serif;
+        }
+
+        .admin-main {
+            margin-right: 260px;
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            position: fixed;
+            top: 0;
+            right: 260px;
+            left: 0;
+            height: 72px;
+
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 24px;
+
+            background: rgba(7,17,31,.95);
+
+            border-bottom:
+                1px solid rgba(255,255,255,.07);
+
+            backdrop-filter: blur(14px);
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .page-title strong {
+            display: block;
+            font-size: 15px;
+        }
+
+        .page-title span {
+            color: #687990;
+            font-size: 9px;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 20px;
+
+            color: #69dda2;
+
+            background:
+                rgba(49,212,127,.07);
+
+            border:
+                1px solid rgba(49,212,127,.13);
+
+            font-size: 9px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #31d47f;
+
+            box-shadow:
+                0 0 9px rgba(49,212,127,.7);
+        }
+
+        .page-content {
+            max-width: 1700px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        /* ==============================================
+           BACK
+        ============================================== */
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            margin-bottom: 18px;
+
+            color: #71849b;
+
+            text-decoration: none;
+
+            font-size: 8px;
+        }
+
+        .back-link:hover {
+            color: white;
+        }
+
+        /* ==============================================
+           HERO
+        ============================================== */
+
+        .resource-hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 20px;
+
+            margin-bottom: 15px;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    120deg,
+                    #0e2035,
+                    #0b1829
+                );
+
+            border:
+                1px solid rgba(255,255,255,.07);
+        }
+
+        .resource-identity {
+            display: flex;
+            align-items: center;
+
+            gap: 15px;
+        }
+
+        .large-resource-icon {
+            width: 60px;
+            height: 60px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,.05);
+
+            font-size: 27px;
+        }
+
+        .resource-identity h1 {
+            margin: 0 0 4px;
+
+            font-size: 19px;
+        }
+
+        .resource-id {
+            direction: ltr;
+            text-align: right;
+
+            color: #64778e;
+
+            font-size: 8px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .hero-btn {
+            min-height: 36px;
+
+            padding: 0 13px;
+
+            border-radius: 8px;
+
+            border:
+                1px solid rgba(255,255,255,.07);
+
+            background:
+                rgba(255,255,255,.035);
+
+            color: #aebccc;
+
+            font-family: inherit;
+            font-size: 8px;
+
+            cursor: pointer;
+        }
+
+        .hero-btn:hover {
+            background:
+                rgba(255,255,255,.07);
+
+            color: white;
+        }
+
+        .hero-btn.primary {
+            background: #e94f5b;
+            border-color: #e94f5b;
+            color: white;
+        }
+
+        /* ==============================================
+           STATUS
+        ============================================== */
+
+        .resource-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 7px 10px;
+
+            margin-top: 9px;
+
+            border-radius: 20px;
+
+            font-size: 7px;
+        }
+
+        .resource-status::before {
+            content: "";
+
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+        }
+
+        .available {
+            color: #62dda1;
+            background:
+                rgba(63,214,146,.08);
+        }
+
+        .available::before {
+            background: #42d493;
+            box-shadow:
+                0 0 8px rgba(66,212,147,.5);
+        }
+
+        .busy {
+            color: #ffc05b;
+            background:
+                rgba(255,190,81,.08);
+        }
+
+        .busy::before {
+            background: #ffb94f;
+        }
+
+        .offline {
+            color: #929dad;
+            background:
+                rgba(146,157,173,.08);
+        }
+
+        .offline::before {
+            background: #788493;
+        }
+
+        /* ==============================================
+           GRID
+        ============================================== */
+
+        .main-grid {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1.55fr)
+                minmax(320px, .8fr);
+
+            gap: 15px;
+        }
+
+        .left-column,
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .panel {
+            border-radius: 14px;
+
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 14px 17px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .panel-header strong {
+            font-size: 10px;
+        }
+
+        .panel-header span {
+            color: #60738a;
+            font-size: 7px;
+        }
+
+        .panel-body {
+            padding: 17px;
+        }
+
+        /* ==============================================
+           MAP
+        ============================================== */
+
+        #resourceMap {
+            width: 100%;
+            height: 400px;
+        }
+
+        .leaflet-container {
+            background: #091522;
+        }
+
+        .map-overlay {
+            position: absolute;
+
+            z-index: 500;
+
+            top: 12px;
+            right: 12px;
+
+            padding: 8px 10px;
+
+            border-radius: 8px;
+
+            background:
+                rgba(7,17,31,.88);
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            color: #b8c5d2;
+
+            font-size: 7px;
+        }
+
+        /* ==============================================
+           INFO GRID
+        ============================================== */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0,1fr));
+
+            gap: 10px;
+        }
+
+        .info-item {
+            padding: 12px;
+
+            border-radius: 9px;
+
+            background:
+                rgba(255,255,255,.025);
+
+            border:
+                1px solid rgba(255,255,255,.035);
+        }
+
+        .info-label {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #62758b;
+
+            font-size: 7px;
+        }
+
+        .info-value {
+            display: block;
+
+            color: #c8d3de;
+
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .ltr {
+            direction: ltr;
+            text-align: right;
+        }
+
+        /* ==============================================
+           ASSIGNMENT
+        ============================================== */
+
+        .assignment-card {
+            padding: 14px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(103,186,255,.035);
+
+            border:
+                1px solid
+                rgba(103,186,255,.08);
+        }
+
+        .assignment-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 12px;
+        }
+
+        .assignment-label {
+            color: #687c94;
+            font-size: 7px;
+        }
+
+        .mission-active {
+            color: #67baff;
+            font-size: 7px;
+        }
+
+        .mission-id {
+            direction: ltr;
+            text-align: right;
+
+            color: #d5e0eb;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .mission-description {
+            margin: 5px 0 12px;
+
+            color: #77899e;
+
+            font-size: 8px;
+
+            line-height: 1.8;
+        }
+
+        .view-mission {
+            display: inline-flex;
+
+            color: #67baff;
+
+            text-decoration: none;
+
+            font-size: 7px;
+        }
+
+        /* ==============================================
+           COORDINATES
+        ============================================== */
+
+        .coordinates {
+            display: flex;
+
+            gap: 8px;
+        }
+
+        .coordinate {
+            flex: 1;
+
+            padding: 12px;
+
+            border-radius: 9px;
+
+            background:
+                #091625;
+        }
+
+        .coordinate label {
+            display: block;
+
+            color: #5e7188;
+
+            font-size: 7px;
+
+            margin-bottom: 5px;
+        }
+
+        .coordinate strong {
+            display: block;
+
+            direction: ltr;
+            text-align: right;
+
+            color: #a9b8c8;
+
+            font-size: 9px;
+        }
+
+        /* ==============================================
+           ACTIONS
+        ============================================== */
+
+        .action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .operation-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            width: 100%;
+
+            min-height: 42px;
+
+            padding: 0 12px;
+
+            border-radius: 9px;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+
+            background:
+                rgba(255,255,255,.025);
+
+            color: #9caabd;
+
+            font-family: inherit;
+            font-size: 8px;
+
+            cursor: pointer;
+
+            text-align: right;
+        }
+
+        .operation-btn:hover {
+            background:
+                rgba(255,255,255,.06);
+
+            color: white;
+        }
+
+        .operation-btn span:last-child {
+            color: #52667e;
+        }
+
+        .operation-btn.danger {
+            color: #ff777f;
+
+            border-color:
+                rgba(233,79,91,.12);
+        }
+
+        /* ==============================================
+           ACTIVITY
+        ============================================== */
+
+        .timeline {
+            position: relative;
+
+            padding-right: 21px;
+        }
+
+        .timeline::before {
+            content: "";
+
+            position: absolute;
+
+            top: 7px;
+            bottom: 7px;
+
+            right: 6px;
+
+            width: 1px;
+
+            background:
+                rgba(255,255,255,.08);
+        }
+
+        .timeline-item {
+            position: relative;
+
+            padding-bottom: 18px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+
+            right: -19px;
+            top: 3px;
+
+            width: 9px;
+            height: 9px;
+
+            border-radius: 50%;
+
+            background: #30445b;
+
+            border: 2px solid #0d1b2d;
+        }
+
+        .timeline-item.current
+        .timeline-dot {
+            background: #31d47f;
+
+            box-shadow:
+                0 0 10px
+                rgba(49,212,127,.45);
+        }
+
+        .timeline-title {
+            display: block;
+
+            color: #aebccc;
+
+            font-size: 8px;
+        }
+
+        .timeline-time {
+            display: block;
+
+            margin-top: 3px;
+
+            direction: ltr;
+            text-align: right;
+
+            color: #52677f;
+
+            font-size: 7px;
+        }
+
+        /* ==============================================
+           TOAST
+        ============================================== */
+
+        .toast {
+            position: fixed;
+
+            left: 22px;
+            bottom: 22px;
+
+            z-index: 7000;
+
+            padding: 11px 15px;
+
+            border-radius: 9px;
+
+            background: #13253b;
+
+            border:
+                1px solid rgba(255,255,255,.08);
+
+            color: #dce5ef;
+
+            font-size: 9px;
+
+            opacity: 0;
+
+            transform:
+                translateY(70px);
+
+            transition: .25s;
+        }
+
+        .toast.show {
+            opacity: 1;
+
+            transform:
+                translateY(0);
+        }
+
+        /* ==============================================
+           ERROR
+        ============================================== */
+
+        .error-state {
+            max-width: 500px;
+
+            margin: 80px auto;
+
+            padding: 30px;
+
+            text-align: center;
+
+            border-radius: 15px;
+
+            background: #0d1b2d;
+
+            border:
+                1px solid rgba(255,255,255,.06);
+        }
+
+        .error-state h2 {
+            margin: 0 0 7px;
+
+            font-size: 16px;
+        }
+
+        .error-state p {
+            color: #667990;
+
+            font-size: 8px;
+        }
+
+        .error-state a {
+            display: inline-flex;
+
+            margin-top: 10px;
+
+            color: #67baff;
+
+            font-size: 8px;
+        }
+
+        /* ==============================================
+           RESPONSIVE
+        ============================================== */
+
+        @media (max-width: 1100px) {
+
+            .admin-main {
+                margin-right: 0;
+            }
+
+            .admin-header {
+                right: 0;
+            }
+
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .page-content {
+                padding: 16px;
+            }
+
+            .resource-hero {
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+            .hero-actions {
+                width: 100%;
+            }
+
+            .hero-btn {
+                flex: 1;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .coordinates {
+                flex-direction: column;
+            }
+
+            #resourceMap {
+                height: 320px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<script>
+
+    /* ==============================================
+       AUTH GUARD
+    ============================================== */
+
+    if (
+        sessionStorage.getItem(
+            "adminAuthenticated"
+        ) !== "true"
+    ) {
+
+        window.location.href =
+            "login.html";
+
+    }
+
+</script>
+
+
+<div id="adminNav"></div>
+
+
+<header class="admin-header">
+
+    <div class="admin-header-left">
+
+        <button
+            class="menu-toggle"
+            onclick="toggleSidebar()"
+        >
+            ☰
+        </button>
+
+        <div class="page-title">
+
+            <strong>
+                تفاصيل المورد
+            </strong>
+
+            <span>
+                Resource Operational Details
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="system-status">
+
+        <span class="status-dot"></span>
+
+        Resource System Online
+
+    </div>
+
+</header>
+
+
+<main class="admin-main">
+
+    <div class="page-content">
+
+
+        <a
+            href="resources.html"
+            class="back-link"
+        >
+            ← العودة إلى قائمة الموارد
+        </a>
+
+
+        <div id="resourceContainer">
+
+            <!-- Rendered by JavaScript -->
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+></script>
+
+<script src="../js/app.js"></script>
+
+
+<script>
+
+    /* ==============================================
+       NAV
+    ============================================== */
+
+    document.getElementById(
+        "adminNav"
+    ).innerHTML =
+        adminNav("resources");
+
+
+    /* ==============================================
+       STATE
+    ============================================== */
+
+    let resource = null;
+
+    let emergency = null;
+
+    let map = null;
+
+
+    /* ==============================================
+       HELPERS
+    ============================================== */
+
+    function typeAr(type) {
+
+        const types = {
+
+            "Ambulance":
+                "إسعاف",
+
+            "Fire Rescue":
+                "إطفاء وإنقاذ",
+
+            "Rescue Team":
+                "فريق إنقاذ"
+
+        };
+
+        return types[type] || type;
+
+    }
+
+
+    function typeIcon(type) {
+
+        if (
+            type === "Ambulance"
+        ) {
+
+            return "🚑";
+
+        }
+
+        if (
+            type === "Fire Rescue"
+        ) {
+
+            return "🚒";
+
+        }
+
+        return "🛟";
+
+    }
+
+
+    function statusAr(status) {
+
+        const statuses = {
+
+            "Available":
+                "متاح",
+
+            "Busy":
+                "في مهمة",
+
+            "Offline":
+                "خارج الخدمة"
+
+        };
+
+        return statuses[status] || status;
+
+    }
+
+
+    function statusClass(status) {
+
+        if (
+            status === "Available"
+        ) {
+
+            return "available";
+
+        }
+
+        if (
+            status === "Busy"
+        ) {
+
+            return "busy";
+
+        }
+
+        return "offline";
+
+    }
+
+
+    function getResourceId() {
+
+        const params =
+            new URLSearchParams(
+                window.location.search
+            );
+
+        return params.get(
+            "id"
+        );
+
+    }
+
+
+    function showToast(message) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+        toast.textContent =
+            message;
+
+        toast.classList.add(
+            "show"
+        );
+
+        setTimeout(
+            () => {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            2500
+        );
+
+    }
+
+
+    /* ==============================================
+       LOAD
+    ============================================== */
+
+    async function loadResource() {
+
+        const resourceId =
+            getResourceId();
+
+
+        if (!resourceId) {
+
+            showError(
+                "لم يتم تحديد المورد."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "../mock-data/data.json"
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Failed to load data"
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            resource =
+                (data.resources || [])
+                    .find(
+                        item =>
+                            item.resource_id ===
+                            resourceId
+                    );
+
+
+            if (!resource) {
+
+                showError(
+                    "المورد المطلوب غير موجود."
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Find current assignment.
+             */
+
+            if (
+                resource.assignment &&
+                resource.assignment !== "None"
+            ) {
+
+                emergency =
+                    (data.emergencies || [])
+                        .find(
+                            item =>
+                                item.emergency_id ===
+                                resource.assignment
+                        );
+
+            }
+
+
+            renderResource();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showError(
+                "تعذر تحميل بيانات المورد."
+            );
+
+        }
+
+    }
+
+
+    /* ==============================================
+       ERROR
+    ============================================== */
+
+    function showError(message) {
+
+        document.getElementById(
+            "resourceContainer"
+        ).innerHTML = `
+
+            <div class="error-state">
+
+                <h2>
+                    تعذر عرض المورد
+                </h2>
+
+                <p>
+                    ${escapeHtml(message)}
+                </p>
+
+                <a href="resources.html">
+                    العودة إلى الموارد
+                </a>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ==============================================
+       RENDER
+    ============================================== */
+
+    function renderResource() {
+
+        const status =
+            resource.status || "Offline";
+
+
+        const assignmentExists =
+            resource.assignment &&
+            resource.assignment !== "None";
+
+
+        document.getElementById(
+            "resourceContainer"
+        ).innerHTML = `
+
+            <!-- HERO -->
+
+            <section class="resource-hero">
+
+                <div
+                    class="resource-identity"
+                >
+
+                    <div
+                        class="large-resource-icon"
+                    >
+                        ${typeIcon(
+                            resource.resource_type
+                        )}
+                    </div>
+
+
+                    <div>
+
+                        <h1>
+                            ${escapeHtml(
+                                resource.resource_name
+                            )}
+                        </h1>
+
+                        <div class="resource-id">
+                            ${escapeHtml(
+                                resource.resource_id
+                            )}
+                        </div>
+
+
+                        <span
+                            class="
+                                resource-status
+                                ${statusClass(status)}
+                            "
+                        >
+                            ${escapeHtml(
+                                statusAr(status)
+                            )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hero-actions">
+
+                    <button
+                        class="hero-btn"
+                        id="locateBtn"
+                    >
+                        تحديد على الخريطة
+                    </button>
+
+                    <button
+                        class="
+                            hero-btn
+                            primary
+                        "
+                        id="statusBtn"
+                    >
+                        تغيير الحالة
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- MAIN -->
+
+            <div class="main-grid">
+
+
+                <div class="left-column">
+
+
+                    <!-- MAP -->
+
+                    <section class="panel">
+
+                        <div class="panel-header">
+
+                            <strong>
+                                موقع المورد
+                            </strong>
+
+                            <span>
+                                LIVE LOCATION
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            style="
+                                position:relative;
+                            "
+                        >
+
+                            <div
+                                id="resourceMap"
+                            ></div>
+
+                            <div
+                                class="map-overlay"
+                            >
+                                آخر موقع معروف
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- RESOURCE INFORMATION -->
+
+                    <section class="panel">
+
+                        <div class="panel-header">
+
+                            <strong>
+                                معلومات المورد
+                            </strong>
+
+                            <span>
+                                RESOURCE INFORMATION
+                            </span>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="info-grid">
+
+                                <div
+                                    class="info-item"
+                                >
+
+                                    <span
+                                        class="info-label"
+                                    >
+                                        اسم المورد
+                                    </span>
+
+                                    <span
+                                        class="info-value"
+                                    >
+                                        ${escapeHtml(
+                                            resource.resource_name
+                                        )}
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="info-item"
+                                >
+
+                                    <span
+                                        class="info-label"
+                                    >
+                                        نوع المورد
+                                    </span>
+
+                                    <span
+                                        class="info-value"
+                                    >
+                                        ${escapeHtml(
+                                            typeAr(
+                                                resource.resource_type
+                                            )
+                                        )}
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="info-item"
+                                >
+
+                                    <span
+                                        class="info-label"
+                                    >
+                                        Resource ID
+                                    </span>
+
+                                    <span
+                                        class="
+                                            info-value
+                                            ltr
+                                        "
+                                    >
+                                        ${escapeHtml(
+                                            resource.resource_id
+                                        )}
+                                    </span>
+
+                                </div>
+
+
+                                <div
+                                    class="info-item"
+                                >
+
+                                    <span
+                                        class="info-label"
+                                    >
+                                        الحالة التشغيلية
+                                    </span>
+
+                                    <span
+                                        class="info-value"
+                                    >
+                                        ${escapeHtml(
+                                            statusAr(status)
+                                        )}
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- COORDINATES -->
+
+                    <section class="panel">
+
+                        <div class="panel-header">
+
+                            <strong>
+                                إحداثيات الموقع
+                            </strong>
+
+                            <span>
+                                GPS
+                            </span>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="coordinates">
+
+                                <div
+                                    class="coordinate"
+                                >
+
+                                    <label>
+                                        Latitude
+                                    </label>
+
+                                    <strong>
+                                        ${Number(
+                                            resource.latitude
+                                        ).toFixed(6)}
+                                    </strong>
+
+                                </div>
+
+
+                                <div
+                                    class="coordinate"
+                                >
+
+                                    <label>
+                                        Longitude
+                                    </label>
+
+                                    <strong>
+                                        ${Number(
+                                            resource.longitude
+                                        ).toFixed(6)}
+                                    </strong>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                </div>
+
+
+                <div class="right-column">
+
+
+                    <!-- ASSIGNMENT -->
+
+                    <section class="panel">
+
+                        <div class="panel-header">
+
+                            <strong>
+                                المهمة الحالية
+                            </strong>
+
+                            <span>
+                                CURRENT ASSIGNMENT
+                            </span>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            ${
+                                assignmentExists
+                                    ? `
+
+                                        <div
+                                            class="
+                                                assignment-card
+                                            "
+                                        >
+
+                                            <div
+                                                class="assignment-top"
+                                            >
+
+                                                <span
+                                                    class="
+                                                        assignment-label
+                                                    "
+                                                >
+                                                    مهمة نشطة
+                                                </span>
+
+                                                <span
+                                                    class="
+                                                        mission-active
+                                                    "
+                                                >
+                                                    ● ACTIVE
+                                                </span>
+
+                                            </div>
+
+
+                                            <div
+                                                class="mission-id"
+                                            >
+                                                ${escapeHtml(
+                                                    resource.assignment
+                                                )}
+                                            </div>
+
+
+                                            ${
+                                                emergency
+                                                    ? `
+
+                                                        <p
+                                                            class="
+                                                                mission-description
+                                                            "
+                                                        >
+                                                            ${escapeHtml(
+                                                                emergency.description ||
+                                                                "لا يوجد وصف للبلاغ."
+                                                            )}
+                                                        </p>
+
+                                                        <a
+                                                            class="
+                                                                view-mission
+                                                            "
+                                                            href="
+                                                                emergency-details.html?id=${encodeURIComponent(
+                                                                    emergency.emergency_id
+                                                                )}
+                                                            "
+                                                        >
+                                                            عرض تفاصيل البلاغ ←
+                                                        </a>
+
+                                                    `
+                                                    : `
+
+                                                        <p
+                                                            class="
+                                                                mission-description
+                                                            "
+                                                        >
+                                                            يوجد ارتباط بمهمة،
+                                                            لكن تفاصيل البلاغ
+                                                            غير موجودة في البيانات
+                                                            الحالية.
+                                                        </p>
+
+                                                    `
+                                            }
+
+                                        </div>
+
+                                    `
+                                    : `
+
+                                        <div
+                                            style="
+                                                padding:25px 10px;
+                                                text-align:center;
+                                                color:#61748b;
+                                            "
+                                        >
+
+                                            <div
+                                                style="
+                                                    font-size:25px;
+                                                    margin-bottom:8px;
+                                                "
+                                            >
+                                                ✓
+                                            </div>
+
+                                            <strong
+                                                style="
+                                                    display:block;
+                                                    color:#899aad;
+                                                    font-size:9px;
+                                                    margin-bottom:4px;
+                                                "
+                                            >
+                                                لا توجد مهمة حالية
+                                            </strong>
+
+                                            <span
+                                                style="
+                                                    font-size:7px;
+                                                "
+                                            >
+                                                المورد جاهز للتوجيه
+                                            </span>
+
+                                        </div>
+
+                                    `
+                            }
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- OPERATIONS -->
+
+                    <section class="panel">
+
+                        <div class="panel-header">
+
+                            <strong>
+                                الإجراءات التشغيلية
+                            </strong>
+
+                            <span>
+                                OPERATIONS
+                            </span>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="action-list">
+
+                                <button
+                                    class="operation-btn"
+                                    id="mapBtn"
+                                >
+
+                                    <span>
+                                        عرض على الخريطة الرئيسية
+                                    </span>
+
+                                    <span>
+                                        →
+                                    </span>
+
+                                </button>
+
+
+                                <button
+                                    class="operation-btn"
+                                    id="changeStatusBtn"
+                                >
+
+                                    <span>
+                                        تغيير الحالة التشغيلية
+                                    </span>
+
+                                    <span>
+                                        ⚙
+                                    </span>
+
+                                </button>
+
+
+                                ${
+                                    assignmentExists
+                                        ? `
+
+                                            <button
+                                                class="
+                                                    operation-btn
+                                                    danger
+                                                "
+                                                id="releaseBtn"
+                                            >
+
+                                                <span>
+                                                    إنهاء المهمة الحالية
+                                                </span>
+
+                                                <span>
+                                                    ×
+                                                </span>
+
+                                            </button>
+
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ACTIVITY -->
+
+                    <section class="panel">
+
+                        <div class="panel-header">
+
+                            <strong>
+                                سجل النشاط
+                            </strong>
+
+                            <span>
+                                ACTIVITY
+                            </span>
+
+                        </div>
+
+
+                        <div class="panel-body">
+
+                            <div class="timeline">
+
+                                <div
+                                    class="
+                                        timeline-item
+                                        current
+                                    "
+                                >
+
+                                    <span
+                                        class="timeline-dot"
+                                    ></span>
+
+                                    <span
+                                        class="timeline-title"
+                                    >
+                                        آخر حالة مسجلة:
+                                        ${escapeHtml(
+                                            statusAr(status)
+                                        )}
+                                    </span>
+
+                                    <span
+                                        class="timeline-time"
+                                    >
+                                        System Current State
+                                    </span>
+
+                                </div>
+
+
+                                ${
+                                    assignmentExists
+                                        ? `
+
+                                            <div
+                                                class="timeline-item"
+                                            >
+
+                                                <span
+                                                    class="timeline-dot"
+                                                ></span>
+
+                                                <span
+                                                    class="timeline-title"
+                                                >
+                                                    تم ربط المورد بالبلاغ
+                                                </span>
+
+                                                <span
+                                                    class="timeline-time"
+                                                >
+                                                    ${escapeHtml(
+                                                        resource.assignment
+                                                    )}
+                                                </span>
+
+                                            </div>
+
+                                        `
+                                        : `
+
+                                            <div
+                                                class="timeline-item"
+                                            >
+
+                                                <span
+                                                    class="timeline-dot"
+                                                ></span>
+
+                                                <span
+                                                    class="timeline-title"
+                                                >
+                                                    المورد بدون مهمة
+                                                </span>
+
+                                                <span
+                                                    class="timeline-time"
+                                                >
+                                                    Ready State
+                                                </span>
+
+                                            </div>
+
+                                        `
+                                }
+
+
+                                <div
+                                    class="timeline-item"
+                                >
+
+                                    <span
+                                        class="timeline-dot"
+                                    ></span>
+
+                                    <span
+                                        class="timeline-title"
+                                    >
+                                        تمت إضافة المورد إلى النظام
+                                    </span>
+
+                                    <span
+                                        class="timeline-time"
+                                    >
+                                        Resource Registry
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        initializeMap();
+
+        initializeActions();
+
+    }
+
+
+    /* ==============================================
+       MAP
+    ============================================== */
+
+    function initializeMap() {
+
+        const latitude =
+            Number(
+                resource.latitude
+            );
+
+
+        const longitude =
+            Number(
+                resource.longitude
+            );
+
+
+        map =
+            L.map(
+                "resourceMap",
+                {
+                    zoomControl: true
+                }
+            )
+            .setView(
+                [
+                    latitude,
+                    longitude
+                ],
+                15
+            );
+
+
+        L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+                attribution:
+                    "&copy; OpenStreetMap contributors"
+            }
+        )
+        .addTo(map);
+
+
+        const marker =
+            L.circleMarker(
+                [
+                    latitude,
+                    longitude
+                ],
+                {
+                    radius: 12,
+
+                    color:
+                        "#ffffff",
+
+                    weight: 2,
+
+                    fillColor:
+                        "#31d47f",
+
+                    fillOpacity:
+                        .9
+                }
+            )
+            .addTo(map);
+
+
+        marker.bindPopup(`
+
+            <strong>
+                ${escapeHtml(
+                    resource.resource_name
+                )}
+            </strong>
+
+            <br>
+
+            ${escapeHtml(
+                typeAr(
+                    resource.resource_type
+                )
+            )}
+
+            <br>
+
+            ${escapeHtml(
+                statusAr(
+                    resource.status
+                )
+            )}
+
+        `);
+
+
+        marker.openPopup();
+
+    }
+
+
+    /* ==============================================
+       ACTIONS
+    ============================================== */
+
+    function initializeActions() {
+
+        document.getElementById(
+            "locateBtn"
+        )?.addEventListener(
+            "click",
+            () => {
+
+                if (!map)
+                    return;
+
+                map.setView(
+                    [
+                        Number(
+                            resource.latitude
+                        ),
+                        Number(
+                            resource.longitude
+                        )
+                    ],
+                    17,
+                    {
+                        animate: true
+                    }
+                );
+
+            }
+        );
+
+
+        document.getElementById(
+            "mapBtn"
+        )?.addEventListener(
+            "click",
+            () => {
+
+                window.location.href =
+                    `map.html?resource=${encodeURIComponent(
+                        resource.resource_id
+                    )}`;
+
+            }
+        );
+
+
+        document.getElementById(
+            "statusBtn"
+        )?.addEventListener(
+            "click",
+            changeStatus
+        );
+
+
+        document.getElementById(
+            "changeStatusBtn"
+        )?.addEventListener(
+            "click",
+            changeStatus
+        );
+
+
+        document.getElementById(
+            "releaseBtn"
+        )?.addEventListener(
+            "click",
+            releaseMission
+        );
+
+    }
+
+
+    /* ==============================================
+       CHANGE STATUS
+    ============================================== */
+
+    function changeStatus() {
+
+        const states = [
+
+            "Available",
+
+            "Busy",
+
+            "Offline"
+
+        ];
+
+
+        const currentIndex =
+            states.indexOf(
+                resource.status
+            );
+
+
+        const nextIndex =
+            currentIndex === -1
+                ? 0
+                : (
+                    currentIndex + 1
+                ) %
+                states.length;
+
+
+        resource.status =
+            states[nextIndex];
+
+
+        /*
+         * Prototype only.
+         * Backend will later handle:
+         *
+         * PATCH /api/resources/{resource_id}
+         */
+
+        renderResource();
+
+
+        showToast(
+            `تم تغيير حالة المورد إلى ${statusAr(
+                resource.status
+            )}.`
+        );
+
+    }
+
+
+    /* ==============================================
+       RELEASE MISSION
+    ============================================== */
+
+    function releaseMission() {
+
+        if (!resource.assignment) {
+            return;
+        }
+
+
+        const confirmed =
+            window.confirm(
+                "هل تريد إنهاء المهمة الحالية لهذا المورد؟"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        resource.assignment =
+            "None";
+
+
+        resource.status =
+            "Available";
+
+
+        emergency =
+            null;
+
+
+        /*
+         * Prototype only.
+         *
+         * Future backend:
+         *
+         * PATCH /api/resources/{resource_id}
+         * PATCH /api/emergencies/{emergency_id}/status
+         */
+
+        renderResource();
+
+
+        showToast(
+            "تم تحرير المورد وأصبح متاحًا."
+        );
+
+    }
+
+
+    /* ==============================================
+       START
+    ============================================== */
+
+    loadResource();
+
+</script>
+
+
+</body>
+
+</html>
