@@ -2,7 +2,15 @@
 
 ## Project Description
 
-> TBD — A short description of the project will be added once the project scope is confirmed.
+Multimodal AI Emergency Response System is a collaborative academic platform for receiving emergency reports and supporting response decisions with several AI and data components:
+
+- **S1 — Text AI:** analyse the text of an emergency report.
+- **S2 — Image AI:** analyse images supplied with a report.
+- **S3 — Fusion / decision:** combine the available signals into a recommendation.
+- **S4 — Geospatial:** add location and geographic context.
+- **S5 — Backend:** store reports and expose the integration layer through Laravel and MySQL.
+
+The repository currently contains the **S5 backend foundation**: a Laravel 12 application, an `EmergencyReport` model and migration, and feature tests for the model. API endpoints, authentication, the AI services, geospatial integration, and the frontend are not implemented yet.
 
 ---
 
